@@ -94400,31 +94400,6 @@ exports.AddButton = react_2.memo((props) => {
 
 /***/ }),
 
-/***/ "./resources/ts/components/atoms/button/LoginButton.tsx":
-/*!**************************************************************!*\
-  !*** ./resources/ts/components/atoms/button/LoginButton.tsx ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.LoginButton = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
-exports.LoginButton = react_2.memo((props) => {
-    const { children, disabled = false, loading = false } = props;
-    return (react_1.default.createElement(react_3.Button, { bg: "teal.400", color: "white", _hover: { opacity: 0.8 }, disabled: disabled || loading, isLoading: loading }, children));
-});
-
-
-/***/ }),
-
 /***/ "./resources/ts/components/atoms/button/MenuIconButton.tsx":
 /*!*****************************************************************!*\
   !*** ./resources/ts/components/atoms/button/MenuIconButton.tsx ***!
@@ -94517,6 +94492,33 @@ exports.MenuDrawer = react_2.memo((props) => {
                     react_1.default.createElement(react_3.Button, { w: "100%", bg: "teal.100", onClick: onClickMyData }, "\u79C1\u306E\u30C7\u30FC\u30BF"),
                     react_1.default.createElement(react_3.Button, { w: "100%", bg: "teal.100", onClick: onClickShareData }, "\u307F\u3093\u306A\u306E\u30C7\u30FC\u30BF"),
                     react_1.default.createElement(react_3.Button, { w: "100%", bg: "teal.100", onClick: onClickSettings }, "\u8A2D\u5B9A"))))));
+});
+
+
+/***/ }),
+
+/***/ "./resources/ts/components/organisms/layout/Footer.tsx":
+/*!*************************************************************!*\
+  !*** ./resources/ts/components/organisms/layout/Footer.tsx ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Footer = void 0;
+const react_1 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+const react_2 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_3 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+exports.Footer = react_3.memo(() => {
+    return (react_2.default.createElement(react_2.default.Fragment, null,
+        react_2.default.createElement(react_1.Flex, { as: "nav", bg: "gray", color: "gray.50", width: "100%", align: "center", justify: "space-between", padding: { base: 3, md: 5 }, position: "absolute", bottom: "0" },
+            react_2.default.createElement(react_1.Flex, { align: "center", as: "a", mr: 8 },
+                react_2.default.createElement(react_1.Heading, { as: "h1", fontSize: { base: "md", md: "lg" } }, "DaTabi")))));
 });
 
 
@@ -94858,46 +94860,6 @@ exports.AddData = react_2.memo(() => {
     return (react_1.default.createElement(react_3.ChakraProvider, null,
         react_1.default.createElement("button", { style: buttonStyle, onClick: onClickAddData }, "\uFF0B"),
         react_1.default.createElement(AddDataModal_1.AddDataModal, { isOpen: isOpen, onClose: onClose })));
-});
-
-
-/***/ }),
-
-/***/ "./resources/ts/components/pages/Login.tsx":
-/*!*************************************************!*\
-  !*** ./resources/ts/components/pages/Login.tsx ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Login = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const react_3 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const react_4 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
-const LoginButton_1 = __webpack_require__(/*! ../atoms/button/LoginButton */ "./resources/ts/components/atoms/button/LoginButton.tsx");
-exports.Login = react_2.memo(() => {
-    const [userName, setUserName] = react_3.useState('');
-    const [userPass, setUserPass] = react_3.useState('');
-    const onChangeUserName = (e) => setUserName(e.target.value);
-    const onChangeUserPass = (e) => setUserPass(e.target.value);
-    return (react_1.default.createElement(react_4.Flex, { align: "center", justify: "center", height: "100vh" },
-        react_1.default.createElement(react_4.Box, { bg: "white", w: "sm", p: 4, borderRadius: "md", shadow: "md" },
-            react_1.default.createElement(react_4.Heading, { as: "h1", size: "lg", textAlign: "center" },
-                "DaTabi",
-                react_1.default.createElement("br", null),
-                "\u30ED\u30B0\u30A4\u30F3\u753B\u9762"),
-            react_1.default.createElement(react_4.Divider, { my: 4 }),
-            react_1.default.createElement(react_4.Stack, { spacing: 6, py: 4, px: 10 },
-                react_1.default.createElement(react_4.Input, { placeholder: "\u30E6\u30FC\u30B6\u30FC\u30CD\u30FC\u30E0", value: userName, onChange: onChangeUserName }),
-                react_1.default.createElement(react_4.Input, { placeholder: "\u30D1\u30B9\u30EF\u30FC\u30C9", value: userPass, onChange: onChangeUserPass }),
-                react_1.default.createElement(LoginButton_1.LoginButton, { disabled: userName === "" || userPass === "" }, "\u30ED\u30B0\u30A4\u30F3")))));
 });
 
 
@@ -95251,6 +95213,33 @@ exports.Settings = react_2.memo(() => {
 
 /***/ }),
 
+/***/ "./resources/ts/components/templates/FooterLayout.tsx":
+/*!************************************************************!*\
+  !*** ./resources/ts/components/templates/FooterLayout.tsx ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FooterLayout = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const Footer_1 = __webpack_require__(/*! ../organisms/layout/Footer */ "./resources/ts/components/organisms/layout/Footer.tsx");
+exports.FooterLayout = react_2.memo((props) => {
+    const { children } = props;
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(Footer_1.Footer, null),
+        children));
+});
+
+
+/***/ }),
+
 /***/ "./resources/ts/components/templates/HeaderLayout.tsx":
 /*!************************************************************!*\
   !*** ./resources/ts/components/templates/HeaderLayout.tsx ***!
@@ -95369,16 +95358,17 @@ exports.Router = void 0;
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-const Login_1 = __webpack_require__(/*! ../components/pages/Login */ "./resources/ts/components/pages/Login.tsx");
+// import { Login } from '../components/pages/Login';
 const Page404_1 = __webpack_require__(/*! ../components/pages/Page404 */ "./resources/ts/components/pages/Page404.tsx");
 const MyDataRoutes_1 = __webpack_require__(/*! ./MyDataRoutes */ "./resources/ts/router/MyDataRoutes.tsx");
 const HeaderLayout_1 = __webpack_require__(/*! ../components/templates/HeaderLayout */ "./resources/ts/components/templates/HeaderLayout.tsx");
+const FooterLayout_1 = __webpack_require__(/*! ../components/templates/FooterLayout */ "./resources/ts/components/templates/FooterLayout.tsx");
 exports.Router = react_2.memo(() => {
     return (react_1.default.createElement(react_router_dom_1.Switch, null,
-        react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/" },
-            react_1.default.createElement(Login_1.Login, null)),
+        react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/" }),
         react_1.default.createElement(react_router_dom_1.Route, { path: "/home", render: ({ match: { url } }) => (react_1.default.createElement(react_router_dom_1.Switch, null, MyDataRoutes_1.myDataRoutes.map((route) => (react_1.default.createElement(react_router_dom_1.Route, { key: route.path, exact: route.exact, path: `${url}${route.path}` },
-                react_1.default.createElement(HeaderLayout_1.HeaderLayout, null, route.children)))))) }),
+                react_1.default.createElement(HeaderLayout_1.HeaderLayout, null,
+                    react_1.default.createElement(FooterLayout_1.FooterLayout, null, route.children))))))) }),
         react_1.default.createElement(react_router_dom_1.Route, { path: "*" },
             react_1.default.createElement(Page404_1.Page404, null))));
 });
@@ -95419,8 +95409,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

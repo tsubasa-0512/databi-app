@@ -1,17 +1,17 @@
 import React from "react";
 import { ReactNode } from 'react';
 import { memo,VFC } from 'react';
-import { Header } from '../organisms/layout/Header'
+import { Footer } from "../organisms/layout/Footer";
 
 type Props = {
   children:ReactNode;
 };
 
-export const HeaderLayout: VFC<Props> = memo((props) => {
+export const FooterLayout: VFC<Props> = memo((props) => {
   const {children} = props;
   return (
     <>
-      <Header />
+      <Footer />
       {children}
     </>
   )
