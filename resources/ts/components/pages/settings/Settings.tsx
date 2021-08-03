@@ -12,9 +12,9 @@ export const Settings: VFC = memo(() => {
 
   const onClick = useCallback(() => onOpen(), []);
   
-  const pStyle = {
-    color:"#333333"
-  };
+  // const pStyle = {
+  //   color:"#333333"
+  // };
 
   const buttonStyle = { 
     width: "400px",
@@ -37,8 +37,11 @@ export const Settings: VFC = memo(() => {
 
   return (
     <ChakraProvider>
-    <Box textAlign="center" >
-    <p style={pStyle} >設定ページ</p>
+    <Box 
+    textAlign="center" 
+    margin="10px"
+    >
+    {/* <p style={pStyle} >設定ページ</p> */}
 
     <Profile 
     // id={1}

@@ -7,6 +7,12 @@ export const Footer: VFC= memo(() => {
   return(
     <>
     <Flex
+    minHeight="100vh"
+    position="relative"
+    paddingBottom="60px"
+    boxSizing="border-box"
+    >
+    <Flex
     as="nav" 
     bg="gray" 
     color="gray.50" 
@@ -14,7 +20,7 @@ export const Footer: VFC= memo(() => {
     align="center" 
     justify="space-between"
     padding={{ base:3, md:5 }} 
-    position="absolute"
+    position="fixed"
     bottom= "0"
     >
       <Flex 
@@ -27,6 +33,7 @@ export const Footer: VFC= memo(() => {
         </Heading>
         </Flex>
     
+    </Flex>
     </Flex>
     </>
   )

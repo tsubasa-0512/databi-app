@@ -94516,9 +94516,10 @@ const react_2 = __importDefault(__webpack_require__(/*! react */ "./node_modules
 const react_3 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 exports.Footer = react_3.memo(() => {
     return (react_2.default.createElement(react_2.default.Fragment, null,
-        react_2.default.createElement(react_1.Flex, { as: "nav", bg: "gray", color: "gray.50", width: "100%", align: "center", justify: "space-between", padding: { base: 3, md: 5 }, position: "absolute", bottom: "0" },
-            react_2.default.createElement(react_1.Flex, { align: "center", as: "a", mr: 8 },
-                react_2.default.createElement(react_1.Heading, { as: "h1", fontSize: { base: "md", md: "lg" } }, "DaTabi")))));
+        react_2.default.createElement(react_1.Flex, { minHeight: "100vh", position: "relative", paddingBottom: "60px", boxSizing: "border-box" },
+            react_2.default.createElement(react_1.Flex, { as: "nav", bg: "gray", color: "gray.50", width: "100%", align: "center", justify: "space-between", padding: { base: 3, md: 5 }, position: "fixed", bottom: "0" },
+                react_2.default.createElement(react_1.Flex, { align: "center", as: "a", mr: 8 },
+                    react_2.default.createElement(react_1.Heading, { as: "h1", fontSize: { base: "md", md: "lg" } }, "DaTabi"))))));
 });
 
 
@@ -95168,9 +95169,9 @@ const Others_1 = __webpack_require__(/*! ./Others */ "./resources/ts/components/
 exports.Settings = react_2.memo(() => {
     const { isOpen, onOpen, onClose } = react_4.useDisclosure();
     const onClick = react_3.useCallback(() => onOpen(), []);
-    const pStyle = {
-        color: "#333333"
-    };
+    // const pStyle = {
+    //   color:"#333333"
+    // };
     const buttonStyle = {
         width: "400px",
         border: "solid 1px",
@@ -95189,8 +95190,7 @@ exports.Settings = react_2.memo(() => {
         borderRadius: "8%"
     };
     return (react_1.default.createElement(react_4.ChakraProvider, null,
-        react_1.default.createElement(react_4.Box, { textAlign: "center" },
-            react_1.default.createElement("p", { style: pStyle }, "\u8A2D\u5B9A\u30DA\u30FC\u30B8"),
+        react_1.default.createElement(react_4.Box, { textAlign: "center", margin: "10px" },
             react_1.default.createElement(Profile_1.Profile
             // id={1}
             , { 
@@ -95367,8 +95367,9 @@ exports.Router = react_2.memo(() => {
     return (react_1.default.createElement(react_router_dom_1.Switch, null,
         react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/" }),
         react_1.default.createElement(react_router_dom_1.Route, { path: "/home", render: ({ match: { url } }) => (react_1.default.createElement(react_router_dom_1.Switch, null, MyDataRoutes_1.myDataRoutes.map((route) => (react_1.default.createElement(react_router_dom_1.Route, { key: route.path, exact: route.exact, path: `${url}${route.path}` },
-                react_1.default.createElement(HeaderLayout_1.HeaderLayout, null,
-                    react_1.default.createElement(FooterLayout_1.FooterLayout, null, route.children))))))) }),
+                react_1.default.createElement(HeaderLayout_1.HeaderLayout, null),
+                route.children,
+                react_1.default.createElement(FooterLayout_1.FooterLayout, null)))))) }),
         react_1.default.createElement(react_router_dom_1.Route, { path: "*" },
             react_1.default.createElement(Page404_1.Page404, null))));
 });
