@@ -13,7 +13,7 @@ export const ModalHeaders: VFC<Props>= memo((props) => {
     <>
       <ModalHeader 
       textAlign="center" 
-      bg="teal.300" 
+      bg="teal.400" 
       color="gray.50"
       pb={2}
       mb={5}

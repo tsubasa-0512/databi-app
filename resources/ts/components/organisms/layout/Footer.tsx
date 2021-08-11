@@ -10,8 +10,12 @@ export const Footer: VFC= memo(() => {
   const history = useHistory();
 
   const onClickMyData = useCallback(() => history.push("/home"), [history]);
-  const onClickShareData = useCallback(() => history.push("/home/sharedata"), [history]);
-  const onClickSettings = useCallback(() => history.push("/home/settings"), [history]);
+  const onClickShareData = useCallback(() => history.push("/sharedata"), [history]);
+  const onClickSettings = useCallback(() => history.push("/settings"), [history]);
+
+  const style = {
+    textDecoration:"none"
+   };
 
   return(
     <Flex
@@ -33,18 +37,18 @@ export const Footer: VFC= memo(() => {
       >
         <Flex 
         align="center" 
-        fontSize="sm" 
+        fontSize={{ base:"sm", md:"md" }} 
         >
           <Box pr={10}>
            <AddData />
           </Box>
           <Box pr={10}>
-            <Link onClick={onClickMyData}>私のデータ</Link>
+            <Link style={ style } onClick={onClickMyData}>私のデータ</Link>
           </Box>
           <Box pr={10}>
-            <Link onClick={onClickShareData}>みんなのデータ</Link>
+            <Link style={ style } onClick={onClickShareData}>みんなのデータ</Link>
           </Box>
-            <Link onClick={onClickSettings}>設定</Link>
+            <Link style={ style } onClick={onClickSettings}>設定</Link>
         </Flex>
     
       </Flex>

@@ -1,7 +1,12 @@
 import React, { ChangeEvent, useState } from "react";
-import { memo,ReactNode,VFC } from 'react'
-import { Button, Modal, ModalContent, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, Stack, FormControl, FormLabel, Input, ModalFooter, Select, Checkbox } from '@chakra-ui/react';
+import { memo, VFC } from 'react'
+import { Modal, ModalContent, ModalOverlay, ModalCloseButton, ModalBody, Stack, FormControl, FormLabel, Input, ModalFooter, Select, Checkbox } from '@chakra-ui/react';
+
 import { ModalHeaders } from '../layout/ModalHeaders';
+import { PrimaryButton } from "../../atoms/button/PrimaryButton";
+import axios from "axios";
+
+
 
 type Props = {
   isOpen: boolean;
@@ -11,7 +16,7 @@ type Props = {
 export const AddDataModal: VFC<Props> = memo((props) => {
   const { isOpen, onClose} = props;
 
-  const [ inputTitle, setInputTitle ] = useState('');
+  const [ inputTitle, setInputTitle ] = useState<string>('');
   const [ inputDeparture, setInputDeparture ] = useState('');
   const [ inputArrival, setInputArrival ] = useState('');
   const [ inputPurpose, setInputPurpose ] = useState('');
@@ -43,7 +48,21 @@ export const AddDataModal: VFC<Props> = memo((props) => {
     }
   };
 
-  
+  const addInputData = () => { 
+    alert("新規データ登録");
+    axios.post('/posts',{
+      // title:title
+    })
+    .then(response => {
+      // setInputTitle([...inputTitle, response.data])
+      console.log(response);
+    })
+    .catch(function(error){
+      console.log(error)
+    });
+    setInputTitle("");
+    };
+
   return (
     <Modal 
       isOpen={isOpen}
@@ -52,14 +71,11 @@ export const AddDataModal: VFC<Props> = memo((props) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeaders>新規データの追加</ModalHeaders>
+          <ModalHeaders>新規データの登録</ModalHeaders>
            <ModalCloseButton />
            <ModalBody mx={10}>
             <Stack spacing={4}>
-              {/* <FormControl>
-                <FormLabel>ID</FormLabel>
-                <Input value="ID" isReadOnly />
-              </FormControl> */}
+              
               <FormControl>
                 <FormLabel fontSize="sm">タイトル</FormLabel>
                 <Input 
@@ -139,11 +155,6 @@ export const AddDataModal: VFC<Props> = memo((props) => {
                   onChange={handleChange}
                   checked={ inputGoWith.includes('others') }
                   >その他</Checkbox>
-                  <Checkbox size="sm" colorScheme="teal" 
-                  value="others"
-                  onChange={handleChange}
-                  checked={ inputGoWith.includes('alone') }
-                  >なし</Checkbox>
                 </Stack>
               </FormControl>
               <FormControl>
@@ -153,9 +164,17 @@ export const AddDataModal: VFC<Props> = memo((props) => {
             </Stack>
           </ModalBody>
 
-          <ModalFooter>
-            <Button mr={3} disabled={inputTitle === ""}>新規登録</Button>
-            {/* <Button onClick={onClose}>キャンセル</Button> */}
+          <ModalFooter >
+      
+            <PrimaryButton
+            disabled={inputTitle === ""}
+            // loading={loading}
+            onClick={addInputData}
+            // onClick={onClose} //書き方？
+            >
+              新規登録
+            </PrimaryButton>
+            
           </ModalFooter>
         </ModalContent> 
       </Modal>

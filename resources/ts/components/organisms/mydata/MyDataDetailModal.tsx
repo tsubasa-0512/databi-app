@@ -5,6 +5,7 @@ import {
 import { ModalHeaders } from '../layout/ModalHeaders';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import { AddButton } from '../../atoms/button/AddButton';
+import { LoginButton } from "../../atoms/button/LoginButton";
 
 type Props = {
   isOpen: boolean
@@ -31,7 +32,8 @@ export const MyDataDetailModal: VFC<Props> = memo((props) => {
           <ModalCloseButton />
           <ModalBody mx={10}>
             <Stack spacing={4}>
-              <Stack >
+              <Stack>
+                <Box>
               <Box>
               <FormControl>
                 <FormLabel>タイトル</FormLabel>
@@ -59,6 +61,7 @@ export const MyDataDetailModal: VFC<Props> = memo((props) => {
               </Box>
 
               <PrimaryButton>編集</PrimaryButton>
+              </Box>
               </Stack>
 
               <FormControl >

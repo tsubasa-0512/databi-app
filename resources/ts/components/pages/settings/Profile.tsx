@@ -47,10 +47,6 @@ export const Profile: VFC<Props> = memo((props) => {
                 <Input value="ユーザー名" color="gray"/>
               </FormControl>
               <FormControl>
-                <FormLabel fontSize="sm">workstyle</FormLabel>
-                <Input value="選択" color="gray"/>
-              </FormControl>
-              <FormControl>
                 <FormLabel fontSize="sm">性別</FormLabel>
                 <Input value="選択" color="gray"/>
               </FormControl>

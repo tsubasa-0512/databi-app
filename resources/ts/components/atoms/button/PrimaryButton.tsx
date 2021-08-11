@@ -1,33 +1,29 @@
 import React from "react";
 import { memo,ReactNode,VFC } from 'react';
+import { Button } from "@chakra-ui/react";
 
 
 type Props = {
   children: ReactNode;
+  disabled?: boolean;
+  loading?: boolean;
+  onClick: () => void;
 };
 
 
 export const PrimaryButton: VFC<Props> = memo((props) => {
-  const { children } = props;
-
-  const style = {
-    width:"100px",
-    textAlign:'center' as const,
-    background: "#20b2aa", 
-    border: "solid 1px",
-    padding: "5px",
-    margin: "20px",
-    borderColor: "#3aacad",
-    color:"#fffafa",
-    borderRadius:"5%"
-  };
-
+  const { children, disabled = false, loading = false, onClick } = props;
 
   return (
-    <div style={style}>
-    <button>
+    <Button 
+    bg="teal.400" 
+    color="gray.50" 
+    _hover={{ opacity: 0.8 }}
+    disabled={disabled || loading} 
+    isLoading={loading}
+    onClick={onClick}
+    >
       {children}
-    </button>
-    </div>
+    </Button>
   )
 });

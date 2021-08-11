@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { memo,VFC } from 'react';
 import { Box, Stack, Image, Text  } from '@chakra-ui/react';
+import { Link } from "react-router-dom";
 
 type Props = {
   id: number;
@@ -8,11 +9,28 @@ type Props = {
   title: string;
   totalCosts: string;
   dates: string;
+  
   onClick: (id: number) => void;
 };
 
 export const MyDataCard: VFC<Props> = memo((props) => {
   const { id, imageUrl, title, totalCosts, dates, onClick } = props;
+
+  //  useEffect(() => {
+  //    const~ = db.~ => {
+  //     setData(
+  //       ~ map(() => ({
+  //         id: ,
+  //         title: ,
+  //       }))
+  //     ); 
+  //    };
+  //  });
+
+  //  return () => (constで定義した~）();
+  // },[]);
+
+
   return (
     <Box
           w="260px"
