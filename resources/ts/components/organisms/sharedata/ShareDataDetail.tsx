@@ -38,13 +38,13 @@ export const ShareDataDetail: VFC= memo((props) => {
         // bg="gray.100"
         >
         <Box bg="orange.200" mb="8px">
-        <Center h="40px"  mb="5px" color="gray.400">食</Center></Box>
+        <Center h="40px"  mb="5px" color="gray.50">食</Center></Box>
         <Box bg="cyan.700" mb="8px">
-        <Center h="40px"  mb="5px" color="gray.400">宿</Center></Box>
+        <Center h="40px"  mb="5px" color="gray.50">宿</Center></Box>
         <Box bg="green.500" mb="8px">
-        <Center h="40px"  mb="5px" color="gray.400">交通</Center></Box>
+        <Center h="40px"  mb="5px" color="gray.50">交通</Center></Box>
         <Box bg="pink.400" mb="8px">
-        <Center h="40px"  mb="5px" color="gray.400">体験</Center></Box>
+        <Center h="40px"  mb="5px" color="gray.50">体験</Center></Box>
         
         </Box>
       </WrapItem>

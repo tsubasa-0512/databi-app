@@ -4,11 +4,11 @@ import {
   Wrap, WrapItem, ChakraProvider, useDisclosure, Switch } from '@chakra-ui/react';
 import { useCallback } from 'react';
 import { MyDataCard } from '../organisms/mydata/MyDataCard';
-import { MyDataDetailModal } from '../organisms/mydata/MyDataDetailModal';
+import { MyDataDetailModal } from '../organisms/mydata/AddDetailModal';
 import { Link } from "react-router-dom";
 
 export const MyData: VFC = memo(() => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onClickMyData = useCallback((id: number) => {
     console.log(id);

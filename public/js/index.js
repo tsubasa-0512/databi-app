@@ -94542,10 +94542,10 @@ exports.PrimaryButton = react_2.memo((props) => {
 
 /***/ }),
 
-/***/ "./resources/ts/components/organisms/layout/DataDetail.tsx":
-/*!*****************************************************************!*\
-  !*** ./resources/ts/components/organisms/layout/DataDetail.tsx ***!
-  \*****************************************************************/
+/***/ "./resources/ts/components/atoms/button/secButton.tsx":
+/*!************************************************************!*\
+  !*** ./resources/ts/components/atoms/button/secButton.tsx ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -94555,14 +94555,59 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SecButton = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+exports.SecButton = react_2.memo((props) => {
+    const { children, disabled = false, loading = false, onClick } = props;
+    return (react_1.default.createElement(react_3.Button, { size: "sm", fontWeight: "light", borderRadius: "none", bg: "teal.400", color: "gray.50", _hover: { opacity: 0.8 }, disabled: disabled || loading, isLoading: loading, onClick: onClick }, children));
+});
+
+
+/***/ }),
+
+/***/ "./resources/ts/components/organisms/layout/DataDetail.tsx":
+/*!*****************************************************************!*\
+  !*** ./resources/ts/components/organisms/layout/DataDetail.tsx ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataDetail = void 0;
 const react_1 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
-const react_2 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_2 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_3 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./resources/ts/components/atoms/button/secButton.tsx");
+const EditTitleModal_1 = __webpack_require__(/*! ../mydata/EditTitleModal */ "./resources/ts/components/organisms/mydata/EditTitleModal.tsx");
 // type Props = {
 //   children:ReactNode;
 // };
-exports.DataDetail = react_3.memo(() => {
+exports.DataDetail = react_3.memo((props) => {
+    const { isOpen, onOpen, onClose } = react_1.useDisclosure();
+    const onClickEdit = react_2.useCallback(() => onOpen(), []);
     // const {children} = props;
     return (react_2.default.createElement(react_2.default.Fragment, null,
         react_2.default.createElement(react_1.Box, { display: "flex" },
@@ -94580,7 +94625,15 @@ exports.DataDetail = react_3.memo(() => {
                 react_2.default.createElement(react_1.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
                     react_2.default.createElement(react_1.Center, { w: "180", h: "30", color: "gray.400" }, "\u540C\u884C\u8005")),
                 react_2.default.createElement(react_1.Box, { bg: "teal.400", mb: "4px" },
-                    react_2.default.createElement(react_1.Center, { w: "180", h: "30", color: "gray.50" }, "\u5408\u8A08\u91D1\u984D"))))));
+                    react_2.default.createElement(react_1.Center, { w: "180", h: "30", color: "gray.50" }, "\u5408\u8A08\u91D1\u984D")),
+                react_2.default.createElement(react_1.Box, { margin: "25px" },
+                    react_2.default.createElement(react_1.Center
+                    // bg="pink"
+                    , { 
+                        // bg="pink"
+                        w: "180px", h: "30px" },
+                        react_2.default.createElement(secButton_1.SecButton, { onClick: onClickEdit }, "\u7DE8\u96C6"))))),
+        react_2.default.createElement(EditTitleModal_1.EditTitleModal, { isOpen: isOpen, onClose: onClose })));
 });
 
 
@@ -94877,6 +94930,147 @@ exports.AddDataModal = react_2.memo((props) => {
 
 /***/ }),
 
+/***/ "./resources/ts/components/organisms/mydata/AddDetailModal.tsx":
+/*!*********************************************************************!*\
+  !*** ./resources/ts/components/organisms/mydata/AddDetailModal.tsx ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AddDetailModal = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+const ModalHeaders_1 = __webpack_require__(/*! ../layout/ModalHeaders */ "./resources/ts/components/organisms/layout/ModalHeaders.tsx");
+const PrimaryButton_1 = __webpack_require__(/*! ../../atoms/button/PrimaryButton */ "./resources/ts/components/atoms/button/PrimaryButton.tsx");
+exports.AddDetailModal = react_2.memo((props) => {
+    const { isOpen, onClose } = props;
+    const onClickSet = () => {
+        alert("登録します");
+    };
+    return (react_1.default.createElement(react_3.Modal, { isOpen: isOpen, onClose: onClose, autoFocus: false },
+        react_1.default.createElement(react_3.ModalOverlay, null,
+            react_1.default.createElement(react_3.ModalContent, { pb: 6 },
+                react_1.default.createElement(ModalHeaders_1.ModalHeaders, null, "\u8A73\u7D30\u30C7\u30FC\u30BF\u8FFD\u52A0\u753B\u9762"),
+                react_1.default.createElement(react_3.ModalCloseButton, null),
+                react_1.default.createElement(react_3.ModalBody, { mx: 10 },
+                    react_1.default.createElement(react_3.Stack, { spacing: 4 },
+                        react_1.default.createElement(react_3.Stack, null,
+                            react_1.default.createElement(react_3.Box, null,
+                                react_1.default.createElement(react_3.FormControl, null,
+                                    react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
+                                    react_1.default.createElement(react_3.Select
+                                    // value={inputPurpose} 
+                                    // onChange={onChangeInputPurpose} 
+                                    , null,
+                                        react_1.default.createElement("option", { value: "food" }, "\u98F2\u98DF"),
+                                        react_1.default.createElement("option", { value: "stay" }, "\u5BBF\u6CCA"),
+                                        react_1.default.createElement("option", { value: "traffic" }, "\u4EA4\u901A"),
+                                        react_1.default.createElement("option", { value: "leisure" }, "\u4F53\u9A13"),
+                                        react_1.default.createElement("option", { value: "other" }, "\u305D\u306E\u4ED6"))),
+                                react_1.default.createElement(react_3.Box, { margin: "5" },
+                                    react_1.default.createElement(react_3.FormControl, null,
+                                        react_1.default.createElement(react_3.FormLabel, null,
+                                            react_1.default.createElement(react_3.Input, { placeholder: "\u30BF\u30A4\u30C8\u30EB", type: "text" }))),
+                                    react_1.default.createElement(react_3.FormControl, null,
+                                        react_1.default.createElement(react_3.FormLabel, null),
+                                        react_1.default.createElement(react_3.Input, { placeholder: "\u753B\u50CF", isReadOnly: true }))),
+                                react_1.default.createElement(react_3.Box, null,
+                                    react_1.default.createElement(react_3.FormControl, null,
+                                        react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
+                                        react_1.default.createElement(react_3.Input, { placeholder: "\u30B3\u30E1\u30F3\u30C8", type: "text" })),
+                                    react_1.default.createElement(react_3.FormControl, null,
+                                        react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
+                                        react_1.default.createElement(react_3.Input, { placeholder: "\u91D1\u984D" }))),
+                                react_1.default.createElement(react_3.Box, { textAlign: "right", margin: "5" },
+                                    react_1.default.createElement(PrimaryButton_1.PrimaryButton, { onClick: onClickSet }, "\u767B\u9332"))))))))));
+});
+
+
+/***/ }),
+
+/***/ "./resources/ts/components/organisms/mydata/EditTitleModal.tsx":
+/*!*********************************************************************!*\
+  !*** ./resources/ts/components/organisms/mydata/EditTitleModal.tsx ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EditTitleModal = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+const ModalHeaders_1 = __webpack_require__(/*! ../layout/ModalHeaders */ "./resources/ts/components/organisms/layout/ModalHeaders.tsx");
+const PrimaryButton_1 = __webpack_require__(/*! ../../atoms/button/PrimaryButton */ "./resources/ts/components/atoms/button/PrimaryButton.tsx");
+exports.EditTitleModal = react_2.memo((props) => {
+    const { isOpen, onClose } = props;
+    const onClickUpdate = () => {
+        alert("更新されました");
+    };
+    return (react_1.default.createElement(react_3.Modal, { isOpen: isOpen, onClose: onClose, autoFocus: false },
+        react_1.default.createElement(react_3.ModalOverlay, null,
+            react_1.default.createElement(react_3.ModalContent, { pb: 6 },
+                react_1.default.createElement(ModalHeaders_1.ModalHeaders, null, "\u30C7\u30FC\u30BF\u6982\u8981"),
+                react_1.default.createElement(react_3.ModalCloseButton, null),
+                react_1.default.createElement(react_3.ModalBody, { mx: 10 },
+                    react_1.default.createElement(react_3.Stack, { spacing: 4 },
+                        react_1.default.createElement(react_3.Stack, null,
+                            react_1.default.createElement(react_3.Box, null,
+                                react_1.default.createElement(react_3.Box, null,
+                                    react_1.default.createElement(react_3.FormControl, null,
+                                        react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u30BF\u30A4\u30C8\u30EB"),
+                                        react_1.default.createElement(react_3.Input, { placeholder: "\u30BF\u30A4\u30C8\u30EB", type: "text" })),
+                                    react_1.default.createElement(react_3.FormControl, null,
+                                        react_1.default.createElement(react_3.FormLabel, null, "\u753B\u50CF"),
+                                        react_1.default.createElement(react_3.Input, { value: "\u753B\u50CF" }))),
+                                react_1.default.createElement(react_3.Box, null,
+                                    react_1.default.createElement(react_3.FormControl, null,
+                                        react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u51FA\u767A\u65E5"),
+                                        react_1.default.createElement(react_3.Input, { type: "date" })),
+                                    react_1.default.createElement(react_3.FormControl, null,
+                                        react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u5E30\u5B85\u65E5"),
+                                        react_1.default.createElement(react_3.Input, { type: "date" })),
+                                    react_1.default.createElement(react_3.FormControl, null,
+                                        react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u76EE\u7684"),
+                                        react_1.default.createElement(react_3.Select
+                                        // value={inputPurpose} 
+                                        // onChange={onChangeInputPurpose} 
+                                        , null,
+                                            react_1.default.createElement("option", { value: "leisure" }, "\u30EC\u30B8\u30E3\u30FC"),
+                                            react_1.default.createElement("option", { value: "business" }, "\u30D3\u30B8\u30CD\u30B9"),
+                                            react_1.default.createElement("option", { value: "worcation" }, "\u30EF\u30FC\u30B1\u30FC\u30B7\u30E7\u30F3"),
+                                            react_1.default.createElement("option", { value: "bleisure" }, "\u30D6\u30EC\u30B8\u30E3\u30FC"),
+                                            react_1.default.createElement("option", { value: "other" }, "\u305D\u306E\u4ED6"))),
+                                    react_1.default.createElement(react_3.FormControl, null,
+                                        react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u540C\u884C\u8005"),
+                                        react_1.default.createElement(react_3.Stack, { direction: "row", align: "center" },
+                                            react_1.default.createElement(react_3.Checkbox, { size: "sm", value: "family", colorScheme: "teal" }, "\u914D\u5076\u8005"),
+                                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "partner" }, "\u604B\u4EBA"),
+                                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "children" }, "\u5B50"),
+                                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "parents" }, "\u89AA"),
+                                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "relatives" }, "\u89AA\u65CF"),
+                                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "friends" }, "\u53CB\u4EBA"),
+                                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "coworker" }, "\u540C\u50DA"),
+                                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "others" }, "\u305D\u306E\u4ED6")))),
+                                react_1.default.createElement(react_3.Box, { margin: "5", textAlign: "right" },
+                                    react_1.default.createElement(PrimaryButton_1.PrimaryButton, { onClick: onClickUpdate }, "\u66F4\u65B0"))))))))));
+});
+
+
+/***/ }),
+
 /***/ "./resources/ts/components/organisms/mydata/MyDataCard.tsx":
 /*!*****************************************************************!*\
   !*** ./resources/ts/components/organisms/mydata/MyDataCard.tsx ***!
@@ -94928,19 +95122,39 @@ exports.MyDataCard = react_2.memo((props) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyDataDetail = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const DataDetail_1 = __webpack_require__(/*! ../layout/DataDetail */ "./resources/ts/components/organisms/layout/DataDetail.tsx");
 const DataDetailHeaders_1 = __webpack_require__(/*! ../layout/DataDetailHeaders */ "./resources/ts/components/organisms/layout/DataDetailHeaders.tsx");
 const DataDetailTitle_1 = __webpack_require__(/*! ../layout/DataDetailTitle */ "./resources/ts/components/organisms/layout/DataDetailTitle.tsx");
+const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./resources/ts/components/atoms/button/secButton.tsx");
+const AddDetailModal_1 = __webpack_require__(/*! ./AddDetailModal */ "./resources/ts/components/organisms/mydata/AddDetailModal.tsx");
 exports.MyDataDetail = react_2.memo((props) => {
+    const { isOpen, onOpen, onClose } = react_3.useDisclosure();
+    const onClickAdd = react_1.useCallback(() => onOpen(), []);
     const { id } = react_router_dom_1.useParams();
     console.log({ id });
     return (react_1.default.createElement(react_3.Wrap, { justify: "center", p: "4px", mx: { base: 4, md: 100 }, bg: "white", shadow: "md" },
@@ -94951,80 +95165,19 @@ exports.MyDataDetail = react_2.memo((props) => {
                 react_1.default.createElement(DataDetail_1.DataDetail, null))),
         react_1.default.createElement(react_3.WrapItem, { alignItems: "center" },
             react_1.default.createElement(react_3.Box, { w: "400px", p: 4 },
+                react_1.default.createElement(react_3.Box, { paddingLeft: "170px" },
+                    react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", border: "1px", borderColor: "teal.500", p: "2", alignItems: "center", w: "200px" },
+                        react_1.default.createElement(react_3.Box, { onClick: onClickAdd, color: "gray.500" }, "\u8A73\u7D30\u30C7\u30FC\u30BF\u8FFD\u52A0"),
+                        react_1.default.createElement(secButton_1.SecButton, { onClick: onClickAdd }, "\uFF0B"))),
                 react_1.default.createElement(react_3.Box, { bg: "orange.200", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.400" }, "\u98DF")),
+                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u98DF")),
                 react_1.default.createElement(react_3.Box, { bg: "cyan.700", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.400" }, "\u5BBF")),
+                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u5BBF")),
                 react_1.default.createElement(react_3.Box, { bg: "green.500", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.400" }, "\u4EA4\u901A")),
+                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u4EA4\u901A")),
                 react_1.default.createElement(react_3.Box, { bg: "pink.400", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.400" }, "\u4F53\u9A13"))))));
-});
-
-
-/***/ }),
-
-/***/ "./resources/ts/components/organisms/mydata/MyDataDetailModal.tsx":
-/*!************************************************************************!*\
-  !*** ./resources/ts/components/organisms/mydata/MyDataDetailModal.tsx ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MyDataDetailModal = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
-const ModalHeaders_1 = __webpack_require__(/*! ../layout/ModalHeaders */ "./resources/ts/components/organisms/layout/ModalHeaders.tsx");
-const PrimaryButton_1 = __webpack_require__(/*! ../../atoms/button/PrimaryButton */ "./resources/ts/components/atoms/button/PrimaryButton.tsx");
-const AddButton_1 = __webpack_require__(/*! ../../atoms/button/AddButton */ "./resources/ts/components/atoms/button/AddButton.tsx");
-exports.MyDataDetailModal = react_2.memo((props) => {
-    const { isOpen, onClose } = props;
-    const detailStyle = {
-        padding: "5px 20px",
-        margin: "10px",
-        border: "solid 1px",
-        borderColor: "#3aacad",
-        borderRadius: "2%",
-        display: "flex"
-    };
-    return (react_1.default.createElement(react_3.Modal, { isOpen: isOpen, onClose: onClose, autoFocus: false },
-        react_1.default.createElement(react_3.ModalOverlay, null,
-            react_1.default.createElement(react_3.ModalContent, { pb: 6 },
-                react_1.default.createElement(ModalHeaders_1.ModalHeaders, null, "\u8A73\u7D30\u30C7\u30FC\u30BF"),
-                react_1.default.createElement(react_3.ModalCloseButton, null),
-                react_1.default.createElement(react_3.ModalBody, { mx: 10 },
-                    react_1.default.createElement(react_3.Stack, { spacing: 4 },
-                        react_1.default.createElement(react_3.Stack, null,
-                            react_1.default.createElement(react_3.Box, null,
-                                react_1.default.createElement(react_3.Box, null,
-                                    react_1.default.createElement(react_3.FormControl, null,
-                                        react_1.default.createElement(react_3.FormLabel, null, "\u30BF\u30A4\u30C8\u30EB"),
-                                        react_1.default.createElement(react_3.Input, { value: "\u30BF\u30A4\u30C8\u30EB", isReadOnly: true })),
-                                    react_1.default.createElement(react_3.FormControl, null,
-                                        react_1.default.createElement(react_3.FormLabel, null, "\u753B\u50CF"),
-                                        react_1.default.createElement(react_3.Input, { value: "\u753B\u50CF", isReadOnly: true }))),
-                                react_1.default.createElement(react_3.Box, null,
-                                    react_1.default.createElement(react_3.FormControl, null,
-                                        react_1.default.createElement(react_3.FormLabel, null, "\u65E5\u7A0B"),
-                                        react_1.default.createElement(react_3.Input, { value: "\u65E5\u7A0B", isReadOnly: true })),
-                                    react_1.default.createElement(react_3.FormControl, null,
-                                        react_1.default.createElement(react_3.FormLabel, null, "\u7A2E\u5225"),
-                                        react_1.default.createElement(react_3.Input, { value: "\u7A2E\u5225", isReadOnly: true })),
-                                    react_1.default.createElement(react_3.FormControl, null,
-                                        react_1.default.createElement(react_3.FormLabel, null, "\u4EBA\u6570"),
-                                        react_1.default.createElement(react_3.Input, { value: "\u4EBA\u6570", isReadOnly: true }))),
-                                react_1.default.createElement(PrimaryButton_1.PrimaryButton, null, "\u7DE8\u96C6"))),
-                        react_1.default.createElement(react_3.FormControl, null,
-                            react_1.default.createElement(react_3.FormLabel, { style: detailStyle },
-                                "\u8A73\u7D30\u30C7\u30FC\u30BF\u8FFD\u52A0",
-                                react_1.default.createElement(AddButton_1.AddButton, null, "\uFF0B")))))))));
+                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u4F53\u9A13")),
+                react_1.default.createElement(AddDetailModal_1.AddDetailModal, { isOpen: isOpen, onClose: onClose })))));
 });
 
 
@@ -95095,13 +95248,13 @@ exports.ShareDataDetail = react_2.memo((props) => {
         react_1.default.createElement(react_3.WrapItem, { alignItems: "center" },
             react_1.default.createElement(react_3.Box, { w: "400px", p: 4 },
                 react_1.default.createElement(react_3.Box, { bg: "orange.200", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.400" }, "\u98DF")),
+                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u98DF")),
                 react_1.default.createElement(react_3.Box, { bg: "cyan.700", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.400" }, "\u5BBF")),
+                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u5BBF")),
                 react_1.default.createElement(react_3.Box, { bg: "green.500", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.400" }, "\u4EA4\u901A")),
+                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u4EA4\u901A")),
                 react_1.default.createElement(react_3.Box, { bg: "pink.400", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.400" }, "\u4F53\u9A13"))))));
+                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u4F53\u9A13"))))));
 });
 
 
@@ -95163,7 +95316,7 @@ const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const react_4 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const MyDataCard_1 = __webpack_require__(/*! ../organisms/mydata/MyDataCard */ "./resources/ts/components/organisms/mydata/MyDataCard.tsx");
-const MyDataDetailModal_1 = __webpack_require__(/*! ../organisms/mydata/MyDataDetailModal */ "./resources/ts/components/organisms/mydata/MyDataDetailModal.tsx");
+const AddDetailModal_1 = __webpack_require__(/*! ../organisms/mydata/AddDetailModal */ "./resources/ts/components/organisms/mydata/AddDetailModal.tsx");
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 exports.MyData = react_2.memo(() => {
     const { isOpen, onOpen, onClose } = react_3.useDisclosure();
@@ -95179,7 +95332,7 @@ exports.MyData = react_2.memo(() => {
             react_1.default.createElement(react_3.WrapItem, { key: 2, mx: "auto" },
                 react_1.default.createElement(react_router_dom_1.Link, { style: style, to: "/home/3" },
                     react_1.default.createElement(MyDataCard_1.MyDataCard, { id: 2, imageUrl: "http://source.unsplash.com/random", title: "\u4F73\u3089\u4E45", totalCosts: "10\u4E07", dates: "6/13-6/14", onClick: onClickMyData })))),
-        react_1.default.createElement(MyDataDetailModal_1.MyDataDetailModal, { isOpen: isOpen, onClose: onClose })));
+        react_1.default.createElement(AddDetailModal_1.MyDataDetailModal, { isOpen: isOpen, onClose: onClose })));
 });
 
 

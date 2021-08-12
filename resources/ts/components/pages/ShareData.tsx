@@ -2,7 +2,7 @@ import React from "react";
 import { memo, VFC } from 'react'
 import { Wrap, WrapItem, ChakraProvider, Box, Stack, Image, Text, useDisclosure, Spinner, Center } from '@chakra-ui/react';
 import { ShareDataCard } from '../organisms/sharedata/ShareDataCard';
-import { MyDataDetailModal } from '../organisms/mydata/MyDataDetailModal';
+import { MyDataDetailModal } from '../organisms/mydata/AddDetailModal';
 import { Link } from "react-router-dom";
 import { useCallback } from "react";
 
