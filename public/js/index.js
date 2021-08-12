@@ -93662,8 +93662,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

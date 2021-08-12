@@ -11,6 +11,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        $this->call(UserSeeder::class);
+        $this->call(GenderSeeder::class);
+        $this->call(CodeSeeder::class);
+        $this->call(PrefectureSeeder::class);
+
+        \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
