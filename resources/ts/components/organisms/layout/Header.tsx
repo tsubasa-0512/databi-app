@@ -27,7 +27,7 @@ export const Header: VFC= memo(() => {
         _hover={ {cursor:"pointer" }}
         onClick={onClickMyData}
         >
-        <Heading as="h1" fontSize={{ base:"md", md:"lg" }}>
+        <Heading as="h1" fontSize={{ base:"lg", md:"2xl" }}>
           DaTabi
         </Heading>
         </Flex>

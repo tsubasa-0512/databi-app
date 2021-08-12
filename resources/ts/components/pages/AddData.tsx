@@ -10,12 +10,10 @@ export const AddData: VFC = memo(() => {
  const onClickAddData = useCallback(() => onOpen(), []);
 
  const buttonStyle = {
-  width: "40px",
-  border: "solid 1.5px",
-  borderRadius: '90%' as const,
-  padding: "5px",
-  margin: "10px",
+  // padding: "5px",
+  // margin: "10px",
   color:"#ffffff",
+  fontSize:"16px",
   fontWeight: '900' as const
  };
 

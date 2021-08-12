@@ -1,8 +1,7 @@
 import React from "react";
 import { MyData } from "../components/pages/MyData"; 
-import { ShareData } from "../components/pages/ShareData";
-import { Settings } from "../components/pages/settings/Settings";
 import { Page404 } from "../components/pages/Page404";
+import { MyDataDetail } from "../components/organisms/mydata/MyDataDetail";
 
 export const myDataRoutes = [
   {
@@ -11,14 +10,11 @@ export const myDataRoutes = [
     children: <MyData />
   },
   {
-    path: "/sharedata",
-    exact: false,
-    children: <ShareData />
-  },
-  {
-    path: "/settings",
+    path: "/:id",
+    component:{ MyDataDetail },
+    key:"MyDataDetail.id",
     exact: true,
-    children: <Settings />
+    children: <MyDataDetail />
   },
   {
     path: "*",
