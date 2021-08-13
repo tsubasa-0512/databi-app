@@ -12,7 +12,7 @@ export const MyData: VFC = memo(() => {
 
   const onClickMyData = useCallback((id: number) => {
     console.log(id);
-    onOpen();}, []);
+    }, []);
   
    const style = {
       textDecoration:"none"
@@ -22,6 +22,7 @@ export const MyData: VFC = memo(() => {
     <ChakraProvider>
 
     <Wrap justify="center" p={{ base: 4, md: 10 }}>
+    <Link style={style} to={{ pathname: "/home/:id" }}>
       <WrapItem key={1} mx="auto">
         <MyDataCard 
          id={1}
@@ -32,8 +33,9 @@ export const MyData: VFC = memo(() => {
          onClick={onClickMyData}
         />
       </WrapItem>
+      </Link>
 
-        <WrapItem key={2} mx="auto">
+        {/* <WrapItem key={2} mx="auto">
           <Link style={style} to="/home/3">
           <MyDataCard 
           id={2}
@@ -56,7 +58,7 @@ export const MyData: VFC = memo(() => {
          dates="4/1-4/3"
          
         />
-      </WrapItem>
+      </WrapItem> */}
     </Wrap>
     
     

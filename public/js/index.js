@@ -94561,7 +94561,7 @@ const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 exports.SecButton = react_2.memo((props) => {
     const { children, disabled = false, loading = false, onClick } = props;
-    return (react_1.default.createElement(react_3.Button, { size: "sm", fontWeight: "light", borderRadius: "none", bg: "teal.400", color: "gray.50", _hover: { opacity: 0.8 }, disabled: disabled || loading, isLoading: loading, onClick: onClick }, children));
+    return (react_1.default.createElement(react_3.Button, { size: "xs", fontWeight: "light", borderRadius: "none", bg: "teal.400", color: "gray.50", _hover: { opacity: 0.8 }, disabled: disabled || loading, isLoading: loading, onClick: onClick }, children));
 });
 
 
@@ -94571,6 +94571,50 @@ exports.SecButton = react_2.memo((props) => {
 /*!*****************************************************************!*\
   !*** ./resources/ts/components/organisms/layout/DataDetail.tsx ***!
   \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DataDetail = void 0;
+const react_1 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+const react_2 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_3 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+// type Props = {
+//   children:ReactNode;
+// };
+exports.DataDetail = react_3.memo((props) => {
+    // const {children} = props;
+    return (react_2.default.createElement(react_2.default.Fragment, null,
+        react_2.default.createElement(react_1.Box, { display: "flex" },
+            react_2.default.createElement(react_1.Box, { w: "200px", h: "260px", p: 4, align: "center" },
+                react_2.default.createElement(react_1.Image
+                // borderRadius="full"
+                , { 
+                    // borderRadius="full"
+                    boxSize: "150px", src: "http://source.unsplash.com/random", alt: "", m: "auto" })),
+            react_2.default.createElement(react_1.Box, { w: "200px", h: "260px", p: 4 },
+                react_2.default.createElement(react_1.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
+                    react_2.default.createElement(react_1.Center, { w: "180", h: "30", color: "gray.400" }, "\u65E5\u7A0B")),
+                react_2.default.createElement(react_1.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
+                    react_2.default.createElement(react_1.Center, { w: "180", h: "30", color: "gray.400" }, "\u76EE\u7684")),
+                react_2.default.createElement(react_1.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
+                    react_2.default.createElement(react_1.Center, { w: "180", h: "30", color: "gray.400" }, "\u540C\u884C\u8005")),
+                react_2.default.createElement(react_1.Box, { bg: "teal.400", mb: "4px" },
+                    react_2.default.createElement(react_1.Center, { w: "180", h: "30", color: "gray.50" }, "\u5408\u8A08\u91D1\u984D"))))));
+});
+
+
+/***/ }),
+
+/***/ "./resources/ts/components/organisms/layout/DataDetailEdit.tsx":
+/*!*********************************************************************!*\
+  !*** ./resources/ts/components/organisms/layout/DataDetailEdit.tsx ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -94596,44 +94640,47 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataDetail = void 0;
-const react_1 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
-const react_2 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const react_3 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+exports.DataDetailEdit = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./resources/ts/components/atoms/button/secButton.tsx");
 const EditTitleModal_1 = __webpack_require__(/*! ../mydata/EditTitleModal */ "./resources/ts/components/organisms/mydata/EditTitleModal.tsx");
 // type Props = {
-//   children:ReactNode;
+//  isOpen: boolean;
+//  onClose: () => void;
+//  onOpen: () => void;
+//  onClick: () => void;
 // };
-exports.DataDetail = react_3.memo((props) => {
-    const { isOpen, onOpen, onClose } = react_1.useDisclosure();
-    const onClickEdit = react_2.useCallback(() => onOpen(), []);
+exports.DataDetailEdit = react_2.memo((props) => {
+    const { isOpen, onOpen, onClose } = react_3.useDisclosure();
+    const onClickEdit = react_1.useCallback(() => onOpen(), []);
     // const {children} = props;
-    return (react_2.default.createElement(react_2.default.Fragment, null,
-        react_2.default.createElement(react_1.Box, { display: "flex" },
-            react_2.default.createElement(react_1.Box, { w: "200px", h: "260px", p: 4, align: "center" },
-                react_2.default.createElement(react_1.Image
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(react_3.Box, { display: "flex" },
+            react_1.default.createElement(react_3.Box, { w: "200px", h: "260px", p: 4, align: "center" },
+                react_1.default.createElement(react_3.Image
                 // borderRadius="full"
                 , { 
                     // borderRadius="full"
                     boxSize: "150px", src: "http://source.unsplash.com/random", alt: "", m: "auto" })),
-            react_2.default.createElement(react_1.Box, { w: "200px", h: "260px", p: 4 },
-                react_2.default.createElement(react_1.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
-                    react_2.default.createElement(react_1.Center, { w: "180", h: "30", color: "gray.400" }, "\u65E5\u7A0B")),
-                react_2.default.createElement(react_1.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
-                    react_2.default.createElement(react_1.Center, { w: "180", h: "30", color: "gray.400" }, "\u76EE\u7684")),
-                react_2.default.createElement(react_1.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
-                    react_2.default.createElement(react_1.Center, { w: "180", h: "30", color: "gray.400" }, "\u540C\u884C\u8005")),
-                react_2.default.createElement(react_1.Box, { bg: "teal.400", mb: "4px" },
-                    react_2.default.createElement(react_1.Center, { w: "180", h: "30", color: "gray.50" }, "\u5408\u8A08\u91D1\u984D")),
-                react_2.default.createElement(react_1.Box, { margin: "25px" },
-                    react_2.default.createElement(react_1.Center
+            react_1.default.createElement(react_3.Box, { w: "200px", h: "260px", p: 4 },
+                react_1.default.createElement(react_3.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
+                    react_1.default.createElement(react_3.Center, { w: "180", h: "30", color: "gray.400" }, "\u65E5\u7A0B")),
+                react_1.default.createElement(react_3.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
+                    react_1.default.createElement(react_3.Center, { w: "180", h: "30", color: "gray.400" }, "\u76EE\u7684")),
+                react_1.default.createElement(react_3.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
+                    react_1.default.createElement(react_3.Center, { w: "180", h: "30", color: "gray.400" }, "\u540C\u884C\u8005")),
+                react_1.default.createElement(react_3.Box, { bg: "teal.400", mb: "4px" },
+                    react_1.default.createElement(react_3.Center, { w: "180", h: "30", color: "gray.50" }, "\u5408\u8A08\u91D1\u984D")),
+                react_1.default.createElement(react_3.Box, { margin: "25px" },
+                    react_1.default.createElement(react_3.Center
                     // bg="pink"
                     , { 
                         // bg="pink"
                         w: "180px", h: "30px" },
-                        react_2.default.createElement(secButton_1.SecButton, { onClick: onClickEdit }, "\u7DE8\u96C6"))))),
-        react_2.default.createElement(EditTitleModal_1.EditTitleModal, { isOpen: isOpen, onClose: onClose })));
+                        react_1.default.createElement(secButton_1.SecButton, { onClick: onClickEdit }, "\u7DE8\u96C6"))))),
+        react_1.default.createElement(EditTitleModal_1.EditTitleModal, { isOpen: isOpen, onClose: onClose })));
 });
 
 
@@ -95147,11 +95194,11 @@ const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/re
 const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
-const DataDetail_1 = __webpack_require__(/*! ../layout/DataDetail */ "./resources/ts/components/organisms/layout/DataDetail.tsx");
 const DataDetailHeaders_1 = __webpack_require__(/*! ../layout/DataDetailHeaders */ "./resources/ts/components/organisms/layout/DataDetailHeaders.tsx");
 const DataDetailTitle_1 = __webpack_require__(/*! ../layout/DataDetailTitle */ "./resources/ts/components/organisms/layout/DataDetailTitle.tsx");
 const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./resources/ts/components/atoms/button/secButton.tsx");
 const AddDetailModal_1 = __webpack_require__(/*! ./AddDetailModal */ "./resources/ts/components/organisms/mydata/AddDetailModal.tsx");
+const DataDetailEdit_1 = __webpack_require__(/*! ../layout/DataDetailEdit */ "./resources/ts/components/organisms/layout/DataDetailEdit.tsx");
 exports.MyDataDetail = react_2.memo((props) => {
     const { isOpen, onOpen, onClose } = react_3.useDisclosure();
     const onClickAdd = react_1.useCallback(() => onOpen(), []);
@@ -95162,7 +95209,7 @@ exports.MyDataDetail = react_2.memo((props) => {
             react_1.default.createElement(react_3.Box, null,
                 react_1.default.createElement(DataDetailHeaders_1.DataDetailHeaders, null, "\u30DE\u30A4\u30C7\u30FC\u30BF\u8A73\u7D30\u3000\u30C7\u30FC\u30BF\u8FFD\u52A0\u753B\u9762"),
                 react_1.default.createElement(DataDetailTitle_1.DataDetailTitle, null, "\u30BF\u30A4\u30C8\u30EB"),
-                react_1.default.createElement(DataDetail_1.DataDetail, null))),
+                react_1.default.createElement(DataDetailEdit_1.DataDetailEdit, null))),
         react_1.default.createElement(react_3.WrapItem, { alignItems: "center" },
             react_1.default.createElement(react_3.Box, { w: "400px", p: 4 },
                 react_1.default.createElement(react_3.Box, { paddingLeft: "170px" },
@@ -95316,23 +95363,20 @@ const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const react_4 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const MyDataCard_1 = __webpack_require__(/*! ../organisms/mydata/MyDataCard */ "./resources/ts/components/organisms/mydata/MyDataCard.tsx");
-const AddDetailModal_1 = __webpack_require__(/*! ../organisms/mydata/AddDetailModal */ "./resources/ts/components/organisms/mydata/AddDetailModal.tsx");
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 exports.MyData = react_2.memo(() => {
-    const { isOpen, onOpen, onClose } = react_3.useDisclosure();
+    // const { isOpen, onOpen, onClose } = useDisclosure();
     const onClickMyData = react_4.useCallback((id) => {
         console.log(id);
-        onOpen();
     }, []);
     const style = {
         textDecoration: "none"
     };
     return (react_1.default.createElement(react_3.ChakraProvider, null,
         react_1.default.createElement(react_3.Wrap, { justify: "center", p: { base: 4, md: 10 } },
-            react_1.default.createElement(react_3.WrapItem, { key: 2, mx: "auto" },
-                react_1.default.createElement(react_router_dom_1.Link, { style: style, to: "/home/3" },
-                    react_1.default.createElement(MyDataCard_1.MyDataCard, { id: 2, imageUrl: "http://source.unsplash.com/random", title: "\u4F73\u3089\u4E45", totalCosts: "10\u4E07", dates: "6/13-6/14", onClick: onClickMyData })))),
-        react_1.default.createElement(AddDetailModal_1.MyDataDetailModal, { isOpen: isOpen, onClose: onClose })));
+            react_1.default.createElement(react_router_dom_1.Link, { style: style, to: { pathname: "/home/:id" } },
+                react_1.default.createElement(react_3.WrapItem, { key: 1, mx: "auto" },
+                    react_1.default.createElement(MyDataCard_1.MyDataCard, { id: 1, imageUrl: "http://source.unsplash.com/random", title: "\u65C5\u30BF\u30A4\u30C8\u30EB", totalCosts: "\u5408\u8A08\u91D1\u984D", dates: "\u65E5\u7A0B", onClick: onClickMyData }))))));
 });
 
 
@@ -95887,8 +95931,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
