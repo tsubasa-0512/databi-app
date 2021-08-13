@@ -4,11 +4,12 @@ import { RouteComponentProps, useParams } from "react-router-dom";
 
 import { Box, Center, Flex, useDisclosure, Wrap, WrapItem } from "@chakra-ui/react";
 
-import { DataDetail } from "../layout/DataDetail";
+
 import { DataDetailHeaders } from "../layout/DataDetailHeaders";
 import { DataDetailTitle } from "../layout/DataDetailTitle";
 import { SecButton } from "../../atoms/button/secButton";
 import { AddDetailModal } from "./AddDetailModal";
+import { DataDetailEdit } from "../layout/DataDetailEdit"
 
 
 type Props = RouteComponentProps<{
@@ -34,7 +35,7 @@ export const MyDataDetail: VFC= memo((props) => {
         <DataDetailTitle>
           タイトル
         </DataDetailTitle>
-        <DataDetail></DataDetail>
+        <DataDetailEdit></DataDetailEdit>
         </Box>
       </WrapItem>
       
