@@ -1,36 +1,31 @@
 import React from "react";
 import { memo,VFC } from 'react';
 import { useCallback } from 'react';
-import { Box, useDisclosure, ChakraProvider } from '@chakra-ui/react';
+import { Box, useDisclosure, ChakraProvider, Heading } from '@chakra-ui/react';
 
 import { Profile } from './Profile';
 import { CreateMyRank } from './CreateMyRank';
 import { Others } from './Others';
+import { Link } from "react-router-dom";
+import { PrimaryButton } from "../../atoms/button/PrimaryButton";
+import { SecButton } from "../../atoms/button/secButton";
+import { LogoutButton } from "../../atoms/button/LogoutButton";
 
 
 export const Settings: VFC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const onClick = useCallback(() => onOpen(), []);
+  const csrf_token = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute("content")
 
-  // const buttonStyle = { 
-  //   width: "400px",
-  //   border: "solid 1px",
-  //   padding: "10px 100px",
-  //   margin: "10px",
-  //   borderColor: "#3aacad",
-  //   color:"#333333"
-  //  }; 
+  const Logout = () =>  {
+    document.querySelector("#logout-form").submit();
+  }
 
-  //  const linkButtonStyle = {
-  //   width: "40px",
-  //   border: "solid 1px",
-  //   padding: "5px",
-  //   margin: "10px",
-  //   borderColor: "#3aacad",
-  //   color:"#333333",
-  //   borderRadius:"8%"
-  //  };
+  const style = {
+    textDecoration:"none"
+   };
 
   return (
     <ChakraProvider>
@@ -58,6 +53,16 @@ export const Settings: VFC = memo(() => {
      isOpen={isOpen} 
      onClose={onClose}
      onOpen={onOpen} />
+
+    <Box p={10} >
+      <LogoutButton onClick={Logout}>ログアウト</LogoutButton>
+      {/* <SecButton 
+      onClick={Logout}>ログアウト</SecButton> */}
+      {/* <Link style={style} onClick={Logout}>ログアウト</Link> */}
+      <form id="logout-form" action="/logout" method="POST">
+      <input type="hidden" name="_token" value={ csrf_token } />
+      </form>
+    </Box>
     
     </Box>
 

@@ -94517,6 +94517,31 @@ exports.AddButton = react_2.memo((props) => {
 
 /***/ }),
 
+/***/ "./resources/ts/components/atoms/button/LogoutButton.tsx":
+/*!***************************************************************!*\
+  !*** ./resources/ts/components/atoms/button/LogoutButton.tsx ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.LogoutButton = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+exports.LogoutButton = react_2.memo((props) => {
+    const { children, disabled = false, loading = false, onClick } = props;
+    return (react_1.default.createElement(react_3.Button, { size: "sm", padding: "5", fontSize: { base: "md", md: "lg" }, fontWeight: "normal", borderRadius: "none", bg: "teal.400", color: "gray.50", _hover: { opacity: 0.8 }, disabled: disabled || loading, isLoading: loading, onClick: onClick }, children));
+});
+
+
+/***/ }),
+
 /***/ "./resources/ts/components/atoms/button/PrimaryButton.tsx":
 /*!****************************************************************!*\
   !*** ./resources/ts/components/atoms/button/PrimaryButton.tsx ***!
@@ -94777,31 +94802,21 @@ const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@cha
 const AddData_1 = __webpack_require__(/*! ../../pages/AddData */ "./resources/ts/components/pages/AddData.tsx");
 exports.Footer = react_2.memo(() => {
     const history = react_router_dom_1.useHistory();
-    const csrf_token = document
-        .querySelector('meta[name="csrf-token"]')
-        .getAttribute("content");
     const onClickMyData = react_1.useCallback(() => history.push("/home"), [history]);
     const onClickShareData = react_1.useCallback(() => history.push("/sharedata"), [history]);
     const onClickSettings = react_1.useCallback(() => history.push("/settings"), [history]);
-    const Logout = () => {
-        document.querySelector("#logout-form").submit();
-    };
     const style = {
         textDecoration: "none"
     };
     return (react_1.default.createElement(react_3.Flex, { minHeight: "100vh", position: "relative", paddingBottom: "60px", boxSizing: "border-box" },
         react_1.default.createElement(react_3.Flex, { as: "nav", bg: "gray", color: "gray.50", width: "100%", align: "center", justify: "center", padding: { base: 5, md: 8 }, position: "fixed", bottom: "0" },
             react_1.default.createElement(react_3.Flex, { align: "center", fontSize: { base: "sm", md: "md" } },
-                react_1.default.createElement(react_3.Box, { pr: 10 },
+                react_1.default.createElement(react_3.Box, { pr: { base: 10, md: 20 } },
                     react_1.default.createElement(AddData_1.AddData, null)),
-                react_1.default.createElement(react_3.Box, { pr: 10 },
+                react_1.default.createElement(react_3.Box, { pr: { base: 10, md: 20 } },
                     react_1.default.createElement(react_3.Link, { style: style, onClick: onClickMyData }, "\u79C1\u306E\u30C7\u30FC\u30BF")),
-                react_1.default.createElement(react_3.Box, { pr: 10 },
+                react_1.default.createElement(react_3.Box, { pr: { base: 10, md: 20 } },
                     react_1.default.createElement(react_3.Link, { style: style, onClick: onClickShareData }, "\u307F\u3093\u306A\u306E\u30C7\u30FC\u30BF")),
-                react_1.default.createElement(react_3.Box, { pr: 10 },
-                    react_1.default.createElement(react_3.Link, { style: style, onClick: Logout }, "\u30ED\u30B0\u30A2\u30A6\u30C8"),
-                    react_1.default.createElement("form", { id: "logout-form", action: "/logout", method: "POST" },
-                        react_1.default.createElement("input", { type: "hidden", name: "_token", value: csrf_token }))),
                 react_1.default.createElement(react_3.Link, { style: style, onClick: onClickSettings }, "\u8A2D\u5B9A")))));
 });
 
@@ -95693,33 +95708,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Settings = void 0;
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const react_3 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const react_4 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const Profile_1 = __webpack_require__(/*! ./Profile */ "./resources/ts/components/pages/settings/Profile.tsx");
 const CreateMyRank_1 = __webpack_require__(/*! ./CreateMyRank */ "./resources/ts/components/pages/settings/CreateMyRank.tsx");
 const Others_1 = __webpack_require__(/*! ./Others */ "./resources/ts/components/pages/settings/Others.tsx");
+const LogoutButton_1 = __webpack_require__(/*! ../../atoms/button/LogoutButton */ "./resources/ts/components/atoms/button/LogoutButton.tsx");
 exports.Settings = react_2.memo(() => {
-    const { isOpen, onOpen, onClose } = react_4.useDisclosure();
-    const onClick = react_3.useCallback(() => onOpen(), []);
-    // const buttonStyle = { 
-    //   width: "400px",
-    //   border: "solid 1px",
-    //   padding: "10px 100px",
-    //   margin: "10px",
-    //   borderColor: "#3aacad",
-    //   color:"#333333"
-    //  }; 
-    //  const linkButtonStyle = {
-    //   width: "40px",
-    //   border: "solid 1px",
-    //   padding: "5px",
-    //   margin: "10px",
-    //   borderColor: "#3aacad",
-    //   color:"#333333",
-    //   borderRadius:"8%"
-    //  };
-    return (react_1.default.createElement(react_4.ChakraProvider, null,
-        react_1.default.createElement(react_4.Box, { textAlign: "center", margin: "10px" },
+    const { isOpen, onOpen, onClose } = react_3.useDisclosure();
+    const csrf_token = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
+    const Logout = () => {
+        document.querySelector("#logout-form").submit();
+    };
+    const style = {
+        textDecoration: "none"
+    };
+    return (react_1.default.createElement(react_3.ChakraProvider, null,
+        react_1.default.createElement(react_3.Box, { textAlign: "center", margin: "10px" },
             react_1.default.createElement(Profile_1.Profile
             // id={1}
             , { 
@@ -95736,7 +95742,11 @@ exports.Settings = react_2.memo(() => {
             //  id={3}
             , { 
                 //  id={3}
-                isOpen: isOpen, onClose: onClose, onOpen: onOpen }))));
+                isOpen: isOpen, onClose: onClose, onOpen: onOpen }),
+            react_1.default.createElement(react_3.Box, { p: 10 },
+                react_1.default.createElement(LogoutButton_1.LogoutButton, { onClick: Logout }, "\u30ED\u30B0\u30A2\u30A6\u30C8"),
+                react_1.default.createElement("form", { id: "logout-form", action: "/logout", method: "POST" },
+                    react_1.default.createElement("input", { type: "hidden", name: "_token", value: csrf_token }))))));
 });
 
 
@@ -95986,8 +95996,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
