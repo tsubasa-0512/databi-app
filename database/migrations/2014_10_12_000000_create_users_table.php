@@ -21,9 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('prefecture_id');
+            $table->unsignedBigInteger('prefecture_id')->nullable();
             $table->foreign('prefecture_id')->references('id')->on('addresses');
-            $table->unsignedBigInteger('gender_id');
+            $table->unsignedBigInteger('gender_id')->nullable();
             $table->foreign('gender_id')->references('id')->on('genders');
             $table->unsignedBigInteger('code_id')->nullable();
             $table->foreign('code_id')->references('id')->on('codes');

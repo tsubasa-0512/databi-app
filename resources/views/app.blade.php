@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
+    <meta name="api-token" content="{{ session()->get('api_token') ?? '' }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Databi</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}"></link>
 </head> 
 <body>

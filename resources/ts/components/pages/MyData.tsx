@@ -1,5 +1,6 @@
-import React from "react";
-import { memo,VFC } from 'react'
+import React, {useEffect} from "react";
+import { memo,VFC } from 'react';
+import axios from 'axios';
 import { 
   Wrap, WrapItem, ChakraProvider } from '@chakra-ui/react';
 import { useCallback } from 'react';
@@ -17,6 +18,25 @@ export const MyData: VFC = memo(() => {
    const style = {
       textDecoration:"none"
      };
+
+   const api_token= document
+    .querySelector('meta[name="api-token"]')
+    .getAttribute("content");
+
+    useEffect(() => {
+      getUser()
+  },[])
+
+     const getUser = async () => {
+      console.log("URL",`/api/user?api_token=${api_token}`)
+       await axios
+      .get(`/api/user?api_token=${api_token}`)
+      .then( (res) => {
+              console.log("user",res.data)
+              }).catch(error => {
+                   console.log('Error',error.response);
+                       });
+              }
 
   return (
     <ChakraProvider>

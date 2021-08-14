@@ -94777,9 +94777,15 @@ const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@cha
 const AddData_1 = __webpack_require__(/*! ../../pages/AddData */ "./resources/ts/components/pages/AddData.tsx");
 exports.Footer = react_2.memo(() => {
     const history = react_router_dom_1.useHistory();
+    const csrf_token = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
     const onClickMyData = react_1.useCallback(() => history.push("/home"), [history]);
     const onClickShareData = react_1.useCallback(() => history.push("/sharedata"), [history]);
     const onClickSettings = react_1.useCallback(() => history.push("/settings"), [history]);
+    const Logout = () => {
+        document.querySelector("#logout-form").submit();
+    };
     const style = {
         textDecoration: "none"
     };
@@ -94792,6 +94798,10 @@ exports.Footer = react_2.memo(() => {
                     react_1.default.createElement(react_3.Link, { style: style, onClick: onClickMyData }, "\u79C1\u306E\u30C7\u30FC\u30BF")),
                 react_1.default.createElement(react_3.Box, { pr: 10 },
                     react_1.default.createElement(react_3.Link, { style: style, onClick: onClickShareData }, "\u307F\u3093\u306A\u306E\u30C7\u30FC\u30BF")),
+                react_1.default.createElement(react_3.Box, { pr: 10 },
+                    react_1.default.createElement(react_3.Link, { style: style, onClick: Logout }, "\u30ED\u30B0\u30A2\u30A6\u30C8"),
+                    react_1.default.createElement("form", { id: "logout-form", action: "/logout", method: "POST" },
+                        react_1.default.createElement("input", { type: "hidden", name: "_token", value: csrf_token }))),
                 react_1.default.createElement(react_3.Link, { style: style, onClick: onClickSettings }, "\u8A2D\u5B9A")))));
 });
 
@@ -95353,13 +95363,42 @@ exports.AddData = react_2.memo(() => {
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyData = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const react_4 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const MyDataCard_1 = __webpack_require__(/*! ../organisms/mydata/MyDataCard */ "./resources/ts/components/organisms/mydata/MyDataCard.tsx");
@@ -95372,6 +95411,22 @@ exports.MyData = react_2.memo(() => {
     const style = {
         textDecoration: "none"
     };
+    const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content");
+    react_1.useEffect(() => {
+        getUser();
+    }, []);
+    const getUser = () => __awaiter(void 0, void 0, void 0, function* () {
+        console.log("URL", `/api/user?api_token=${api_token}`);
+        yield axios_1.default
+            .get(`/api/user?api_token=${api_token}`)
+            .then((res) => {
+            console.log("user", res.data);
+        }).catch(error => {
+            console.log('Error', error.response);
+        });
+    });
     return (react_1.default.createElement(react_3.ChakraProvider, null,
         react_1.default.createElement(react_3.Wrap, { justify: "center", p: { base: 4, md: 10 } },
             react_1.default.createElement(react_router_dom_1.Link, { style: style, to: { pathname: "/home/:id" } },
@@ -95931,8 +95986,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
