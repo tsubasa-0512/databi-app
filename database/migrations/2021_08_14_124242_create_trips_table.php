@@ -34,7 +34,6 @@ class CreateTripsTable extends Migration
             $table->date('arrival');
             $table->unsignedBigInteger('purpose_id');
             $table->foreign('purpose_id')->references('id')->on('purposes');
-            $table->string('companion');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
@@ -45,6 +44,15 @@ class CreateTripsTable extends Migration
             $table->string('photo');
             $table->unsignedBigInteger('trip_id');
             $table->foreign('trip_id')->references('id')->on('trips');
+            $table->timestamps();
+        });
+
+        Schema::create('companion_trip', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('trip_id');
+            $table->foreign('trip_id')->references('id')->on('trips')->onDelete('cascade');
+            $table->unsignedBigInteger('companion_id');
+            $table->foreign('companion_id')->references('id')->on('companions')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -59,6 +67,7 @@ class CreateTripsTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('companion_trip');
         Schema::dropIfExists('photos');
         Schema::dropIfExists('trips');
         Schema::dropIfExists('purposes');
