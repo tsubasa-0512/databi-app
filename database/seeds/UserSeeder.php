@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'email' => 'test@gmail.com',
             'password' => Hash::make('password'),
             'prefecture_id' => 4,
-            'gender_id' => 2,
+            'gender' => '女性',
         ]);
     }
 }

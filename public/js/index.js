@@ -94907,6 +94907,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -94920,6 +94929,8 @@ const PrimaryButton_1 = __webpack_require__(/*! ../../atoms/button/PrimaryButton
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 exports.AddDataModal = react_2.memo((props) => {
     const { isOpen, onClose } = props;
+    const [purpose, setPurpose] = react_1.useState([]);
+    const [goWith, setGoWith] = react_1.useState([]);
     const [inputTitle, setInputTitle] = react_1.useState('');
     const [inputDeparture, setInputDeparture] = react_1.useState('');
     const [inputArrival, setInputArrival] = react_1.useState('');
@@ -94940,14 +94951,39 @@ exports.AddDataModal = react_2.memo((props) => {
             setInputGoWith([...inputGoWith, e.target.value]);
         }
     };
+    const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content");
+    const csrf_token = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
+    react_1.useEffect(() => {
+        getSelection();
+    }, []);
+    const getSelection = () => __awaiter(void 0, void 0, void 0, function* () {
+        yield axios_1.default.get("/api/trip-form-select", { api_token }, { csrf_token })
+            .then((res) => {
+            console.log(res.data['purpose']);
+            setPurpose(res.data['purpose']);
+            setGoWith(res.data['companion']);
+        })
+            .catch(error => {
+            console.log('Error', error.response);
+        });
+    });
     const addInputData = () => {
         alert("新規データ登録");
-        axios_1.default.post('/posts', {
-        // title:title
+        axios_1.default.post('/api/add-mytrip', {
+            title: inputTitle,
+            departure: inputDeparture,
+            arrival: inputArrival,
+            purpose: inputPurpose,
+            companion: inputGoWith,
+            api_token: api_token
         })
             .then(response => {
             // setInputTitle([...inputTitle, response.data])
-            console.log(response);
+            console.log(response.data);
         })
             .catch(function (error) {
             console.log(error);
@@ -94972,23 +95008,18 @@ exports.AddDataModal = react_2.memo((props) => {
                         react_1.default.createElement(react_3.Input, { type: "date", value: inputArrival, onChange: onChangeInputArrival })),
                     react_1.default.createElement(react_3.FormControl, null,
                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u76EE\u7684"),
-                        react_1.default.createElement(react_3.Select, { value: inputPurpose, onChange: onChangeInputPurpose },
-                            react_1.default.createElement("option", { value: "leisure" }, "\u30EC\u30B8\u30E3\u30FC"),
-                            react_1.default.createElement("option", { value: "business" }, "\u30D3\u30B8\u30CD\u30B9"),
-                            react_1.default.createElement("option", { value: "worcation" }, "\u30EF\u30FC\u30B1\u30FC\u30B7\u30E7\u30F3"),
-                            react_1.default.createElement("option", { value: "bleisure" }, "\u30D6\u30EC\u30B8\u30E3\u30FC"),
-                            react_1.default.createElement("option", { value: "other" }, "\u305D\u306E\u4ED6"))),
+                        react_1.default.createElement(react_3.Select, { onChange: onChangeInputPurpose }, purpose.map((p) => react_1.default.createElement("option", { value: p.id }, p.purpose)))),
                     react_1.default.createElement(react_3.FormControl, null,
                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u540C\u884C\u8005"),
                         react_1.default.createElement(react_3.Stack, { direction: "row", align: "center" },
-                            react_1.default.createElement(react_3.Checkbox, { size: "sm", value: "family", colorScheme: "teal", onChange: handleChange, checked: inputGoWith.includes('family') }, "\u914D\u5076\u8005"),
-                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "partner", onChange: handleChange, checked: inputGoWith.includes('partner') }, "\u604B\u4EBA"),
-                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "children", onChange: handleChange, checked: inputGoWith.includes('children') }, "\u5B50"),
-                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "parents", onChange: handleChange, checked: inputGoWith.includes('parents') }, "\u89AA"),
-                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "relatives", onChange: handleChange, checked: inputGoWith.includes('relatives') }, "\u89AA\u65CF"),
-                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "friends", onChange: handleChange, checked: inputGoWith.includes('friends') }, "\u53CB\u4EBA"),
-                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "coworker", onChange: handleChange, checked: inputGoWith.includes('coworker') }, "\u540C\u50DA"),
-                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "others", onChange: handleChange, checked: inputGoWith.includes('others') }, "\u305D\u306E\u4ED6"))),
+                            react_1.default.createElement(react_3.Checkbox, { size: "sm", value: "1", colorScheme: "teal", onChange: handleChange, checked: inputGoWith.includes('1') }, "\u914D\u5076\u8005"),
+                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "2", onChange: handleChange, checked: inputGoWith.includes('2') }, "\u604B\u4EBA"),
+                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "3", onChange: handleChange, checked: inputGoWith.includes('3') }, "\u5B50"),
+                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "4", onChange: handleChange, checked: inputGoWith.includes('4') }, "\u89AA"),
+                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "5", onChange: handleChange, checked: inputGoWith.includes('5') }, "\u89AA\u65CF"),
+                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "6", onChange: handleChange, checked: inputGoWith.includes('6') }, "\u53CB\u4EBA"),
+                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "7", onChange: handleChange, checked: inputGoWith.includes('7') }, "\u540C\u50DA"),
+                            react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "8", onChange: handleChange, checked: inputGoWith.includes('8') }, "\u305D\u306E\u4ED6"))),
                     react_1.default.createElement(react_3.FormControl, null,
                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u753B\u50CF"),
                         react_1.default.createElement(react_3.Input, { placeholder: "\u753B\u50CF", isReadOnly: true })))),
@@ -95996,8 +96027,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
