@@ -18,11 +18,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['api']], function () {
+    // プロフィール入力に必要な性別・都道府県項目を返す
+    Route::get('/user-form-info','UserController@userFormInfo');
     // 目的・同伴者項目を返す
     Route::get('/trip-form-select','TripsController@formSelect');
 });
 
 Route::group(['middleware' => ['auth:api']], function () {
+    // ログインユーザー情報表示
+    Route::get('/myprofile','UserController@getMyProfile');
     // ユーザーの旅行情報表示(すべて)
     Route::get('/mytrip','TripsController@myTrip');
     // ユーザーの旅行情報表示(月別)

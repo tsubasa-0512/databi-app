@@ -94961,7 +94961,7 @@ exports.AddDataModal = react_2.memo((props) => {
         getSelection();
     }, []);
     const getSelection = () => __awaiter(void 0, void 0, void 0, function* () {
-        yield axios_1.default.get("/api/trip-form-select", { api_token }, { csrf_token })
+        yield axios_1.default.get("/api/trip-form-select")
             .then((res) => {
             console.log(res.data['purpose']);
             setPurpose(res.data['purpose']);
@@ -95464,7 +95464,7 @@ exports.MyData = react_2.memo(() => {
         getUser();
     }, []);
     const getUser = () => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("URL", `/api/user?api_token=${api_token}`);
+        console.log("URL", `/api/myprofile?api_token=${api_token}`);
         yield axios_1.default
             .get(`/api/user?api_token=${api_token}`)
             .then((res) => {
@@ -95667,19 +95667,65 @@ exports.Others = react_2.memo((props) => {
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Profile = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const ModalHeaders_1 = __webpack_require__(/*! ../../organisms/layout/ModalHeaders */ "./resources/ts/components/organisms/layout/ModalHeaders.tsx");
 const AddButton_1 = __webpack_require__(/*! ../../atoms/button/AddButton */ "./resources/ts/components/atoms/button/AddButton.tsx");
+const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 exports.Profile = react_2.memo((props) => {
     const { isOpen, onClose, onOpen } = react_3.useDisclosure();
+    const [gender, setGender] = react_1.useState([]);
+    const [prefecture, setPrefecture] = react_1.useState([]);
+    react_1.useEffect(() => {
+        getMypageSelection();
+    }, []);
     const onClickProfile = react_2.useCallback(() => onOpen(), []);
+    const getMypageSelection = () => __awaiter(void 0, void 0, void 0, function* () {
+        yield axios_1.default.get("/api/user-form-info")
+            .then((res) => {
+            console.log(res.data['gender']);
+            setGender(res.data['gender']);
+            console.log(res.data['prefecture']);
+            setPrefecture(res.data['prefecture']);
+        })
+            .catch(error => {
+            console.log('Error', error.response);
+        });
+    });
     const buttonStyle = {
         width: "300px",
         border: "solid 1px",

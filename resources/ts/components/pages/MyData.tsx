@@ -28,7 +28,7 @@ export const MyData: VFC = memo(() => {
   },[])
 
      const getUser = async () => {
-      console.log("URL",`/api/user?api_token=${api_token}`)
+      console.log("URL",`/api/myprofile?api_token=${api_token}`)
        await axios
       .get(`/api/user?api_token=${api_token}`)
       .then( (res) => {

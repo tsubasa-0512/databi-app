@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useCallback, memo,VFC } from 'react';
 import { Button, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, Stack, FormControl, FormLabel, Input, ModalFooter, useDisclosure, MenuButton } from '@chakra-ui/react'; 
 import { ModalHeaders } from '../../organisms/layout/ModalHeaders';
 import { AddButton } from "../../atoms/button/AddButton";
+import axios from "axios";
 
 
 type Props = {
@@ -15,7 +16,28 @@ type Props = {
 export const Profile: VFC<Props> = memo((props) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
+  const [gender, setGender] = useState([]);
+  const [prefecture, setPrefecture] = useState([]);
+
+  useEffect(() => {
+    getMypageSelection()
+  },[])
+
   const onClickProfile = useCallback(() => onOpen(), []);
+
+  const getMypageSelection = async() =>{
+    await axios.get("/api/user-form-info")
+    .then((res)=>{   
+      console.log(res.data['gender'])
+      setGender(res.data['gender'])
+      console.log(res.data['prefecture'])
+      setPrefecture(res.data['prefecture'])
+      }
+        ) 
+    .catch(error => {
+      console.log('Error',error.response);
+      });
+  }
 
   const buttonStyle = { 
     width: "300px",

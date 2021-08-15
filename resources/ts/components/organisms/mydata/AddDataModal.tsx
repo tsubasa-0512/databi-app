@@ -63,7 +63,7 @@ export const AddDataModal: VFC<Props> = memo((props) => {
   },[])
 
   const getSelection = async() =>{
-    await axios.get("/api/trip-form-select",{api_token},{csrf_token})
+    await axios.get("/api/trip-form-select")
     .then((res)=>{   
       console.log(res.data['purpose'])
       setPurpose(res.data['purpose'])
