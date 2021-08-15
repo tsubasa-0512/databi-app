@@ -23,8 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->unsignedBigInteger('prefecture_id')->nullable();
             $table->foreign('prefecture_id')->references('id')->on('addresses');
-            $table->unsignedBigInteger('gender_id')->nullable();
-            $table->foreign('gender_id')->references('id')->on('genders');
+            $table->string('gender')->nullable();
             $table->unsignedBigInteger('code_id')->nullable();
             $table->foreign('code_id')->references('id')->on('codes');
             $table->text('link')->nullable();

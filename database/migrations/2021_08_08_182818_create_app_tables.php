@@ -21,12 +21,6 @@ class CreateAppTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('genders', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('gender');
-            $table->timestamps();
-        });
-
         Schema::create('codes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('code');
@@ -45,7 +39,6 @@ class CreateAppTables extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('prefectures');
-        Schema::dropIfExists('genders');
         Schema::dropIfExists('codes');
         Schema::enableForeignKeyConstraints();
     }

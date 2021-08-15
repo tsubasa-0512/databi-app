@@ -16,3 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['middleware' => ['api']], function () {
+    // 目的・同伴者項目を返す
+    Route::get('/trip-form-select','TripsController@formSelect');
+});
+
+Route::group(['middleware' => ['auth:api']], function () {
+    // ユーザーの旅行情報追加
+    Route::post('/add-mytrip','TripsController@addMyTrip');
+});

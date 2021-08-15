@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, useEffect } from "react";
 import { memo, VFC } from 'react'
 import { Modal, ModalContent, ModalOverlay, ModalCloseButton, ModalBody, Stack, FormControl, FormLabel, Input, ModalFooter, Select, Checkbox } from '@chakra-ui/react';
 
@@ -16,6 +16,8 @@ type Props = {
 export const AddDataModal: VFC<Props> = memo((props) => {
   const { isOpen, onClose} = props;
 
+  const [purpose, setPurpose] = useState([]);
+  const [goWith, setGoWith] = useState([]);
   const [ inputTitle, setInputTitle ] = useState<string>('');
   const [ inputDeparture, setInputDeparture ] = useState('');
   const [ inputArrival, setInputArrival ] = useState('');
@@ -48,14 +50,44 @@ export const AddDataModal: VFC<Props> = memo((props) => {
     }
   };
 
+  const api_token = document
+  .querySelector('meta[name="api-token"]')
+  .getAttribute("content")
+
+  const csrf_token = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute("content")
+
+  useEffect(() => {
+    getSelection()
+  },[])
+
+  const getSelection = async() =>{
+    await axios.get("/api/trip-form-select",{api_token},{csrf_token})
+    .then((res)=>{   
+      console.log(res.data['purpose'])
+      setPurpose(res.data['purpose'])
+      setGoWith(res.data['companion'])
+      }
+        ) 
+    .catch(error => {
+      console.log('Error',error.response);
+      });
+  }  
+
   const addInputData = () => { 
     alert("新規データ登録");
-    axios.post('/posts',{
-      // title:title
+    axios.post('/api/add-mytrip',{
+      title: inputTitle,
+      departure: inputDeparture,
+      arrival: inputArrival,
+      purpose: inputPurpose,
+      companion: inputGoWith,
+      api_token:api_token
     })
     .then(response => {
       // setInputTitle([...inputTitle, response.data])
-      console.log(response);
+      console.log(response.data);
     })
     .catch(function(error){
       console.log(error)
@@ -103,59 +135,57 @@ export const AddDataModal: VFC<Props> = memo((props) => {
               </FormControl>
               <FormControl>
                 <FormLabel fontSize="sm">目的</FormLabel>
-                <Select value={inputPurpose} onChange={onChangeInputPurpose} >
-                  <option value="leisure">レジャー</option>
-                  <option value="business">ビジネス</option>
-                  <option value="worcation">ワーケーション</option>
-                  <option value="bleisure">ブレジャー</option>
-                  <option value="other">その他</option>
+                <Select onChange={onChangeInputPurpose} >
+                  {purpose.map((p) =>
+                    <option value={p.id}>{p.purpose}</option>
+                  )}
                 </Select>
               </FormControl>
               <FormControl>
-                <FormLabel fontSize="sm">同行者</FormLabel>
-                <Stack direction="row" align="center" >
-                  <Checkbox size="sm"
-                  value="family"
-                  colorScheme="teal"
-                  onChange={handleChange}
-                  checked={ inputGoWith.includes('family') }
-                  >配偶者</Checkbox>
-                  <Checkbox size="sm" colorScheme="teal"
-                  value="partner"
-                  onChange={handleChange}
-                  checked={ inputGoWith.includes('partner') }
-                  >恋人</Checkbox>
-                  <Checkbox size="sm" colorScheme="teal" 
-                  value="children"
-                  onChange={handleChange}
-                  checked={ inputGoWith.includes('children') }
-                  >子</Checkbox>
-                  <Checkbox size="sm" colorScheme="teal"
-                  value="parents"
-                  onChange={handleChange}
-                  checked={ inputGoWith.includes('parents') }
-                  >親</Checkbox>
-                  <Checkbox size="sm" colorScheme="teal" 
-                  value="relatives"
-                  onChange={handleChange}
-                  checked={ inputGoWith.includes('relatives') }
-                  >親族</Checkbox>
-                  <Checkbox size="sm" colorScheme="teal"
-                  value="friends"
-                  onChange={handleChange}
-                  checked={ inputGoWith.includes('friends') }
-                  >友人</Checkbox>
-                  <Checkbox size="sm" colorScheme="teal"
-                  value="coworker"
-                  onChange={handleChange}
-                  checked={ inputGoWith.includes('coworker') }
-                  >同僚</Checkbox>
-                  <Checkbox size="sm" colorScheme="teal"
-                  value="others"
-                  onChange={handleChange}
-                  checked={ inputGoWith.includes('others') }
-                  >その他</Checkbox>
-                </Stack>
+                  <FormLabel fontSize="sm">同行者</FormLabel>
+                  <Stack direction="row" align="center" >
+                    <Checkbox size="sm"
+                    value="1"
+                    colorScheme="teal"
+                    onChange={handleChange}
+                    checked={ inputGoWith.includes('1') }
+                    >配偶者</Checkbox>
+                    <Checkbox size="sm" colorScheme="teal"
+                    value="2"
+                    onChange={handleChange}
+                    checked={ inputGoWith.includes('2') }
+                    >恋人</Checkbox>
+                    <Checkbox size="sm" colorScheme="teal" 
+                    value="3"
+                    onChange={handleChange}
+                    checked={ inputGoWith.includes('3') }
+                    >子</Checkbox>
+                    <Checkbox size="sm" colorScheme="teal"
+                    value="4"
+                    onChange={handleChange}
+                    checked={ inputGoWith.includes('4') }
+                    >親</Checkbox>
+                    <Checkbox size="sm" colorScheme="teal" 
+                    value="5"
+                    onChange={handleChange}
+                    checked={ inputGoWith.includes('5') }
+                    >親族</Checkbox>
+                    <Checkbox size="sm" colorScheme="teal"
+                    value="6"
+                    onChange={handleChange}
+                    checked={ inputGoWith.includes('6') }
+                    >友人</Checkbox>
+                    <Checkbox size="sm" colorScheme="teal"
+                    value="7"
+                    onChange={handleChange}
+                    checked={ inputGoWith.includes('7') }
+                    >同僚</Checkbox>
+                    <Checkbox size="sm" colorScheme="teal"
+                    value="8"
+                    onChange={handleChange}
+                    checked={ inputGoWith.includes('8') }
+                    >その他</Checkbox>
+                  </Stack>
               </FormControl>
               <FormControl>
                 <FormLabel  fontSize="sm">画像</FormLabel>
