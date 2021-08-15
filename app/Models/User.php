@@ -37,6 +37,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function gender() { 
+        return $this->belongsTo('App\Models\Gender');
+    }
+
+    public function prefecture() { 
+        return $this->belongsTo('App\Models\Prefecture');
+    }
+
     public function trips() {
         return $this->hasMany('App\Models\Trip');
     }
