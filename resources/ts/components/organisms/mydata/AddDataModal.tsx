@@ -5,6 +5,7 @@ import { Modal, ModalContent, ModalOverlay, ModalCloseButton, ModalBody, Stack, 
 import { ModalHeaders } from '../layout/ModalHeaders';
 import { PrimaryButton } from "../../atoms/button/PrimaryButton";
 import axios from "axios";
+import { Data } from "../../../types/api/data";
 
 
 
@@ -19,8 +20,8 @@ export const AddDataModal: VFC<Props> = memo((props) => {
   const [purpose, setPurpose] = useState([]);
   const [goWith, setGoWith] = useState([]);
   const [ inputTitle, setInputTitle ] = useState<string>('');
-  const [ inputDeparture, setInputDeparture ] = useState('');
-  const [ inputArrival, setInputArrival ] = useState('');
+  const [ inputDeparture, setInputDeparture ] = useState<string>('');
+  const [ inputArrival, setInputArrival ] = useState<string>('');
   const [ inputPurpose, setInputPurpose ] = useState('');
   const [ inputGoWith, setInputGoWith ] = useState('');
 
@@ -77,7 +78,7 @@ export const AddDataModal: VFC<Props> = memo((props) => {
 
   const addInputData = () => { 
     alert("新規データ登録");
-    axios.post('/api/add-mytrip',{
+    axios.post<Data>('/api/add-mytrip',{
       title: inputTitle,
       departure: inputDeparture,
       arrival: inputArrival,

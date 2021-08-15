@@ -1,5 +1,9 @@
 export type Data = {
-  id: number;
   title: string;
-  body: string;
+  departure: string;
+  arrival: string;
+  purpose: number;
+  companion: string;
+  api_token:string;
+  id: number;
 };

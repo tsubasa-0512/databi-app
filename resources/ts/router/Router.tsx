@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { VFC ,memo } from 'react'
 import { Switch, Route } from 'react-router-dom';
 
@@ -12,11 +12,13 @@ import { ShareData } from "../components/pages/ShareData";
 import { Settings } from "../components/pages/settings/Settings";
 import { shareDataRoutes } from "./ShareDataRoutes";
 
+
 export const Router: VFC = memo(() => {
+
   return (
     <Switch>
-      <Route exact path="/">
-        {/* <Login /> */}
+      <Route exact path="/login">
+        {/* <useAuth /> */}
       </Route>
       <Route path="/home" render={({ match: {url} }) => (
         <Switch>

@@ -95444,14 +95444,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyData = void 0;
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
-const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
-const react_4 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const MyDataCard_1 = __webpack_require__(/*! ../organisms/mydata/MyDataCard */ "./resources/ts/components/organisms/mydata/MyDataCard.tsx");
+const react_3 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+const react_4 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+const MyDataCard_1 = __webpack_require__(/*! ../organisms/mydata/MyDataCard */ "./resources/ts/components/organisms/mydata/MyDataCard.tsx");
 exports.MyData = react_2.memo(() => {
-    // const { isOpen, onOpen, onClose } = useDisclosure();
-    const onClickMyData = react_4.useCallback((id) => {
+    const onClickMyData = react_3.useCallback((id) => {
         console.log(id);
     }, []);
     const style = {
@@ -95465,18 +95464,17 @@ exports.MyData = react_2.memo(() => {
     }, []);
     const getUser = () => __awaiter(void 0, void 0, void 0, function* () {
         console.log("URL", `/api/myprofile?api_token=${api_token}`);
-        yield axios_1.default
-            .get(`/api/user?api_token=${api_token}`)
+        yield axios_1.default.get(`/api/user?api_token=${api_token}`)
             .then((res) => {
             console.log("user", res.data);
         }).catch(error => {
             console.log('Error', error.response);
         });
     });
-    return (react_1.default.createElement(react_3.ChakraProvider, null,
-        react_1.default.createElement(react_3.Wrap, { justify: "center", p: { base: 4, md: 10 } },
+    return (react_1.default.createElement(react_4.ChakraProvider, null,
+        react_1.default.createElement(react_4.Wrap, { justify: "center", p: { base: 4, md: 10 } },
             react_1.default.createElement(react_router_dom_1.Link, { style: style, to: { pathname: "/home/:id" } },
-                react_1.default.createElement(react_3.WrapItem, { key: 1, mx: "auto" },
+                react_1.default.createElement(react_4.WrapItem, { key: 1, mx: "auto" },
                     react_1.default.createElement(MyDataCard_1.MyDataCard, { id: 1, imageUrl: "http://source.unsplash.com/random", title: "\u65C5\u30BF\u30A4\u30C8\u30EB", totalCosts: "\u5408\u8A08\u91D1\u984D", dates: "\u65E5\u7A0B", onClick: onClickMyData }))))));
 });
 
@@ -95979,7 +95977,7 @@ const Settings_1 = __webpack_require__(/*! ../components/pages/settings/Settings
 const ShareDataRoutes_1 = __webpack_require__(/*! ./ShareDataRoutes */ "./resources/ts/router/ShareDataRoutes.tsx");
 exports.Router = react_2.memo(() => {
     return (react_1.default.createElement(react_router_dom_1.Switch, null,
-        react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/" }),
+        react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/login" }),
         react_1.default.createElement(react_router_dom_1.Route, { path: "/home", render: ({ match: { url } }) => (react_1.default.createElement(react_router_dom_1.Switch, null, MyDataRoutes_1.myDataRoutes.map((route) => (react_1.default.createElement(react_router_dom_1.Route, { key: route.path, exact: route.exact, path: `${url}${route.path}` },
                 react_1.default.createElement(HeaderLayout_1.HeaderLayout, null),
                 route.children,
@@ -96073,8 +96071,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
