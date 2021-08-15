@@ -23,6 +23,14 @@ Route::group(['middleware' => ['api']], function () {
 });
 
 Route::group(['middleware' => ['auth:api']], function () {
+    // ユーザーの旅行情報表示(すべて)
+    Route::get('/mytrip','TripsController@myTrip');
+    // ユーザーの旅行情報表示(月別)
+    Route::get('/mytrip-by-month','TripsController@myTripByMonth');
+    // ユーザーの特定の旅行情報表示
+    Route::get('/show-mytrip','TripsController@showMyTrip');
     // ユーザーの旅行情報追加
     Route::post('/add-mytrip','TripsController@addMyTrip');
+    // ユーザーの旅行情報更新
+    Route::post('/update-mytrip','TripsController@updateMyTrip');
 });
