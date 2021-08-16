@@ -95449,23 +95449,20 @@ const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_m
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 const react_4 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const MyDataCard_1 = __webpack_require__(/*! ../organisms/mydata/MyDataCard */ "./resources/ts/components/organisms/mydata/MyDataCard.tsx");
+const react_5 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const LoginUserProvider_1 = __webpack_require__(/*! ../../providers/LoginUserProvider */ "./resources/ts/providers/LoginUserProvider.tsx");
 const useLoginUser_1 = __webpack_require__(/*! ../../hooks/useLoginUser */ "./resources/ts/hooks/useLoginUser.tsx");
 // import { useMyData } from "../../hooks/useMyData";
 exports.MyData = react_2.memo(() => {
-    const { setLoginUser } = useLoginUser_1.useLoginUser();
-    // const { getData } = useMyData()
-    const onClickMyData = react_3.useCallback((id) => {
-        console.log(id);
-    }, []);
-    const style = {
-        textDecoration: "none"
-    };
+    const { loginUser } = useLoginUser_1.useLoginUser();
+    console.log(loginUser);
+    const { setLoginUser } = react_5.useContext(LoginUserProvider_1.LoginUserContext);
     const api_token = document
         .querySelector('meta[name="api-token"]')
         .getAttribute("content");
     react_1.useEffect(() => {
         getUser();
-        // getData();
+        getData();
     }, []);
     const getUser = () => __awaiter(void 0, void 0, void 0, function* () {
         console.log("URL", `/api/myprofile?api_token=${api_token}`);
@@ -95477,6 +95474,23 @@ exports.MyData = react_2.memo(() => {
             console.log('Error', error.response);
         });
     });
+    const getData = react_3.useCallback(() => {
+        axios_1.default
+            .get(`/api/mytrip?api_token=${api_token}`)
+            .then((res) => {
+            console.log("mytrip", res.data);
+        })
+            // setData{res.data})
+            .catch(error => {
+            console.log(error);
+        });
+    }, []);
+    const onClickMyData = react_3.useCallback((id) => {
+        console.log(id);
+    }, []);
+    const style = {
+        textDecoration: "none"
+    };
     return (react_1.default.createElement(react_4.ChakraProvider, null,
         react_1.default.createElement(react_4.Wrap, { justify: "center", p: { base: 4, md: 10 } },
             react_1.default.createElement(react_router_dom_1.Link, { style: style, to: { pathname: "/home/:id" } },
@@ -95545,7 +95559,10 @@ const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@cha
 const ShareDataCard_1 = __webpack_require__(/*! ../organisms/sharedata/ShareDataCard */ "./resources/ts/components/organisms/sharedata/ShareDataCard.tsx");
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 const react_4 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const useLoginUser_1 = __webpack_require__(/*! ../../hooks/useLoginUser */ "./resources/ts/hooks/useLoginUser.tsx");
 exports.ShareData = react_2.memo(() => {
+    const { loginUser } = useLoginUser_1.useLoginUser();
+    console.log(loginUser);
     const arrShareData = { id: 6, title: "title" };
     console.log(arrShareData);
     const onClickData = react_4.useCallback((id) => {

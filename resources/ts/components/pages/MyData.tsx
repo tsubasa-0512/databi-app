@@ -8,33 +8,28 @@ import {
   Wrap, WrapItem, ChakraProvider } from '@chakra-ui/react';
 import { MyDataCard } from '../organisms/mydata/MyDataCard';
 import { User } from "../../types/api/user";
+
+import { useContext } from "react";
+import { LoginUserContext } from "../../providers/LoginUserProvider";
 import { useLoginUser } from "../../hooks/useLoginUser";
+import { useState } from "react";
+import { Data } from "../../types/api/data";
 // import { useMyData } from "../../hooks/useMyData";
 
 
 export const MyData: VFC = memo(() => {
+  const { loginUser } = useLoginUser();
+  console.log(loginUser);
 
-  const { setLoginUser } = useLoginUser();
-   
-  // const { getData } = useMyData()
- 
-   
+  const { setLoginUser } = useContext(LoginUserContext);
 
-  const onClickMyData = useCallback((id: number) => {
-    console.log(id);
-    }, []);
-  
-   const style = {
-      textDecoration:"none"
-     };
-
-   const api_token= document
+  const api_token= document
     .querySelector('meta[name="api-token"]')
     .getAttribute("content");
 
     useEffect(() => {
       getUser();
-      // getData();
+      getData();
   },[])
 
      const getUser = async () => {
@@ -47,7 +42,27 @@ export const MyData: VFC = memo(() => {
               }).catch(error => { 
                    console.log('Error',error.response);
                        });
-              }
+              };
+
+      
+  const getData = useCallback(() => {
+    axios
+      .get<Array<Data>>(`/api/mytrip?api_token=${api_token}`)
+      .then((res) => {
+      console.log("mytrip",res.data)}) 
+      // setData{res.data})
+      .catch(error => {
+        console.log(error)
+      });
+  },[]);
+
+  const onClickMyData = useCallback((id: number) => {
+    console.log(id);
+    }, []);
+
+   const style = {
+      textDecoration:"none"
+     };
 
   return (
     <ChakraProvider>
