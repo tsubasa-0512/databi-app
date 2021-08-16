@@ -8,9 +8,17 @@ import {
   Wrap, WrapItem, ChakraProvider } from '@chakra-ui/react';
 import { MyDataCard } from '../organisms/mydata/MyDataCard';
 import { User } from "../../types/api/user";
+import { useLoginUser } from "../../hooks/useLoginUser";
+// import { useMyData } from "../../hooks/useMyData";
+
 
 export const MyData: VFC = memo(() => {
-  
+
+  const { setLoginUser } = useLoginUser();
+   
+  // const { getData } = useMyData()
+ 
+   
 
   const onClickMyData = useCallback((id: number) => {
     console.log(id);
@@ -25,7 +33,8 @@ export const MyData: VFC = memo(() => {
     .getAttribute("content");
 
     useEffect(() => {
-      getUser()
+      getUser();
+      // getData();
   },[])
 
      const getUser = async () => {
@@ -33,6 +42,7 @@ export const MyData: VFC = memo(() => {
        await 
        axios.get<User>(`/api/user?api_token=${api_token}`)
       .then( (res) => {
+              setLoginUser(res.data);
               console.log("user",res.data)
               }).catch(error => { 
                    console.log('Error',error.response);
@@ -54,13 +64,8 @@ export const MyData: VFC = memo(() => {
          onClick={onClickMyData}
         />
       </WrapItem>
-      </Link>
-
-        
+      </Link>  
     </Wrap>
-    
-    
-   
     </ChakraProvider>
   )
 });

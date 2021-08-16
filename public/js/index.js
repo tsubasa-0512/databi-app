@@ -94972,7 +94972,7 @@ exports.AddDataModal = react_2.memo((props) => {
         });
     });
     const addInputData = () => {
-        alert("新規データ登録");
+        alert({ inputTitle });
         axios_1.default.post('/api/add-mytrip', {
             title: inputTitle,
             departure: inputDeparture,
@@ -95449,7 +95449,11 @@ const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_m
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 const react_4 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const MyDataCard_1 = __webpack_require__(/*! ../organisms/mydata/MyDataCard */ "./resources/ts/components/organisms/mydata/MyDataCard.tsx");
+const useLoginUser_1 = __webpack_require__(/*! ../../hooks/useLoginUser */ "./resources/ts/hooks/useLoginUser.tsx");
+// import { useMyData } from "../../hooks/useMyData";
 exports.MyData = react_2.memo(() => {
+    const { setLoginUser } = useLoginUser_1.useLoginUser();
+    // const { getData } = useMyData()
     const onClickMyData = react_3.useCallback((id) => {
         console.log(id);
     }, []);
@@ -95461,11 +95465,13 @@ exports.MyData = react_2.memo(() => {
         .getAttribute("content");
     react_1.useEffect(() => {
         getUser();
+        // getData();
     }, []);
     const getUser = () => __awaiter(void 0, void 0, void 0, function* () {
         console.log("URL", `/api/myprofile?api_token=${api_token}`);
         yield axios_1.default.get(`/api/user?api_token=${api_token}`)
             .then((res) => {
+            setLoginUser(res.data);
             console.log("user", res.data);
         }).catch(error => {
             console.log('Error', error.response);
@@ -95881,6 +95887,25 @@ exports.HeaderLayout = react_2.memo((props) => {
 
 /***/ }),
 
+/***/ "./resources/ts/hooks/useLoginUser.tsx":
+/*!*********************************************!*\
+  !*** ./resources/ts/hooks/useLoginUser.tsx ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.useLoginUser = void 0;
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const LoginUserProvider_1 = __webpack_require__(/*! ../providers/LoginUserProvider */ "./resources/ts/providers/LoginUserProvider.tsx");
+const useLoginUser = () => react_1.useContext(LoginUserProvider_1.LoginUserContext);
+exports.useLoginUser = useLoginUser;
+
+
+/***/ }),
+
 /***/ "./resources/ts/index.tsx":
 /*!********************************!*\
   !*** ./resources/ts/index.tsx ***!
@@ -95906,6 +95931,34 @@ const App = () => {
             react_1.default.createElement(Router_1.Router, null))));
 };
 react_dom_1.default.render(react_1.default.createElement(App, null), document.getElementById('app'));
+
+
+/***/ }),
+
+/***/ "./resources/ts/providers/LoginUserProvider.tsx":
+/*!******************************************************!*\
+  !*** ./resources/ts/providers/LoginUserProvider.tsx ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.LoginUserProvider = exports.LoginUserContext = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const react_3 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+exports.LoginUserContext = react_3.createContext({});
+const LoginUserProvider = (props) => {
+    const { children } = props;
+    const [loginUser, setLoginUser] = react_2.useState(null);
+    return (react_1.default.createElement(exports.LoginUserContext.Provider, { value: { loginUser, setLoginUser } }, children));
+};
+exports.LoginUserProvider = LoginUserProvider;
 
 
 /***/ }),
@@ -95975,21 +96028,23 @@ const HeaderLayout_1 = __webpack_require__(/*! ../components/templates/HeaderLay
 const FooterLayout_1 = __webpack_require__(/*! ../components/templates/FooterLayout */ "./resources/ts/components/templates/FooterLayout.tsx");
 const Settings_1 = __webpack_require__(/*! ../components/pages/settings/Settings */ "./resources/ts/components/pages/settings/Settings.tsx");
 const ShareDataRoutes_1 = __webpack_require__(/*! ./ShareDataRoutes */ "./resources/ts/router/ShareDataRoutes.tsx");
+const LoginUserProvider_1 = __webpack_require__(/*! ../providers/LoginUserProvider */ "./resources/ts/providers/LoginUserProvider.tsx");
 exports.Router = react_2.memo(() => {
     return (react_1.default.createElement(react_router_dom_1.Switch, null,
         react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/login" }),
-        react_1.default.createElement(react_router_dom_1.Route, { path: "/home", render: ({ match: { url } }) => (react_1.default.createElement(react_router_dom_1.Switch, null, MyDataRoutes_1.myDataRoutes.map((route) => (react_1.default.createElement(react_router_dom_1.Route, { key: route.path, exact: route.exact, path: `${url}${route.path}` },
+        react_1.default.createElement(LoginUserProvider_1.LoginUserProvider, null,
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/home", render: ({ match: { url } }) => (react_1.default.createElement(react_router_dom_1.Switch, null, MyDataRoutes_1.myDataRoutes.map((route) => (react_1.default.createElement(react_router_dom_1.Route, { key: route.path, exact: route.exact, path: `${url}${route.path}` },
+                    react_1.default.createElement(HeaderLayout_1.HeaderLayout, null),
+                    route.children,
+                    react_1.default.createElement(FooterLayout_1.FooterLayout, null)))))) }),
+            react_1.default.createElement(react_router_dom_1.Route, { path: "/sharedata", render: ({ match: { url } }) => (react_1.default.createElement(react_router_dom_1.Switch, null, ShareDataRoutes_1.shareDataRoutes.map((route) => (react_1.default.createElement(react_router_dom_1.Route, { key: route.path, exact: route.exact, path: `${url}${route.path}` },
+                    react_1.default.createElement(HeaderLayout_1.HeaderLayout, null),
+                    route.children,
+                    react_1.default.createElement(FooterLayout_1.FooterLayout, null)))))) }),
+            react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/settings" },
                 react_1.default.createElement(HeaderLayout_1.HeaderLayout, null),
-                route.children,
-                react_1.default.createElement(FooterLayout_1.FooterLayout, null)))))) }),
-        react_1.default.createElement(react_router_dom_1.Route, { path: "/sharedata", render: ({ match: { url } }) => (react_1.default.createElement(react_router_dom_1.Switch, null, ShareDataRoutes_1.shareDataRoutes.map((route) => (react_1.default.createElement(react_router_dom_1.Route, { key: route.path, exact: route.exact, path: `${url}${route.path}` },
-                react_1.default.createElement(HeaderLayout_1.HeaderLayout, null),
-                route.children,
-                react_1.default.createElement(FooterLayout_1.FooterLayout, null)))))) }),
-        react_1.default.createElement(react_router_dom_1.Route, { exact: true, path: "/settings" },
-            react_1.default.createElement(HeaderLayout_1.HeaderLayout, null),
-            react_1.default.createElement(Settings_1.Settings, null),
-            react_1.default.createElement(FooterLayout_1.FooterLayout, null)),
+                react_1.default.createElement(Settings_1.Settings, null),
+                react_1.default.createElement(FooterLayout_1.FooterLayout, null))),
         react_1.default.createElement(react_router_dom_1.Route, { path: "*" },
             react_1.default.createElement(Page404_1.Page404, null))));
 });

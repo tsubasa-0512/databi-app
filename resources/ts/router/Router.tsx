@@ -11,6 +11,7 @@ import { MyDataDetail } from "../components/organisms/mydata/MyDataDetail";
 import { ShareData } from "../components/pages/ShareData";
 import { Settings } from "../components/pages/settings/Settings";
 import { shareDataRoutes } from "./ShareDataRoutes";
+import { LoginUserProvider } from "../providers/LoginUserProvider";
 
 
 export const Router: VFC = memo(() => {
@@ -18,8 +19,9 @@ export const Router: VFC = memo(() => {
   return (
     <Switch>
       <Route exact path="/login">
-        {/* <useAuth /> */}
+        {/* <Login /> */}
       </Route>
+      <LoginUserProvider>
       <Route path="/home" render={({ match: {url} }) => (
         <Switch>
           {myDataRoutes.map((route) => (
@@ -64,7 +66,8 @@ export const Router: VFC = memo(() => {
         </FooterLayout>
         
       </Route>
-
+      
+      </LoginUserProvider>
       <Route path="*">
         <Page404 />
       </Route>

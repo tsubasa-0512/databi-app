@@ -77,7 +77,7 @@ export const AddDataModal: VFC<Props> = memo((props) => {
   }  
 
   const addInputData = () => { 
-    alert("新規データ登録");
+    alert({inputTitle});
     axios.post<Data>('/api/add-mytrip',{
       title: inputTitle,
       departure: inputDeparture,

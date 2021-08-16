@@ -1,3 +1,4 @@
+import React from "react";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { Data } from "../types/api/data";
@@ -11,15 +12,15 @@ export const useMyData = () => {
     .querySelector('meta[name="api-token"]')
     .getAttribute("content");
 
-    useEffect(() => {
-      getData()
-  },[])
+  //   useEffect(() => {
+  //     getData()
+  // },[])
 
   const getData = useCallback(() => {
     axios
      .get<Array<Data>>(`/mytrip?api_token=${api_token}`)
      .then((res) => {
-      console.log("mytrip",res.data)}) 
+      console.log("/api/mytrip",res.data)}) 
       // setData{res.data})
      .catch(error => {
        console.log(error)
