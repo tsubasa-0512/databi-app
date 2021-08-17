@@ -26,4 +26,19 @@ class UserController extends Controller
 
         return $user;
     }
+
+    public function updateMyProfile(Request $request, User $user) {
+        $user = User::where('id', $request->user()->id)->first();
+        
+        $user->name = $request->name;
+        $user->gender_id = $request->gender_id;
+        $user->prefecture_id = $request->prefecture_id;
+        $user->age = $request->age;
+        $user->link = $request->link;
+        $user->icon = $request->icon;
+        
+        $user->save();
+
+        return $user;
+    }
 }

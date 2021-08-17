@@ -27,6 +27,8 @@ Route::group(['middleware' => ['api']], function () {
 Route::group(['middleware' => ['auth:api']], function () {
     // ログインユーザー情報表示
     Route::get('/myprofile','UserController@getMyProfile');
+    // ユーザー情報編集
+    Route::post('/update-myprofile','UserController@updateMyProfile');
     // ユーザーの旅行情報表示(すべて)
     Route::get('/mytrip','TripsController@myTrip');
     // ユーザーの旅行情報表示(月別)
@@ -37,4 +39,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/add-mytrip','TripsController@addMyTrip');
     // ユーザーの旅行情報更新
     Route::post('/update-mytrip','TripsController@updateMyTrip');
+    // ユーザーの旅行情報更新
+    Route::delete('/delete-mytrip','TripsController@deleteMyTrip');
 });

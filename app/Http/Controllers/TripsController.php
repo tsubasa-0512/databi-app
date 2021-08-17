@@ -95,4 +95,11 @@ class TripsController extends Controller
         
         return $trip;
     }
+
+    public function deleteMyTrip(Request $request, Trip $trip) {
+        $trip = Trip::where('id', $request->id)->first();
+        $trip->delete();
+
+        return '削除完了';
+    }
 }
