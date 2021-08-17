@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GenderSeeder::class);
         $this->call(CompanionSeeder::class);
         $this->call(PurposeSeeder::class);
+        $this->call(ChannelSeeder::class);
 
         \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
