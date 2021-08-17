@@ -94929,6 +94929,17 @@ const PrimaryButton_1 = __webpack_require__(/*! ../../atoms/button/PrimaryButton
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 exports.AddDataModal = react_2.memo((props) => {
     const { isOpen, onClose } = props;
+    // const [ inputMyData, setInputMyData ] = useState([ 
+    //   {
+    //     id: "",
+    //     title: "",
+    //     departure: "",
+    //     arrival: "",
+    //     purpose: "",
+    //     companion: "",
+    //     api_token: ""
+    //   },
+    // ]);
     const [purpose, setPurpose] = react_1.useState([]);
     const [goWith, setGoWith] = react_1.useState([]);
     const [inputTitle, setInputTitle] = react_1.useState('');
@@ -94936,9 +94947,9 @@ exports.AddDataModal = react_2.memo((props) => {
     const [inputArrival, setInputArrival] = react_1.useState('');
     const [inputPurpose, setInputPurpose] = react_1.useState('');
     const [inputGoWith, setInputGoWith] = react_1.useState('');
-    const [count, setCount] = react_1.useState();
-    const handleSubmit = () => {
-    };
+    // const [ count, setCount ] = useState()
+    // const handleSubmit = () {
+    // }
     const onChangeInputTitle = (e) => setInputTitle(e.target.value);
     const onChangeInputDeparture = (e) => setInputDeparture(e.target.value);
     const onChangeInputArrival = (e) => setInputArrival(e.target.value);
@@ -94972,7 +94983,7 @@ exports.AddDataModal = react_2.memo((props) => {
         });
     });
     const addInputData = () => {
-        alert({ inputTitle });
+        alert(setInputTitle);
         axios_1.default.post('/api/add-mytrip', {
             title: inputTitle,
             departure: inputDeparture,
@@ -95452,11 +95463,13 @@ const MyDataCard_1 = __webpack_require__(/*! ../organisms/mydata/MyDataCard */ "
 const react_5 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const LoginUserProvider_1 = __webpack_require__(/*! ../../providers/LoginUserProvider */ "./resources/ts/providers/LoginUserProvider.tsx");
 const useLoginUser_1 = __webpack_require__(/*! ../../hooks/useLoginUser */ "./resources/ts/hooks/useLoginUser.tsx");
+const react_6 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 // import { useMyData } from "../../hooks/useMyData";
 exports.MyData = react_2.memo(() => {
     const { loginUser } = useLoginUser_1.useLoginUser();
     console.log(loginUser);
     const { setLoginUser } = react_5.useContext(LoginUserProvider_1.LoginUserContext);
+    const [mydata, setMydata] = react_6.useState([]);
     const api_token = document
         .querySelector('meta[name="api-token"]')
         .getAttribute("content");
@@ -95478,9 +95491,9 @@ exports.MyData = react_2.memo(() => {
         axios_1.default
             .get(`/api/mytrip?api_token=${api_token}`)
             .then((res) => {
+            setMydata(res.data);
             console.log("mytrip", res.data);
         })
-            // setData{res.data})
             .catch(error => {
             console.log(error);
         });
@@ -95492,6 +95505,9 @@ exports.MyData = react_2.memo(() => {
         textDecoration: "none"
     };
     return (react_1.default.createElement(react_4.ChakraProvider, null,
+        react_1.default.createElement(react_4.Wrap, { justify: "center", p: { base: 4, md: 10 } }, mydata.map((mytrip) => (react_1.default.createElement(react_router_dom_1.Link, { style: style, to: { pathname: `/home/${mytrip.id}` } },
+            react_1.default.createElement(react_4.WrapItem, { key: mytrip.id, mx: "auto" },
+                react_1.default.createElement(MyDataCard_1.MyDataCard, { id: mytrip.id, imageUrl: "http://source.unsplash.com/random", title: mytrip.title, totalCosts: "\u5408\u8A08\u91D1\u984D", dates: mytrip.arrival, onClick: onClickMyData })))))),
         react_1.default.createElement(react_4.Wrap, { justify: "center", p: { base: 4, md: 10 } },
             react_1.default.createElement(react_router_dom_1.Link, { style: style, to: { pathname: "/home/:id" } },
                 react_1.default.createElement(react_4.WrapItem, { key: 1, mx: "auto" },

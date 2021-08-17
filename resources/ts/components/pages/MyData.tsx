@@ -23,6 +23,9 @@ export const MyData: VFC = memo(() => {
 
   const { setLoginUser } = useContext(LoginUserContext);
 
+  const [ mydata, setMydata ] = useState<Array<Data>>([]);
+
+
   const api_token= document
     .querySelector('meta[name="api-token"]')
     .getAttribute("content");
@@ -49,8 +52,9 @@ export const MyData: VFC = memo(() => {
     axios
       .get<Array<Data>>(`/api/mytrip?api_token=${api_token}`)
       .then((res) => {
-      console.log("mytrip",res.data)}) 
-      // setData{res.data})
+      setMydata(res.data);
+      console.log("mytrip",res.data)
+    }) 
       .catch(error => {
         console.log(error)
       });
@@ -67,6 +71,23 @@ export const MyData: VFC = memo(() => {
   return (
     <ChakraProvider>
 
+    <Wrap justify="center" p={{ base: 4, md: 10 }}>     
+    {mydata.map((mytrip) => (
+    <Link style={style} to={{ pathname: `/home/${mytrip.id}` }}>
+      <WrapItem key={mytrip.id} mx="auto">
+        <MyDataCard 
+         id={mytrip.id}
+         imageUrl="http://source.unsplash.com/random"
+         title={mytrip.title}
+         totalCosts="合計金額"
+         dates={mytrip.arrival}
+         onClick={onClickMyData}
+        />
+      </WrapItem>
+      </Link> 
+    ) )} 
+    </Wrap>
+
     <Wrap justify="center" p={{ base: 4, md: 10 }}>
     <Link style={style} to={{ pathname: "/home/:id" }}>
       <WrapItem key={1} mx="auto">
@@ -81,6 +102,9 @@ export const MyData: VFC = memo(() => {
       </WrapItem>
       </Link>  
     </Wrap>
+
+
+
     </ChakraProvider>
   )
 });
