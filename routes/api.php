@@ -29,16 +29,19 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/myprofile','UserController@getMyProfile');
     // ユーザー情報編集
     Route::post('/update-myprofile','UserController@updateMyProfile');
-    // ユーザーの旅行情報表示(すべて)
+
+    // ログインユーザーの旅行情報表示(すべて)
     Route::get('/mytrip','TripsController@myTrip');
-    // ユーザーの旅行情報表示(月別)
+    // ログインユーザーの旅行情報表示(月別)
     Route::get('/mytrip-by-month','TripsController@myTripByMonth');
+    // 他のユーザーの旅行情報表示(すべて)
+    Route::get('/others-trip','TripsController@othersTrip');
     // ユーザーの特定の旅行情報表示
     Route::get('/show-mytrip','TripsController@showMyTrip');
     // ユーザーの旅行情報追加
     Route::post('/add-mytrip','TripsController@addMyTrip');
     // ユーザーの旅行情報更新
     Route::post('/update-mytrip','TripsController@updateMyTrip');
-    // ユーザーの旅行情報更新
+    // ユーザーの旅行情報削除
     Route::delete('/delete-mytrip','TripsController@deleteMyTrip');
 });

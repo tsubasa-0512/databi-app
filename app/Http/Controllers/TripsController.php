@@ -42,6 +42,15 @@ class TripsController extends Controller
         return $user_trip;
     }
 
+    // 他のユーザーの旅行情報を一覧表示(すべて)
+    public function othersTrip(Request $request) {
+        $user_trip =  Trip::where('user_id', '!=', $request->user()->id)
+        ->with('purpose','companions')
+        ->get();
+
+        return $user_trip;
+    }
+
     
     // ユーザーの旅行情報追加
     public function addMyTrip(TripRequest $request, Trip $trip) {
@@ -96,6 +105,7 @@ class TripsController extends Controller
         return $trip;
     }
 
+    // ユーザーの旅行情報削除
     public function deleteMyTrip(Request $request, Trip $trip) {
         $trip = Trip::where('id', $request->id)->first();
         $trip->delete();
