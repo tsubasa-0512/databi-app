@@ -45,13 +45,20 @@ class TripsController extends Controller
     
     // ユーザーの旅行情報追加
     public function addMyTrip(TripRequest $request, Trip $trip) {
+        
         $trip->title = $request->title;
         $trip->departure = $request->departure;
         $trip->arrival = $request->arrival;
         $trip->purpose_id = $request->purpose;
         $trip->user_id = $request->user()->id;
         
-        $trip->save();
+        // try{
+        //     var_dump($request->title);
+            $trip->save(); 
+        //  }
+        //  catch(\Exception $e){
+        //     echo $e->getMessage();   
+        //  }
         
         foreach ($request->companion as $com){
             $trip->companions()->attach($com);
