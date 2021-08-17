@@ -5,9 +5,12 @@ import { ShareDataCard } from '../organisms/sharedata/ShareDataCard';
 import { MyDataDetailModal } from '../organisms/mydata/AddDetailModal';
 import { Link } from "react-router-dom";
 import { useCallback } from "react";
+import { useLoginUser } from "../../hooks/useLoginUser";
 
 
 export const ShareData: VFC = memo(() => {
+  const { loginUser } = useLoginUser();
+  console.log(loginUser);
   const arrShareData: { id: number, title:string } = { id: 6, title:"title" }; 
   console.log(arrShareData);
 

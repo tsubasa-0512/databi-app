@@ -5,7 +5,7 @@ import { Modal, ModalContent, ModalOverlay, ModalCloseButton, ModalBody, Stack, 
 import { ModalHeaders } from '../layout/ModalHeaders';
 import { PrimaryButton } from "../../atoms/button/PrimaryButton";
 import axios from "axios";
-
+import { Data } from "../../../types/api/data";
 
 
 type Props = {
@@ -16,19 +16,31 @@ type Props = {
 export const AddDataModal: VFC<Props> = memo((props) => {
   const { isOpen, onClose} = props;
 
+  // const [ inputMyData, setInputMyData ] = useState([ 
+  //   {
+  //     id: "",
+  //     title: "",
+  //     departure: "",
+  //     arrival: "",
+  //     purpose: "",
+  //     companion: "",
+  //     api_token: ""
+  //   },
+  // ]);
+
   const [purpose, setPurpose] = useState([]);
   const [goWith, setGoWith] = useState([]);
   const [ inputTitle, setInputTitle ] = useState<string>('');
-  const [ inputDeparture, setInputDeparture ] = useState('');
+  const [ inputDeparture, setInputDeparture ] = useState<string>('');
   const [ inputArrival, setInputArrival ] = useState('');
   const [ inputPurpose, setInputPurpose ] = useState('');
   const [ inputGoWith, setInputGoWith ] = useState('');
 
-  const [ count, setCount ] = useState()
+  // const [ count, setCount ] = useState()
 
-  const handleSubmit = () {
+  // const handleSubmit = () {
     
-  }
+  // }
 
   const onChangeInputTitle = (e:ChangeEvent<HTMLInputElement>) =>
   setInputTitle(e.target.value);
@@ -51,11 +63,11 @@ export const AddDataModal: VFC<Props> = memo((props) => {
   };
 
   const api_token = document
-  .querySelector('meta[name="api-token"]')
+  .querySelector<HTMLElement>('meta[name="api-token"]')
   .getAttribute("content")
 
   const csrf_token = document
-  .querySelector('meta[name="csrf-token"]')
+  .querySelector<HTMLElement>('meta[name="csrf-token"]')
   .getAttribute("content")
 
   useEffect(() => {
@@ -76,7 +88,7 @@ export const AddDataModal: VFC<Props> = memo((props) => {
   }  
 
   const addInputData = () => { 
-    alert("新規データ登録");
+    alert(setInputTitle);
     axios.post('/api/add-mytrip',{
       title: inputTitle,
       departure: inputDeparture,

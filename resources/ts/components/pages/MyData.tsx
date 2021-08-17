@@ -1,45 +1,92 @@
 import React, {useEffect} from "react";
 import { memo,VFC } from 'react';
+import { useCallback } from 'react';
+import { Link } from "react-router-dom";
 import axios from 'axios';
+
 import { 
   Wrap, WrapItem, ChakraProvider } from '@chakra-ui/react';
-import { useCallback } from 'react';
 import { MyDataCard } from '../organisms/mydata/MyDataCard';
+import { User } from "../../types/api/user";
 
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { LoginUserContext } from "../../providers/LoginUserProvider";
+import { useLoginUser } from "../../hooks/useLoginUser";
+import { useState } from "react";
+import { Data } from "../../types/api/data";
+// import { useMyData } from "../../hooks/useMyData";
+
 
 export const MyData: VFC = memo(() => {
-  // const { isOpen, onOpen, onClose } = useDisclosure();
+  const { loginUser } = useLoginUser();
+  console.log(loginUser);
 
-  const onClickMyData = useCallback((id: number) => {
-    console.log(id);
-    }, []);
-  
-   const style = {
-      textDecoration:"none"
-     };
+  const { setLoginUser } = useContext(LoginUserContext);
 
-   const api_token= document
+  const [ mydata, setMydata ] = useState<Array<Data>>([]);
+
+
+  const api_token= document
     .querySelector('meta[name="api-token"]')
     .getAttribute("content");
 
     useEffect(() => {
-      getUser()
+      getUser();
+      getData();
   },[])
 
      const getUser = async () => {
       console.log("URL",`/api/myprofile?api_token=${api_token}`)
-       await axios
-      .get(`/api/user?api_token=${api_token}`)
+       await 
+       axios.get<User>(`/api/user?api_token=${api_token}`)
       .then( (res) => {
+              setLoginUser(res.data);
               console.log("user",res.data)
-              }).catch(error => {
+              }).catch(error => { 
                    console.log('Error',error.response);
                        });
-              }
+              };
+
+      
+  const getData = useCallback(() => {
+    axios
+      .get<Array<Data>>(`/api/mytrip?api_token=${api_token}`)
+      .then((res) => {
+      setMydata(res.data);
+      console.log("mytrip",res.data)
+    }) 
+      .catch(error => {
+        console.log(error)
+      });
+  },[]);
+
+  const onClickMyData = useCallback((id: number) => {
+    console.log(id);
+    }, []);
+
+   const style = {
+      textDecoration:"none"
+     };
 
   return (
     <ChakraProvider>
+
+    <Wrap justify="center" p={{ base: 4, md: 10 }}>     
+    {mydata.map((mytrip) => (
+    <Link style={style} to={{ pathname: `/home/${mytrip.id}` }}>
+      <WrapItem key={mytrip.id} mx="auto">
+        <MyDataCard 
+         id={mytrip.id}
+         imageUrl="http://source.unsplash.com/random"
+         title={mytrip.title}
+         totalCosts="合計金額"
+         dates={mytrip.arrival}
+         onClick={onClickMyData}
+        />
+      </WrapItem>
+      </Link> 
+    ) )} 
+    </Wrap>
 
     <Wrap justify="center" p={{ base: 4, md: 10 }}>
     <Link style={style} to={{ pathname: "/home/:id" }}>
@@ -53,36 +100,11 @@ export const MyData: VFC = memo(() => {
          onClick={onClickMyData}
         />
       </WrapItem>
-      </Link>
-
-        {/* <WrapItem key={2} mx="auto">
-          <Link style={style} to="/home/3">
-          <MyDataCard 
-          id={2}
-          imageUrl="http://source.unsplash.com/random"
-          title="佳ら久"
-          totalCosts="10万"
-          dates="6/13-6/14"
-          onClick={onClickMyData}
-          />
-          </Link>
-        </WrapItem>
-     
-
-      <WrapItem key={3} mx="auto">
-        <MyDataCard 
-         id={3}
-         imageUrl="http://source.unsplash.com/random"
-         title="出雲"
-         totalCosts="なし"
-         dates="4/1-4/3"
-         
-        />
-      </WrapItem> */}
+      </Link>  
     </Wrap>
-    
-    
-   
+
+
+
     </ChakraProvider>
   )
 });
