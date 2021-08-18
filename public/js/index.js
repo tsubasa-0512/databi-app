@@ -94983,7 +94983,7 @@ exports.AddDataModal = react_2.memo((props) => {
         });
     });
     const addInputData = () => {
-        alert(setInputTitle);
+        // alert(setInputTitle);
         axios_1.default.post('/api/add-mytrip', {
             title: inputTitle,
             departure: inputDeparture,
@@ -95204,18 +95204,6 @@ const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 exports.MyDataCard = react_2.memo((props) => {
     const { id, imageUrl, title, totalCosts, dates, onClick } = props;
-    //  useEffect(() => {
-    //    const~ = db.~ => {
-    //     setData(
-    //       ~ map(() => ({
-    //         id: ,
-    //         title: ,
-    //       }))
-    //     ); 
-    //    };
-    //  });
-    //  return () => (constで定義した~）();
-    // },[]);
     return (react_1.default.createElement(react_3.Box, { w: "260px", h: "260px", bg: "white", borderRadius: "10px", shadow: "md", P: 4, _hover: { cursor: "pointer", opacity: 0.8 }, onClick: () => onClick(id) },
         react_1.default.createElement(react_3.Stack, { textAlign: "center" },
             react_1.default.createElement(react_3.Image, { borderRadius: "full", boxSize: "160px", src: "http://source.unsplash.com/random", alt: imageUrl, m: "auto" }),
@@ -95464,12 +95452,14 @@ const react_5 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
 const LoginUserProvider_1 = __webpack_require__(/*! ../../providers/LoginUserProvider */ "./resources/ts/providers/LoginUserProvider.tsx");
 const useLoginUser_1 = __webpack_require__(/*! ../../hooks/useLoginUser */ "./resources/ts/hooks/useLoginUser.tsx");
 const react_6 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const useSelectUserCard_1 = __webpack_require__(/*! ../../hooks/useSelectUserCard */ "./resources/ts/hooks/useSelectUserCard.ts");
 // import { useMyData } from "../../hooks/useMyData";
 exports.MyData = react_2.memo(() => {
     const { loginUser } = useLoginUser_1.useLoginUser();
     console.log(loginUser);
     const { setLoginUser } = react_5.useContext(LoginUserProvider_1.LoginUserContext);
-    const [mydata, setMydata] = react_6.useState([]);
+    const [userData, setUserData] = react_6.useState([]);
+    const { onSelectUserCard, selectedUserCard } = useSelectUserCard_1.useSelectUserCard();
     const api_token = document
         .querySelector('meta[name="api-token"]')
         .getAttribute("content");
@@ -95477,7 +95467,9 @@ exports.MyData = react_2.memo(() => {
         getUser();
         getData();
     }, []);
-    const getUser = () => __awaiter(void 0, void 0, void 0, function* () {
+    const getUser = 
+    //  useCallback(() => {
+    () => __awaiter(void 0, void 0, void 0, function* () {
         console.log("URL", `/api/myprofile?api_token=${api_token}`);
         yield axios_1.default.get(`/api/user?api_token=${api_token}`)
             .then((res) => {
@@ -95487,12 +95479,13 @@ exports.MyData = react_2.memo(() => {
             console.log('Error', error.response);
         });
     });
+    //  }, []); 
     const getData = react_3.useCallback(() => {
         axios_1.default
             .get(`/api/mytrip?api_token=${api_token}`)
             .then((res) => {
-            setMydata(res.data);
-            console.log("mytrip", res.data);
+            setUserData(res.data);
+            console.log("usertrip", res.data);
         })
             .catch(error => {
             console.log(error);
@@ -95500,18 +95493,16 @@ exports.MyData = react_2.memo(() => {
     }, []);
     const onClickMyData = react_3.useCallback((id) => {
         console.log(id);
+        onSelectUserCard({ id, userData });
+        console.log("欲しいデータ", selectedUserCard);
     }, []);
     const style = {
         textDecoration: "none"
     };
     return (react_1.default.createElement(react_4.ChakraProvider, null,
-        react_1.default.createElement(react_4.Wrap, { justify: "center", p: { base: 4, md: 10 } }, mydata.map((mytrip) => (react_1.default.createElement(react_router_dom_1.Link, { style: style, to: { pathname: `/home/${mytrip.id}` } },
-            react_1.default.createElement(react_4.WrapItem, { key: mytrip.id, mx: "auto" },
-                react_1.default.createElement(MyDataCard_1.MyDataCard, { id: mytrip.id, imageUrl: "http://source.unsplash.com/random", title: mytrip.title, totalCosts: "\u5408\u8A08\u91D1\u984D", dates: mytrip.arrival, onClick: onClickMyData })))))),
-        react_1.default.createElement(react_4.Wrap, { justify: "center", p: { base: 4, md: 10 } },
-            react_1.default.createElement(react_router_dom_1.Link, { style: style, to: { pathname: "/home/:id" } },
-                react_1.default.createElement(react_4.WrapItem, { key: 1, mx: "auto" },
-                    react_1.default.createElement(MyDataCard_1.MyDataCard, { id: 1, imageUrl: "http://source.unsplash.com/random", title: "\u65C5\u30BF\u30A4\u30C8\u30EB", totalCosts: "\u5408\u8A08\u91D1\u984D", dates: "\u65E5\u7A0B", onClick: onClickMyData }))))));
+        react_1.default.createElement(react_4.Wrap, { justify: "center", p: { base: 4, md: 10 } }, userData.map((userTrip) => (react_1.default.createElement(react_router_dom_1.Link, { style: style, to: { pathname: `/home/${userTrip.id}` } },
+            react_1.default.createElement(react_4.WrapItem, { key: userTrip.id, mx: "auto" },
+                react_1.default.createElement(MyDataCard_1.MyDataCard, { id: userTrip.id, imageUrl: "http://source.unsplash.com/random", title: userTrip.title, totalCosts: "\u5408\u8A08\u91D1\u984D", dates: `${userTrip.departure}→${userTrip.arrival}`, onClick: onClickMyData }))))))));
 });
 
 
@@ -95935,6 +95926,32 @@ const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
 const LoginUserProvider_1 = __webpack_require__(/*! ../providers/LoginUserProvider */ "./resources/ts/providers/LoginUserProvider.tsx");
 const useLoginUser = () => react_1.useContext(LoginUserProvider_1.LoginUserContext);
 exports.useLoginUser = useLoginUser;
+
+
+/***/ }),
+
+/***/ "./resources/ts/hooks/useSelectUserCard.ts":
+/*!*************************************************!*\
+  !*** ./resources/ts/hooks/useSelectUserCard.ts ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.useSelectUserCard = void 0;
+const react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const useSelectUserCard = () => {
+    const [selectedUserCard, setSelectedUserCard] = react_1.useState(null);
+    const onSelectUserCard = react_1.useCallback((props) => {
+        const { id, userData } = props;
+        const targetUserCard = userData.find((userData) => userData.id === id);
+        setSelectedUserCard(targetUserCard !== null && targetUserCard !== void 0 ? targetUserCard : null);
+    }, []);
+    return { onSelectUserCard, selectedUserCard };
+};
+exports.useSelectUserCard = useSelectUserCard;
 
 
 /***/ }),

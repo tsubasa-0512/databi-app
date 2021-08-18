@@ -5,8 +5,8 @@ import { Data } from "../types/api/data";
 
 
 export const useMyData = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<Array<Data>>();
+  // const [loading, setLoading] = useState<boolean>(false);
+  const [mydata, setMydata] = useState<Array<Data>>();
 
   const api_token= document
     .querySelector('meta[name="api-token"]')
@@ -20,13 +20,13 @@ export const useMyData = () => {
     axios
      .get<Array<Data>>(`/mytrip?api_token=${api_token}`)
      .then((res) => {
-      console.log("/api/mytrip",res.data)}) 
-      // setData{res.data})
+      setMydata(res.data);
+      console.log("mytrip",res.data)}) 
      .catch(error => {
        console.log(error)
      });
   },[]);
 
-  return { getData, loading, data };
+  return { getData, mydata };
 
 };

@@ -16,21 +16,6 @@ type Props = {
 export const MyDataCard: VFC<Props> = memo((props) => {
   const { id, imageUrl, title, totalCosts, dates, onClick } = props;
 
-  //  useEffect(() => {
-  //    const~ = db.~ => {
-  //     setData(
-  //       ~ map(() => ({
-  //         id: ,
-  //         title: ,
-  //       }))
-  //     ); 
-  //    };
-  //  });
-
-  //  return () => (constで定義した~）();
-  // },[]);
-
-
   return (
     <Box
           w="260px"
