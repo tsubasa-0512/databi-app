@@ -16,18 +16,15 @@ import { useState } from "react";
 import { Data } from "../../types/api/data";
 import { useSelectUserCard } from "../../hooks/useSelectUserCard";
 
-// import { useMyData } from "../../hooks/useMyData";
-
 
 export const MyData: VFC = memo(() => {
-  const { loginUser } = useLoginUser();
-  console.log(loginUser);
-  const { setLoginUser } = useContext(LoginUserContext);
+  const { setLoginUser } = useLoginUser();
+  console.log(setLoginUser);
+  // const { setLoginUser } = useContext(LoginUserContext);
 
   const [ userData, setUserData ] = useState<Array<Data>>([]);
   
-  const { onSelectUserCard, selectedUserCard } = useSelectUserCard();
-  
+  // const { onSelectUserCard, selectedUserCard } = useSelectUserCard(); 
 
   const api_token= document
     .querySelector('meta[name="api-token"]')
@@ -60,18 +57,12 @@ export const MyData: VFC = memo(() => {
       .then((res) => {
       setUserData(res.data);
       console.log("usertrip",res.data)
+      console.log("できるかな？",setUserData)
     }) 
       .catch(error => {
         console.log(error)
       });
   },[]);
-
-
-  const onClickMyData = useCallback((id: number) => {
-    console.log(id);
-    onSelectUserCard({ id, userData })
-    console.log("欲しいデータ",selectedUserCard);
-    }, []);
 
    const style = {
       textDecoration:"none"
@@ -90,7 +81,7 @@ export const MyData: VFC = memo(() => {
          title={userTrip.title}
          totalCosts="合計金額"
          dates={`${userTrip.departure}→${userTrip.arrival}`}
-         onClick={onClickMyData}
+        //  onClick={onClickMyData}
         />
       </WrapItem>
       </Link> 
