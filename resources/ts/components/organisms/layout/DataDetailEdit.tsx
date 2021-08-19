@@ -6,14 +6,20 @@ import { EditTitleModal } from "../mydata/EditTitleModal";
 
 
 
-// type Props = {
+type Props = {
+  dates: string;
+  purpose: number;
+  companions: string; 
+  cost: string;
+  imageUrl: string;
 //  isOpen: boolean;
 //  onClose: () => void;
 //  onOpen: () => void;
 //  onClick: () => void;
-// };
+};
 
-export const DataDetailEdit: VFC= memo((props) => {
+export const DataDetailEdit: VFC<Props>= memo((props) => {
+  const { dates, purpose, companions, cost, imageUrl } = props;
   const { isOpen, onOpen, onClose} = useDisclosure();
   const onClickEdit = useCallback(() => onOpen(), []);
 
@@ -33,7 +39,7 @@ export const DataDetailEdit: VFC= memo((props) => {
         // borderRadius="full"
         boxSize="150px"
         src="http://source.unsplash.com/random"
-        alt=""
+        alt={imageUrl}
         m="auto"
       />
       </Box>
@@ -45,13 +51,13 @@ export const DataDetailEdit: VFC= memo((props) => {
       >
 
       <Box border="1px" borderColor="teal.400" mb="5px">
-      <Center w="180" h="30" color="gray.400">日程</Center></Box>
+      <Center w="180" h="30" color="gray.400">{dates}</Center></Box>
       <Box border="1px" borderColor="teal.400" mb="5px">
-      <Center w="180" h="30" color="gray.400">目的</Center></Box>
+      <Center w="180" h="30" color="gray.400">{purpose}目的</Center></Box>
       <Box border="1px" borderColor="teal.400" mb="5px">
-      <Center w="180" h="30" color="gray.400">同行者</Center></Box>
+      <Center w="180" h="30" color="gray.400">{companions}同行者</Center></Box>
       <Box bg="teal.400" mb="4px">
-      <Center w="180" h="30" color="gray.50">合計金額</Center></Box>
+      <Center w="180" h="30" color="gray.50">{cost}</Center></Box>
       <Box margin="25px">
       <Center 
         // bg="pink"

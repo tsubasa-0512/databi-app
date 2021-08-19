@@ -10,26 +10,11 @@ type Props = {
   totalCosts: string;
   dates: string;
   
-  onClick: (id: number) => void;
+  // onClick: (id: number) => void;
 };
 
 export const MyDataCard: VFC<Props> = memo((props) => {
-  const { id, imageUrl, title, totalCosts, dates, onClick } = props;
-
-  //  useEffect(() => {
-  //    const~ = db.~ => {
-  //     setData(
-  //       ~ map(() => ({
-  //         id: ,
-  //         title: ,
-  //       }))
-  //     ); 
-  //    };
-  //  });
-
-  //  return () => (constで定義した~）();
-  // },[]);
-
+  const { id, imageUrl, title, totalCosts, dates } = props;
 
   return (
     <Box
@@ -40,7 +25,7 @@ export const MyDataCard: VFC<Props> = memo((props) => {
           shadow="md"
           P={4}
           _hover={{ cursor:"pointer", opacity:0.8 }}
-          onClick={() => onClick(id)}
+          // onClick={() => onClick(id)}
           >
           <Stack textAlign="center">
             {/* <Text fontSize="sm" color="gray">

@@ -88,7 +88,7 @@ export const AddDataModal: VFC<Props> = memo((props) => {
   }  
 
   const addInputData = () => { 
-    alert(setInputTitle);
+    // alert(setInputTitle);
     axios.post('/api/add-mytrip',{
       title: inputTitle,
       departure: inputDeparture,

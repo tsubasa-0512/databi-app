@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { memo,VFC } from 'react';
 import { RouteComponentProps, useParams } from "react-router-dom";
 
@@ -10,6 +10,9 @@ import { DataDetailTitle } from "../layout/DataDetailTitle";
 import { SecButton } from "../../atoms/button/secButton";
 import { AddDetailModal } from "./AddDetailModal";
 import { DataDetailEdit } from "../layout/DataDetailEdit"
+import { useMyData } from "../../../hooks/useMyData";
+import { Data } from "../../../types/api/data";
+import Axios from "axios";
 
 
 type Props = RouteComponentProps<{
@@ -24,20 +27,55 @@ export const MyDataDetail: VFC= memo((props) => {
   const { id } = useParams();
   console.log({id});
 
+  const [ userData, setUserData ] = useState<Array<Data>>([]);
+
+  const api_token= document
+    .querySelector('meta[name="api-token"]')
+    .getAttribute("content");
+
+    
+  useEffect(() => {
+    getData();
+    },[])
+
+    const getData = useCallback(() => {
+      console.log("user取れる？",api_token)
+      Axios
+        // .get<Array<Data>>(`/api/mytrip?api_token=${api_token},"/api/show-mytrip?id=2"`)
+        .get<Array<Data>>(`/api/show-mytrip?api_token=${api_token}&id=${id}`)
+        .then((res) => {
+        setUserData(res.data);
+        console.log("usertrip",res.data)
+      }) 
+        .catch(error => {
+          console.log(error)
+        });
+    },[]);
+  
+
 
   return (
     <Wrap justify="center" p="4px" mx={{ base: 4, md: 100 }} bg="white" shadow="md">
-      <WrapItem mx="auto">
+      {userData.map((userTrip) => (
+      <WrapItem key={userTrip.id} mx="auto">
         <Box>
         <DataDetailHeaders>
           マイデータ詳細　データ追加画面
         </DataDetailHeaders>
         <DataDetailTitle>
-          タイトル
+        {userTrip.title}
         </DataDetailTitle>
-        <DataDetailEdit></DataDetailEdit>
+        <DataDetailEdit
+         imageUrl="http://source.unsplash.com/random"
+         dates={`${userTrip.departure}${userTrip.arrival}`}
+        // purpose={userTrip.purpose}
+        // companions={userTrip.companions}
+         cost="金額"
+         
+        />
         </Box>
       </WrapItem>
+      ) )}
       
       <WrapItem alignItems="center">
       <Box w="400px"
