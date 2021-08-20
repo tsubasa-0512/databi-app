@@ -15,25 +15,31 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             [
                 'id' => 1,
-                'category' => '宿泊',
+                'category' => '飲食',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
             ],
             [
                 'id' => 2,
-                'category' => '食事',
+                'category' => '宿泊',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
             ],
             [
                 'id' => 3,
-                'category' => '体験',
+                'category' => '交通',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
             ],
             [
                 'id' => 4,
-                'category' => '交通',
+                'category' => '体験',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime(),
+            ],
+            [
+                'id' => 5,
+                'category' => 'その他',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime(),
             ],
