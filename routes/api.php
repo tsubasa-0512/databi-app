@@ -44,4 +44,10 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/update-mytrip','TripsController@updateMyTrip');
     // ユーザーの旅行情報削除
     Route::delete('/delete-mytrip','TripsController@deleteMyTrip');
+    
+    // ログインユーザーの旅行情報詳細追加
+    Route::get('/get-myitinerary','ItinerariesController@getMyItinerary');
+    // ログインユーザーの旅行情報詳細追加
+    Route::post('/add-myitinerary','ItinerariesController@addMyItinerary');
+
 });

@@ -56,32 +56,28 @@ class CreateTripsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('foods', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('when')->nullable();
-            $table->string('restaurant')->nullable();
-            $table->text('comment')->nullable();
-            $table->integer('bill')->nullable();
-            $table->unsignedBigInteger('trip_id');
-            $table->foreign('trip_id')->references('id')->on('trips');
-            $table->timestamps();
-        });
-
         Schema::create('channels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('channel');
             $table->timestamps();
         });
 
-        Schema::create('hotels', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('type_id')->nullable();
-            $table->foreign('type_id')->references('id')->on('types');
-            $table->string('hotel')->nullable();
+            $table->string('category');
+            $table->timestamps();
+        });
+
+        Schema::create('itineraries', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->string('title');
             $table->text('comment')->nullable();
             $table->integer('bill')->nullable();
             $table->unsignedBigInteger('channel_id')->nullable();
             $table->foreign('channel_id')->references('id')->on('channels');
+            $table->text('link')->nullable();
             $table->unsignedBigInteger('trip_id');
             $table->foreign('trip_id')->references('id')->on('trips');
             $table->timestamps();
@@ -98,9 +94,9 @@ class CreateTripsTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('hotels');
+        Schema::dropIfExists('itineraries');
+        Schema::dropIfExists('categories');
         Schema::dropIfExists('channels');
-        Schema::dropIfExists('foods');
         Schema::dropIfExists('companion_trip');
         Schema::dropIfExists('photos');
         Schema::dropIfExists('trips');

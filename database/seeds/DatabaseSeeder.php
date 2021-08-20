@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CompanionSeeder::class);
         $this->call(PurposeSeeder::class);
         $this->call(ChannelSeeder::class);
+        $this->call(CategorySeeder::class);
 
         \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }

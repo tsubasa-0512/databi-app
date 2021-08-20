@@ -24,7 +24,7 @@ class TripsController extends Controller
     // ユーザーの旅行情報を一覧表示
     public function myTrip(Request $request) {
         $user_trip =  Trip::where('user_id', $request->user()->id)
-        ->with('purpose','companions')
+        ->with('purpose:id,purpose','companions:id,companion')
         ->get();
 
         return $user_trip;
@@ -35,7 +35,7 @@ class TripsController extends Controller
         $month = $request->month;
 
         $user_trip =  Trip::where('user_id', $request->user()->id)
-        ->with('purpose','companions')
+        ->with('purpose:id,purpose','companions:id,companion')
         ->whereMonth('created_at', $month)
         ->get();
 
@@ -45,7 +45,7 @@ class TripsController extends Controller
     // 他のユーザーの旅行情報を一覧表示(すべて)
     public function othersTrip(Request $request) {
         $user_trip =  Trip::where('user_id', '!=', $request->user()->id)
-        ->with('purpose','companions')
+        ->with('purpose:id,purpose','companions:id,companion')
         ->get();
 
         return $user_trip;
@@ -80,7 +80,7 @@ class TripsController extends Controller
     public function showMyTrip(Request $request) {
 
         $user_trip =  Trip::where('id', $request->id)
-        ->with('purpose','companions')
+        ->with('purpose:id,purpose','companions:id,companion')
         ->get();
 
         return $user_trip;
