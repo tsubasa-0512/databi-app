@@ -20,8 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['api']], function () {
     // プロフィール入力に必要な性別・都道府県項目を返す
     Route::get('/user-form-info','UserController@userFormInfo');
-    // 目的・同伴者項目を返す
+    // 旅行情報入力に必要な目的・同伴者項目を返す
     Route::get('/trip-form-select','TripsController@formSelect');
+    // 旅行情報詳細入力に必要なカテゴリ・チャネル項目を返す
+    Route::get('/itinerary-form-select','ItinerariesController@itineraryFormSelect');
 });
 
 Route::group(['middleware' => ['auth:api']], function () {
@@ -45,9 +47,14 @@ Route::group(['middleware' => ['auth:api']], function () {
     // ユーザーの旅行情報削除
     Route::delete('/delete-mytrip','TripsController@deleteMyTrip');
     
-    // ログインユーザーの旅行情報詳細追加
+    // ログインユーザーの該当旅行情報詳細表示
+    Route::get('/get-myitinerary-all','ItinerariesController@getMyItineraryAll');
+    // ログインユーザーの該当旅行情報詳細表示（指定したカテゴリ毎）
     Route::get('/get-myitinerary','ItinerariesController@getMyItinerary');
-    // ログインユーザーの旅行情報詳細追加
+    // ログインユーザーの該当旅行情報詳細追加
     Route::post('/add-myitinerary','ItinerariesController@addMyItinerary');
-
+    // ログインユーザーの該当旅行情報詳細編集
+    Route::post('/update-myitinerary','ItinerariesController@updateMyItinerary');
+    // ログインユーザーの該当旅行情報削除
+    Route::delete('/delete-myitinerary','ItinerariesController@deleteMyItinerary');
 });
