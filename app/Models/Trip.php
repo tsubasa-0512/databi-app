@@ -13,4 +13,8 @@ class Trip extends Model
     public function companions() { 
         return $this->belongsToMany('App\Models\Companion')->withTimestamps();   
     }
+
+    public function itineraries() { 
+        return $this->hasMany('App\Models\Itinerary');
+    }
 }
