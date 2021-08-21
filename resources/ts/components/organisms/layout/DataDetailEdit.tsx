@@ -1,12 +1,17 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { memo,VFC } from 'react'
 import { Box, Center, Image, useDisclosure } from "@chakra-ui/react";
 import { SecButton } from "../../atoms/button/secButton";
 import { EditTitleModal } from "../mydata/EditTitleModal";
+import { useSelectUserTrip } from "../../../hooks/useSelectUserTrip";
+import { Data } from "../../../types/api/data";
+import Axios from "axios";
 
 
 
 type Props = {
+  id: number;
+  title: string;
   dates: string;
   purpose: number;
   companions: string; 
@@ -15,14 +20,50 @@ type Props = {
 //  isOpen: boolean;
 //  onClose: () => void;
 //  onOpen: () => void;
-//  onClick: () => void;
+ onClick: (id: number) => void;
 };
 
 export const DataDetailEdit: VFC<Props>= memo((props) => {
-  const { dates, purpose, companions, cost, imageUrl } = props;
-  const { isOpen, onOpen, onClose} = useDisclosure();
-  const onClickEdit = useCallback(() => onOpen(), []);
+  const { id, title, dates, purpose, companions, cost, imageUrl, onClick } = props;
 
+  const [ userData, setUserData ] = useState<Array<Data>>([]);
+ 
+  const [ selectedUserTrip, setSelectedUserTrip ] = useState<Data | null>(null);
+
+  const api_token= document
+    .querySelector('meta[name="api-token"]')
+    .getAttribute("content");
+
+    useEffect(() => {
+      getData();
+  },[])
+
+  const getData = useCallback(() => {
+    Axios
+      .get<Array<Data>>(`/api/mytrip?api_token=${api_token}`)
+      .then((res) => {
+      setUserData(res.data);
+      console.log("usertrip",res.data)
+      console.log("できるかな？",setUserData)
+    }) 
+      .catch(error => {
+        console.log(error)
+      });
+  },[]);
+
+  const { isOpen, onOpen, onClose} = useDisclosure();
+
+
+  const onClickEdit = useCallback((id: number, userData:any ) =>{
+   console.log("確認だよOK",id);
+   const targetUserTrip = userData.find((data) => data.id === id );
+    console.log("保持したい旅行データ",targetUserTrip);
+    setSelectedUserTrip(targetUserTrip ?? null);
+
+   onOpen();}, []);
+
+
+   
   
   // const {children} = props;
   
@@ -64,7 +105,7 @@ export const DataDetailEdit: VFC<Props>= memo((props) => {
         w="180px"
         h="30px"
         >
-        <SecButton onClick={onClickEdit}>編集</SecButton>
+        <SecButton onClick={() => onClickEdit(id,userData)}>編集</SecButton>
         {/* <Button size="xs">編集</Button>
         <Button size="sm">編集</Button> */}
       </Center>
@@ -72,7 +113,7 @@ export const DataDetailEdit: VFC<Props>= memo((props) => {
       </Box>
 
       </Box>
-      <EditTitleModal isOpen={isOpen} onClose={onClose} />
+      <EditTitleModal data={selectedUserTrip} isOpen={isOpen} onClose={onClose} />
   </>
   )
 });
