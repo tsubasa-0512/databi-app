@@ -20,10 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['api']], function () {
     // プロフィール入力に必要な性別・都道府県項目を返す
     Route::get('/user-form-info','UserController@userFormInfo');
+
     // 旅行情報入力に必要な目的・同伴者項目を返す
     Route::get('/trip-form-select','TripsController@formSelect');
     // 旅行情報詳細入力に必要なカテゴリ・チャネル項目を返す
     Route::get('/itinerary-form-select','ItinerariesController@itineraryFormSelect');
+    
+    // デフォルトのランキング一覧を返す
+    Route::get('/default-ranking','RankingsController@getDefaultRanking');
 });
 
 Route::group(['middleware' => ['auth:api']], function () {
@@ -57,4 +61,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/update-myitinerary','ItinerariesController@updateMyItinerary');
     // ログインユーザーの該当旅行情報削除
     Route::delete('/delete-myitinerary','ItinerariesController@deleteMyItinerary');
+
+    // ログインユーザーのマイランキング一覧表示
+    Route::get('/get-myranking','RankingsController@getMyRanking');
+    // マイランキング新規作成
+    Route::post('/add-myranking','RankingsController@addMyRanking');
 });
