@@ -83,6 +83,31 @@ class CreateTripsTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('default_rankings', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title');
+            $table->timestamps();
+        });
+
+        Schema::create('rankings', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
+
+        Schema::create('itinerary_ranking', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('ranking_id');
+            $table->foreign('ranking_id')->references('id')->on('rankings')->onDelete('cascade');
+            $table->unsignedBigInteger('itinerary_id');
+            $table->foreign('itinerary_id')->references('id')->on('itineraries')->onDelete('cascade');
+            $table->unsignedBigInteger('trip_id');
+            $table->foreign('trip_id')->references('id')->on('trips');
+            $table->timestamps();
+        });
+
         Schema::enableForeignKeyConstraints();
     }
 
@@ -94,6 +119,9 @@ class CreateTripsTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('itinerary_ranking');
+        Schema::dropIfExists('rankings');
+        Schema::dropIfExists('default_rankings');
         Schema::dropIfExists('itineraries');
         Schema::dropIfExists('categories');
         Schema::dropIfExists('channels');
