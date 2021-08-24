@@ -41,7 +41,6 @@ export const MyDataDetail: VFC= memo((props) => {
     const getData = useCallback(() => {
       console.log("user取れる？",api_token)
       Axios
-        // .get<Array<Data>>(`/api/mytrip?api_token=${api_token},"/api/show-mytrip?id=2"`)
         .get<Array<Data>>(`/api/show-mytrip?api_token=${api_token}&id=${id}`)
         .then((res) => {
         setUserData(res.data);
@@ -66,12 +65,12 @@ export const MyDataDetail: VFC= memo((props) => {
         {userTrip.title}
         </DataDetailTitle>
         <DataDetailEdit
+         id={userTrip.id}
          imageUrl="http://source.unsplash.com/random"
          dates={`${userTrip.departure}${userTrip.arrival}`}
         // purpose={userTrip.purpose}
         // companions={userTrip.companions}
          cost="金額"
-         
         />
         </Box>
       </WrapItem>

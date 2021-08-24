@@ -5,14 +5,16 @@ import {
 import { ModalHeaders } from '../layout/ModalHeaders';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import { SecButton } from "../../atoms/button/secButton";
+import { Data } from "../../../types/api/data";
 
 type Props = {
   isOpen: boolean
   onClose: () => void;
+  data: Data | null;
 };
 
 export const EditTitleModal: VFC<Props> = memo((props) => {
-  const { isOpen, onClose } = props;
+  const { data, isOpen, onClose } = props;
 
   const onClickUpdate = () => {
     alert("更新されました");
@@ -32,9 +34,9 @@ export const EditTitleModal: VFC<Props> = memo((props) => {
               <FormControl>
                 <FormLabel fontSize="sm">タイトル</FormLabel>
                 <Input 
-                placeholder="タイトル" 
-                type="text" 
-                // value={inputTitle} 
+                // placeholder="タイトル" 
+                // type="text" 
+                value={data?.title} 
                 // onChange={onChangeInputTitle} 
                 />
               </FormControl>
@@ -49,7 +51,7 @@ export const EditTitleModal: VFC<Props> = memo((props) => {
                 <FormLabel fontSize="sm">出発日</FormLabel>
                 <Input 
                   type="date" 
-                  // value={inputDeparture} 
+                  value={data?.departure} 
                   // onChange={onChangeInputDeparture}
                   />
               </FormControl>
@@ -57,7 +59,7 @@ export const EditTitleModal: VFC<Props> = memo((props) => {
                 <FormLabel fontSize="sm">帰宅日</FormLabel>
                 <Input 
                   type="date"   
-                  // value={inputArrival} 
+                  value={data?.arrival} 
                   // onChange={onChangeInputArrival}
                  />
               </FormControl>

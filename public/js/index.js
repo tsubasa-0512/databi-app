@@ -94664,6 +94664,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataDetailEdit = void 0;
 const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
@@ -94671,10 +94674,37 @@ const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./resources/ts/components/atoms/button/secButton.tsx");
 const EditTitleModal_1 = __webpack_require__(/*! ../mydata/EditTitleModal */ "./resources/ts/components/organisms/mydata/EditTitleModal.tsx");
+const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 exports.DataDetailEdit = react_2.memo((props) => {
-    const { dates, purpose, companions, cost, imageUrl } = props;
+    const { id, title, dates, purpose, companions, cost, imageUrl, onClick } = props;
+    const [userData, setUserData] = react_1.useState([]);
+    const [selectedUserTrip, setSelectedUserTrip] = react_1.useState(null);
+    const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content");
+    react_1.useEffect(() => {
+        getData();
+    }, []);
+    const getData = react_1.useCallback(() => {
+        axios_1.default
+            .get(`/api/mytrip?api_token=${api_token}`)
+            .then((res) => {
+            setUserData(res.data);
+            console.log("usertrip", res.data);
+            console.log("できるかな？", setUserData);
+        })
+            .catch(error => {
+            console.log(error);
+        });
+    }, []);
     const { isOpen, onOpen, onClose } = react_3.useDisclosure();
-    const onClickEdit = react_1.useCallback(() => onOpen(), []);
+    const onClickEdit = react_1.useCallback((id, userData) => {
+        console.log("確認だよOK", id);
+        const targetUserTrip = userData.find((data) => data.id === id);
+        console.log("保持したい旅行データ", targetUserTrip);
+        setSelectedUserTrip(targetUserTrip !== null && targetUserTrip !== void 0 ? targetUserTrip : null);
+        onOpen();
+    }, []);
     // const {children} = props;
     return (react_1.default.createElement(react_1.default.Fragment, null,
         react_1.default.createElement(react_3.Box, { display: "flex" },
@@ -94703,8 +94733,8 @@ exports.DataDetailEdit = react_2.memo((props) => {
                     , { 
                         // bg="pink"
                         w: "180px", h: "30px" },
-                        react_1.default.createElement(secButton_1.SecButton, { onClick: onClickEdit }, "\u7DE8\u96C6"))))),
-        react_1.default.createElement(EditTitleModal_1.EditTitleModal, { isOpen: isOpen, onClose: onClose })));
+                        react_1.default.createElement(secButton_1.SecButton, { onClick: () => onClickEdit(id, userData) }, "\u7DE8\u96C6"))))),
+        react_1.default.createElement(EditTitleModal_1.EditTitleModal, { data: selectedUserTrip, isOpen: isOpen, onClose: onClose })));
 });
 
 
@@ -95128,7 +95158,7 @@ const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@cha
 const ModalHeaders_1 = __webpack_require__(/*! ../layout/ModalHeaders */ "./resources/ts/components/organisms/layout/ModalHeaders.tsx");
 const PrimaryButton_1 = __webpack_require__(/*! ../../atoms/button/PrimaryButton */ "./resources/ts/components/atoms/button/PrimaryButton.tsx");
 exports.EditTitleModal = react_2.memo((props) => {
-    const { isOpen, onClose } = props;
+    const { data, isOpen, onClose } = props;
     const onClickUpdate = () => {
         alert("更新されました");
     };
@@ -95144,17 +95174,23 @@ exports.EditTitleModal = react_2.memo((props) => {
                                 react_1.default.createElement(react_3.Box, null,
                                     react_1.default.createElement(react_3.FormControl, null,
                                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u30BF\u30A4\u30C8\u30EB"),
-                                        react_1.default.createElement(react_3.Input, { placeholder: "\u30BF\u30A4\u30C8\u30EB", type: "text" })),
+                                        react_1.default.createElement(react_3.Input
+                                        // placeholder="タイトル" 
+                                        // type="text" 
+                                        , { 
+                                            // placeholder="タイトル" 
+                                            // type="text" 
+                                            value: data === null || data === void 0 ? void 0 : data.title })),
                                     react_1.default.createElement(react_3.FormControl, null,
                                         react_1.default.createElement(react_3.FormLabel, null, "\u753B\u50CF"),
                                         react_1.default.createElement(react_3.Input, { value: "\u753B\u50CF" }))),
                                 react_1.default.createElement(react_3.Box, null,
                                     react_1.default.createElement(react_3.FormControl, null,
                                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u51FA\u767A\u65E5"),
-                                        react_1.default.createElement(react_3.Input, { type: "date" })),
+                                        react_1.default.createElement(react_3.Input, { type: "date", value: data === null || data === void 0 ? void 0 : data.departure })),
                                     react_1.default.createElement(react_3.FormControl, null,
                                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u5E30\u5B85\u65E5"),
-                                        react_1.default.createElement(react_3.Input, { type: "date" })),
+                                        react_1.default.createElement(react_3.Input, { type: "date", value: data === null || data === void 0 ? void 0 : data.arrival })),
                                     react_1.default.createElement(react_3.FormControl, null,
                                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u76EE\u7684"),
                                         react_1.default.createElement(react_3.Select
@@ -95272,7 +95308,6 @@ exports.MyDataDetail = react_2.memo((props) => {
     const getData = react_1.useCallback(() => {
         console.log("user取れる？", api_token);
         axios_1.default
-            // .get<Array<Data>>(`/api/mytrip?api_token=${api_token},"/api/show-mytrip?id=2"`)
             .get(`/api/show-mytrip?api_token=${api_token}&id=${id}`)
             .then((res) => {
             setUserData(res.data);
@@ -95287,7 +95322,7 @@ exports.MyDataDetail = react_2.memo((props) => {
             react_1.default.createElement(react_3.Box, null,
                 react_1.default.createElement(DataDetailHeaders_1.DataDetailHeaders, null, "\u30DE\u30A4\u30C7\u30FC\u30BF\u8A73\u7D30\u3000\u30C7\u30FC\u30BF\u8FFD\u52A0\u753B\u9762"),
                 react_1.default.createElement(DataDetailTitle_1.DataDetailTitle, null, userTrip.title),
-                react_1.default.createElement(DataDetailEdit_1.DataDetailEdit, { imageUrl: "http://source.unsplash.com/random", dates: `${userTrip.departure}${userTrip.arrival}`, 
+                react_1.default.createElement(DataDetailEdit_1.DataDetailEdit, { id: userTrip.id, imageUrl: "http://source.unsplash.com/random", dates: `${userTrip.departure}${userTrip.arrival}`, 
                     // purpose={userTrip.purpose}
                     // companions={userTrip.companions}
                     cost: "\u91D1\u984D" }))))),
@@ -96168,8 +96203,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
