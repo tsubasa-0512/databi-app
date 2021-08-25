@@ -95079,55 +95079,106 @@ exports.AddDataModal = react_2.memo((props) => {
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddDetailModal = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const ModalHeaders_1 = __webpack_require__(/*! ../layout/ModalHeaders */ "./resources/ts/components/organisms/layout/ModalHeaders.tsx");
 const PrimaryButton_1 = __webpack_require__(/*! ../../atoms/button/PrimaryButton */ "./resources/ts/components/atoms/button/PrimaryButton.tsx");
 const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./resources/ts/components/atoms/button/secButton.tsx");
+const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 exports.AddDetailModal = react_2.memo((props) => {
     const { isOpen, onClose } = props;
-    const onClickSet = () => {
-        alert("登録します");
+    const [inputDetailTitle, setInputDetailTitle] = react_1.useState('');
+    const [inputComment, setInputComment] = react_1.useState('');
+    const [inputCosts, setInputCosts] = react_1.useState('');
+    const [inputCategory, setInputCategory] = react_1.useState('');
+    const [category, setCategory] = react_1.useState([]);
+    const onChangeInputDetailTitle = (e) => setInputDetailTitle(e.target.value);
+    const onChangeInputComment = (e) => setInputComment(e.target.value);
+    const onChangeInputCosts = (e) => setInputCosts(e.target.value);
+    const onChangeCategory = e => {
+        if (inputCategory.includes(e.target.value)) {
+            setInputCategory(inputCategory.filter(item => item !== e.target.value));
+        }
+        else {
+            setInputCategory([...inputCategory, e.target.value]);
+        }
     };
-    // const [ addCategory, setAddCategory ] = useState<number>('');
-    // const [category, setCategory] = useState([]);
-    // const onChangeAddDetail = e => { 
-    //   if(addCategory.includes(e.target.value)) {
-    //     setAddCategory(addCategory.filter(item => item !== e.target.value));
-    //   }else{
-    //     setAddCategory([...addCategory, e.target.value]);
-    //   }
-    // };
-    // const api_token = document
-    // .querySelector<HTMLElement>('meta[name="api-token"]')
-    // .getAttribute("content")
-    // useEffect(() => {
-    //   addDetailData()
-    // },[])
-    // const addDetailData = async() =>{
-    //   await Axios.post("/api/add-myitinerary",{
-    //     {
-    //       // title: inputTitle,
-    //       // trip_id: {該当のtripのid}
-    //       // api_token:api_token
-    //     }
-    //   })
-    //   .then((res)=>{   
-    //     console.log(res.data['category'])
-    //     // setPurpose(res.data['purpose'])
-    //     setCategory(res.data['category'])
-    //     }
-    //       ) 
-    //   .catch(error => {
-    //     console.log('Error',error.response);
-    //     });
-    // }  
+    const csrf_token = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
+    react_1.useEffect(() => {
+        getCategory();
+    }, []);
+    const getCategory = () => __awaiter(void 0, void 0, void 0, function* () {
+        yield axios_1.default.get("/api/trip-form-select")
+            .then((res) => {
+            console.log(res.data['category']);
+            setCategory(res.data['category']);
+        })
+            .catch(error => {
+            console.log('Error', error.response);
+        });
+    });
+    const { id } = react_router_dom_1.useParams();
+    console.log({ id });
+    const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content");
+    const onClickAddDetail = () => {
+        alert("登録しますか？");
+        axios_1.default.post('/api/add-myitinerary', {
+            title: inputDetailTitle,
+            comment: inputComment,
+            bill: inputCosts,
+            category: inputCategory,
+            trip_id: `${id}`,
+            api_token: api_token
+        })
+            .then(response => {
+            console.log(response.data);
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+        setInputDetailTitle("");
+        setInputComment("");
+        setInputCosts("");
+    };
     return (react_1.default.createElement(react_3.Modal, { isOpen: isOpen, onClose: onClose, autoFocus: false },
         react_1.default.createElement(react_3.ModalOverlay, null,
             react_1.default.createElement(react_3.ModalContent, { pb: 6 },
@@ -95142,11 +95193,11 @@ exports.AddDetailModal = react_2.memo((props) => {
                                     react_1.default.createElement(react_3.Stack, { direction: "row", 
                                         // align="center" 
                                         mr: "3" },
-                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal" }, "\u98F2\u98DF"),
-                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal" }, "\u5BBF\u6CCA"),
-                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal" }, "\u4F53\u9A13"),
-                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal" }, "\u4EA4\u901A"),
-                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal" }, "\u305D\u306E\u4ED6"))),
+                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "1", onChange: onChangeCategory, checked: inputCategory.includes('1') }, "\u98F2\u98DF"),
+                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "2", onChange: onChangeCategory, checked: inputCategory.includes('2') }, "\u5BBF\u6CCA"),
+                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "3", onChange: onChangeCategory, checked: inputCategory.includes('3') }, "\u4F53\u9A13"),
+                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "4", onChange: onChangeCategory, checked: inputCategory.includes('4') }, "\u4EA4\u901A"),
+                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "5", onChange: onChangeCategory, checked: inputCategory.includes('5') }, "\u305D\u306E\u4ED6"))),
                                 react_1.default.createElement(react_3.Box, { margin: "5", display: "flex" },
                                     react_1.default.createElement(react_3.Box, { mr: "5" },
                                         react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", border: "1px", borderColor: "teal.500", p: "2", alignItems: "center", w: "100px" },
@@ -95161,15 +95212,15 @@ exports.AddDetailModal = react_2.memo((props) => {
                                     react_1.default.createElement(react_3.Box, null,
                                         react_1.default.createElement(react_3.FormControl, null,
                                             react_1.default.createElement(react_3.FormLabel, null,
-                                                react_1.default.createElement(react_3.Input, { placeholder: "\u30BF\u30A4\u30C8\u30EB", type: "text" }))),
+                                                react_1.default.createElement(react_3.Input, { placeholder: "\u30BF\u30A4\u30C8\u30EB", type: "text", value: inputDetailTitle, onChange: onChangeInputDetailTitle }))),
                                         react_1.default.createElement(react_3.FormControl, null,
                                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
-                                            react_1.default.createElement(react_3.Input, { placeholder: "\u30B3\u30E1\u30F3\u30C8", type: "text" })),
+                                            react_1.default.createElement(react_3.Input, { placeholder: "\u30B3\u30E1\u30F3\u30C8", type: "text", value: inputComment, onChange: onChangeInputComment })),
                                         react_1.default.createElement(react_3.FormControl, null,
                                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
-                                            react_1.default.createElement(react_3.Input, { placeholder: "\u91D1\u984D" })))),
+                                            react_1.default.createElement(react_3.Input, { placeholder: "\u91D1\u984D", value: inputCosts, onChange: onChangeInputCosts })))),
                                 react_1.default.createElement(react_3.Box, { textAlign: "right", margin: "5" },
-                                    react_1.default.createElement(PrimaryButton_1.PrimaryButton, { onClick: onClickSet }, "\u767B\u9332"))))))))));
+                                    react_1.default.createElement(PrimaryButton_1.PrimaryButton, { onClick: onClickAddDetail }, "\u767B\u9332"))))))))));
 });
 
 
@@ -95381,6 +95432,7 @@ const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./r
 const AddDetailModal_1 = __webpack_require__(/*! ./AddDetailModal */ "./resources/ts/components/organisms/mydata/AddDetailModal.tsx");
 const DataDetailEdit_1 = __webpack_require__(/*! ../layout/DataDetailEdit */ "./resources/ts/components/organisms/layout/DataDetailEdit.tsx");
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+const MyDetailCard_1 = __webpack_require__(/*! ./MyDetailCard */ "./resources/ts/components/organisms/mydata/MyDetailCard.tsx");
 exports.MyDataDetail = react_2.memo((props) => {
     const { isOpen, onOpen, onClose } = react_3.useDisclosure();
     const onClickAdd = react_1.useCallback(() => onOpen(), []);
@@ -95405,6 +95457,9 @@ exports.MyDataDetail = react_2.memo((props) => {
             console.log(error);
         });
     }, []);
+    const style = {
+        textDecoration: "none"
+    };
     return (react_1.default.createElement(react_3.Wrap, { justify: "center", p: "4px", mx: { base: 4, md: 100 }, bg: "white", shadow: "md" },
         userData.map((userTrip) => (react_1.default.createElement(react_3.WrapItem, { key: userTrip.id, mx: "auto" },
             react_1.default.createElement(react_3.Box, null,
@@ -95420,15 +95475,51 @@ exports.MyDataDetail = react_2.memo((props) => {
                     react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", border: "1px", borderColor: "teal.500", p: "2", alignItems: "center", w: "200px" },
                         react_1.default.createElement(react_3.Box, { onClick: onClickAdd, color: "gray.500" }, "\u8A73\u7D30\u30C7\u30FC\u30BF\u8FFD\u52A0"),
                         react_1.default.createElement(secButton_1.SecButton, { onClick: onClickAdd }, "\uFF0B"))),
-                react_1.default.createElement(react_3.Box, { bg: "orange.200", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u98DF")),
-                react_1.default.createElement(react_3.Box, { bg: "cyan.700", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u5BBF")),
-                react_1.default.createElement(react_3.Box, { bg: "green.500", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u4EA4\u901A")),
-                react_1.default.createElement(react_3.Box, { bg: "pink.400", mb: "8px" },
-                    react_1.default.createElement(react_3.Center, { h: "40px", mb: "5px", color: "gray.50" }, "\u4F53\u9A13")),
+                react_1.default.createElement(react_3.Wrap, { justify: "center", p: { base: 4, md: 10 } },
+                    react_1.default.createElement(react_3.WrapItem, { key: 1, mx: "auto" },
+                        react_1.default.createElement(MyDetailCard_1.MyDetailCard, { id: 1, category: "\u30AB\u30C6\u30B4\u30EA", title: "\u30BF\u30A4\u30C8\u30EB", costs: "\u91D1\u984D", comment: "\u30B3\u30E1\u30F3\u30C8", imageUrl: "http://source.unsplash.com/random" }))),
                 react_1.default.createElement(AddDetailModal_1.AddDetailModal, { isOpen: isOpen, onClose: onClose })))));
+});
+
+
+/***/ }),
+
+/***/ "./resources/ts/components/organisms/mydata/MyDetailCard.tsx":
+/*!*******************************************************************!*\
+  !*** ./resources/ts/components/organisms/mydata/MyDetailCard.tsx ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MyDetailCard = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+exports.MyDetailCard = react_2.memo((props) => {
+    const { id, category, title, costs, comment, imageUrl } = props;
+    return (react_1.default.createElement(react_3.Flex, { w: "370px", h: "60px", bg: "gray.50", color: "teal.400", align: "center", justify: "space-between", mb: "5px", _hover: { cursor: "pointer", opacity: 0.8 } },
+        react_1.default.createElement(react_3.Box, null,
+            react_1.default.createElement(react_3.Center, { fontSize: "sm" }, category)),
+        react_1.default.createElement(react_3.Box, null,
+            react_1.default.createElement(react_3.Center, { fontSize: "sm" }, title)),
+        react_1.default.createElement(react_3.Box, null,
+            react_1.default.createElement(react_3.Center, { fontSize: "sm" }, costs)),
+        react_1.default.createElement(react_3.Box, null,
+            react_1.default.createElement(react_3.Center, { fontSize: "sm" }, comment)),
+        react_1.default.createElement(react_3.Box, { textAlign: "right" },
+            react_1.default.createElement(react_3.Image
+            // borderRadius="full"
+            // boxSize="40px"
+            , { 
+                // borderRadius="full"
+                // boxSize="40px"
+                w: "60px", h: "60px", src: "http://source.unsplash.com/random", alt: imageUrl, m: "auto" }))));
 });
 
 
@@ -95631,7 +95722,6 @@ exports.MyData = react_2.memo(() => {
             .then((res) => {
             setUserData(res.data);
             console.log("usertrip", res.data);
-            console.log("できるかな？", setUserData);
         })
             .catch(error => {
             console.log(error);

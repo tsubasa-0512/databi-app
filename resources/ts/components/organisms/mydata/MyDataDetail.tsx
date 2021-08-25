@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { memo,VFC } from 'react';
-import { RouteComponentProps, useParams } from "react-router-dom";
+import { Link, RouteComponentProps, useParams } from "react-router-dom";
 
 import { Box, Center, Flex, useDisclosure, Wrap, WrapItem } from "@chakra-ui/react";
 
@@ -13,6 +13,7 @@ import { DataDetailEdit } from "../layout/DataDetailEdit"
 import { useMyData } from "../../../hooks/useMyData";
 import { Data } from "../../../types/api/data";
 import Axios from "axios";
+import { MyDetailCard } from "./MyDetailCard";
 
 
 type Props = RouteComponentProps<{
@@ -50,9 +51,11 @@ export const MyDataDetail: VFC= memo((props) => {
           console.log(error)
         });
     },[]);
+
+    const style = {
+      textDecoration:"none"
+     };
   
-
-
   return (
     <Wrap justify="center" p="4px" mx={{ base: 4, md: 100 }} bg="white" shadow="md">
       {userData.map((userTrip) => (
@@ -96,14 +99,36 @@ export const MyDataDetail: VFC= memo((props) => {
           <SecButton onClick={onClickAdd}>＋</SecButton>
         </Flex>
         </Box>
-        <Box bg="orange.200" mb="8px">
-        <Center h="40px"  mb="5px" color="gray.50">食</Center></Box>
-        <Box bg="cyan.700" mb="8px">
+
+        
+        <Wrap justify="center" p={{ base: 4, md: 10 }}>
+          {/* <Link 
+          style={style} 
+          to={{ pathname: "" }}
+          > */}
+            <WrapItem key={1} mx="auto">
+              <MyDetailCard 
+              id={1}
+              category="カテゴリ"
+              title="タイトル"
+              costs="金額"
+              comment="コメント"
+              imageUrl="http://source.unsplash.com/random"
+              // onClick={onClick}
+              />
+            </WrapItem>
+          {/* </Link>   */}
+       </Wrap>
+
+      
+
+
+        {/* <Box bg="cyan.700" mb="8px">
         <Center h="40px"  mb="5px" color="gray.50">宿</Center></Box>
         <Box bg="green.500" mb="8px">
         <Center h="40px"  mb="5px" color="gray.50">交通</Center></Box>
         <Box bg="pink.400" mb="8px">
-        <Center h="40px"  mb="5px" color="gray.50">体験</Center></Box>
+        <Center h="40px"  mb="5px" color="gray.50">体験</Center></Box> */}
         
         <AddDetailModal isOpen={isOpen} onClose={onClose}/>
         </Box>

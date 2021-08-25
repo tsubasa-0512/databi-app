@@ -57,7 +57,6 @@ export const MyData: VFC = memo(() => {
       .then((res) => {
       setUserData(res.data);
       console.log("usertrip",res.data)
-      console.log("できるかな？",setUserData)
     }) 
       .catch(error => {
         console.log(error)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { memo,VFC } from 'react';
 import { 
   FormLabel, ModalBody, ModalCloseButton, ModalHeader, Modal, ModalOverlay,  Stack,  ModalContent,  FormControl, Input,Box, Select, Checkbox, Flex } from '@chakra-ui/react';
@@ -7,6 +7,7 @@ import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import { AddButton } from '../../atoms/button/AddButton';
 import { SecButton } from "../../atoms/button/secButton";
 import Axios from "axios";
+import { useParams } from "react-router-dom";
 
 type Props = {
   isOpen: boolean
@@ -16,50 +17,72 @@ type Props = {
 export const AddDetailModal: VFC<Props> = memo((props) => {
   const { isOpen, onClose } = props;
 
-  const onClickSet = () => {
-    alert("登録します");
+  const [ inputDetailTitle, setInputDetailTitle ] = useState('');
+  const [ inputComment, setInputComment ] = useState('');
+  const [ inputCosts, setInputCosts ] = useState('');
+  const [ inputCategory, setInputCategory ] = useState('');
+  const [ category, setCategory] = useState([]);
+
+  const onChangeInputDetailTitle = (e:ChangeEvent<HTMLInputElement>) => setInputDetailTitle(e.target.value);
+  const onChangeInputComment = (e:ChangeEvent<HTMLInputElement>) => setInputComment(e.target.value);
+  const onChangeInputCosts = (e:ChangeEvent<HTMLInputElement>) => setInputCosts(e.target.value);
+  const onChangeCategory = e => { 
+    if(inputCategory.includes(e.target.value)) {
+      setInputCategory(inputCategory.filter(item => item !== e.target.value));
+    }else{
+      setInputCategory([...inputCategory, e.target.value]);
+    }
   };
 
-  // const [ addCategory, setAddCategory ] = useState<number>('');
-  // const [category, setCategory] = useState([]);
+  const csrf_token = document
+  .querySelector<HTMLElement>('meta[name="csrf-token"]')
+  .getAttribute("content")
 
-  // const onChangeAddDetail = e => { 
-  //   if(addCategory.includes(e.target.value)) {
-  //     setAddCategory(addCategory.filter(item => item !== e.target.value));
-  //   }else{
-  //     setAddCategory([...addCategory, e.target.value]);
-  //   }
-  // };
+  useEffect(() => {
+    getCategory()
+  },[])
 
-  // const api_token = document
-  // .querySelector<HTMLElement>('meta[name="api-token"]')
-  // .getAttribute("content")
+  const getCategory = async() =>{
+    await Axios.get("/api/trip-form-select")
+    .then((res)=>{   
+      console.log(res.data['category'])
+      setCategory(res.data['category'])
+      }
+        ) 
+    .catch(error => {
+      console.log('Error',error.response);
+      });
+  }  
 
+  
+  const { id } = useParams();
+  console.log({id});
 
-  // useEffect(() => {
-  //   addDetailData()
-  // },[])
-
-  // const addDetailData = async() =>{
-  //   await Axios.post("/api/add-myitinerary",{
-  //     {
-  //       // title: inputTitle,
-  //       // trip_id: {該当のtripのid}
-  //       // api_token:api_token
-  //     }
-  //   })
-  //   .then((res)=>{   
-  //     console.log(res.data['category'])
-  //     // setPurpose(res.data['purpose'])
-  //     setCategory(res.data['category'])
-  //     }
-  //       ) 
-  //   .catch(error => {
-  //     console.log('Error',error.response);
-  //     });
-  // }  
+  const api_token = document
+  .querySelector<HTMLElement>('meta[name="api-token"]')
+  .getAttribute("content")
 
 
+  const onClickAddDetail = () => { 
+    alert("登録しますか？");
+    Axios.post('/api/add-myitinerary',{
+      title: inputDetailTitle,
+      comment: inputComment,
+      bill: inputCosts,
+      category: inputCategory 
+      trip_id:`${id}`,
+      api_token:api_token
+    })
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(function(error){
+      console.log(error)
+    });
+    setInputDetailTitle("");
+    setInputComment("");
+    setInputCosts("");
+    };
 
 
 
@@ -81,29 +104,29 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
                     mr="3"
                     >
                       <Checkbox size="sm" colorScheme="teal"
-                      // value="1"
-                      // onChange={onChangeAddDetail}
-                      // checked={ addCategory.includes('1') }
+                      value="1"
+                      onChange={onChangeCategory}
+                      checked={ inputCategory.includes('1') }
                       >飲食</Checkbox>
                       <Checkbox size="sm" colorScheme="teal"
-                      // value="2"
-                      // onChange={onChangeAddDetail}
-                      // checked={ addCategory.includes('2') }
+                      value="2"
+                      onChange={onChangeCategory}
+                      checked={ inputCategory.includes('2') }
                       >宿泊</Checkbox>
                       <Checkbox size="sm" colorScheme="teal" 
-                      // value="3"
-                      // onChange={onChangeAddDetail}
-                      // checked={ addCategory.includes('3') }
+                      value="3"
+                      onChange={onChangeCategory}
+                      checked={ inputCategory.includes('3') }
                       >体験</Checkbox>
                       <Checkbox size="sm" colorScheme="teal"
-                      // value="4"
-                      // onChange={onChangeAddDetail}
-                      // checked={ addCategory.includes('4') }
+                      value="4"
+                      onChange={onChangeCategory}
+                      checked={ inputCategory.includes('4') }
                       >交通</Checkbox>
                       <Checkbox size="sm" colorScheme="teal" 
-                      // value="5"
-                      // onChange={onChangeAddDetail}
-                      // checked={ addCategory.includes('5') }
+                      value="5"
+                      onChange={onChangeCategory}
+                      checked={ inputCategory.includes('5') }
                       >その他</Checkbox>
                     </Stack>
                   </FormControl>
@@ -157,8 +180,8 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
                           <Input 
                           placeholder="タイトル" 
                           type="text" 
-                          // value={inputTitle} 
-                          // onChange={onChangeInputTitle} 
+                          value={inputDetailTitle} 
+                          onChange={onChangeInputDetailTitle} 
                           />
                         </FormLabel>
                       </FormControl>
@@ -167,20 +190,24 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
                           <Input 
                           placeholder="コメント" 
                           type="text" 
-                          // value={inputTitle} 
-                          // onChange={onChangeInputTitle} 
+                          value={inputComment} 
+                          onChange={onChangeInputComment} 
                           />
                       </FormControl>
                       <FormControl>
                         <FormLabel fontSize="sm"></FormLabel>
-                          <Input placeholder="金額"/>
+                          <Input 
+                          placeholder="金額"
+                          value={inputCosts} 
+                          onChange={onChangeInputCosts}
+                          />
                         </FormControl>
                     </Box>
                   </Box>
 
                   <Box textAlign="right" margin="5">
                     <PrimaryButton 
-                      onClick={onClickSet}
+                      onClick={onClickAddDetail}
                       >
                       登録
                     </PrimaryButton>
