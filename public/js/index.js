@@ -95130,7 +95130,7 @@ exports.AddDetailModal = react_2.memo((props) => {
     const onChangeInputDetailTitle = (e) => setInputDetailTitle(e.target.value);
     const onChangeInputComment = (e) => setInputComment(e.target.value);
     const onChangeInputCosts = (e) => setInputCosts(e.target.value);
-    const onChangeCategory = e => {
+    const onChangeCategory = (e) => {
         if (inputCategory.includes(e.target.value)) {
             setInputCategory(inputCategory.filter(item => item !== e.target.value));
         }
@@ -95438,7 +95438,10 @@ exports.MyDataDetail = react_2.memo((props) => {
     const onClickAdd = react_1.useCallback(() => onOpen(), []);
     const { id } = react_router_dom_1.useParams();
     console.log({ id });
+    const { detail_id } = react_router_dom_1.useParams();
+    console.log({ detail_id });
     const [userData, setUserData] = react_1.useState([]);
+    const [userDetailData, setUserDetailData] = react_1.useState([]);
     const api_token = document
         .querySelector('meta[name="api-token"]')
         .getAttribute("content");
