@@ -36,12 +36,6 @@ export const AddDataModal: VFC<Props> = memo((props) => {
   const [ inputPurpose, setInputPurpose ] = useState('');
   const [ inputGoWith, setInputGoWith ] = useState('');
 
-  // const [ count, setCount ] = useState()
-
-  // const handleSubmit = () {
-    
-  // }
-
   const onChangeInputTitle = (e:ChangeEvent<HTMLInputElement>) =>
   setInputTitle(e.target.value);
   
