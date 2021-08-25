@@ -95092,11 +95092,45 @@ const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const ModalHeaders_1 = __webpack_require__(/*! ../layout/ModalHeaders */ "./resources/ts/components/organisms/layout/ModalHeaders.tsx");
 const PrimaryButton_1 = __webpack_require__(/*! ../../atoms/button/PrimaryButton */ "./resources/ts/components/atoms/button/PrimaryButton.tsx");
+const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./resources/ts/components/atoms/button/secButton.tsx");
 exports.AddDetailModal = react_2.memo((props) => {
     const { isOpen, onClose } = props;
     const onClickSet = () => {
         alert("登録します");
     };
+    // const [ addCategory, setAddCategory ] = useState<number>('');
+    // const [category, setCategory] = useState([]);
+    // const onChangeAddDetail = e => { 
+    //   if(addCategory.includes(e.target.value)) {
+    //     setAddCategory(addCategory.filter(item => item !== e.target.value));
+    //   }else{
+    //     setAddCategory([...addCategory, e.target.value]);
+    //   }
+    // };
+    // const api_token = document
+    // .querySelector<HTMLElement>('meta[name="api-token"]')
+    // .getAttribute("content")
+    // useEffect(() => {
+    //   addDetailData()
+    // },[])
+    // const addDetailData = async() =>{
+    //   await Axios.post("/api/add-myitinerary",{
+    //     {
+    //       // title: inputTitle,
+    //       // trip_id: {該当のtripのid}
+    //       // api_token:api_token
+    //     }
+    //   })
+    //   .then((res)=>{   
+    //     console.log(res.data['category'])
+    //     // setPurpose(res.data['purpose'])
+    //     setCategory(res.data['category'])
+    //     }
+    //       ) 
+    //   .catch(error => {
+    //     console.log('Error',error.response);
+    //     });
+    // }  
     return (react_1.default.createElement(react_3.Modal, { isOpen: isOpen, onClose: onClose, autoFocus: false },
         react_1.default.createElement(react_3.ModalOverlay, null,
             react_1.default.createElement(react_3.ModalContent, { pb: 6 },
@@ -95107,30 +95141,36 @@ exports.AddDetailModal = react_2.memo((props) => {
                         react_1.default.createElement(react_3.Stack, null,
                             react_1.default.createElement(react_3.Box, null,
                                 react_1.default.createElement(react_3.FormControl, null,
-                                    react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
-                                    react_1.default.createElement(react_3.Select
-                                    // value={inputPurpose} 
-                                    // onChange={onChangeInputPurpose} 
-                                    , null,
-                                        react_1.default.createElement("option", { value: "food" }, "\u98F2\u98DF"),
-                                        react_1.default.createElement("option", { value: "stay" }, "\u5BBF\u6CCA"),
-                                        react_1.default.createElement("option", { value: "traffic" }, "\u4EA4\u901A"),
-                                        react_1.default.createElement("option", { value: "leisure" }, "\u4F53\u9A13"),
-                                        react_1.default.createElement("option", { value: "other" }, "\u305D\u306E\u4ED6"))),
-                                react_1.default.createElement(react_3.Box, { margin: "5" },
-                                    react_1.default.createElement(react_3.FormControl, null,
-                                        react_1.default.createElement(react_3.FormLabel, null,
-                                            react_1.default.createElement(react_3.Input, { placeholder: "\u30BF\u30A4\u30C8\u30EB", type: "text" }))),
-                                    react_1.default.createElement(react_3.FormControl, null,
-                                        react_1.default.createElement(react_3.FormLabel, null),
-                                        react_1.default.createElement(react_3.Input, { placeholder: "\u753B\u50CF", isReadOnly: true }))),
-                                react_1.default.createElement(react_3.Box, null,
-                                    react_1.default.createElement(react_3.FormControl, null,
-                                        react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
-                                        react_1.default.createElement(react_3.Input, { placeholder: "\u30B3\u30E1\u30F3\u30C8", type: "text" })),
-                                    react_1.default.createElement(react_3.FormControl, null,
-                                        react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
-                                        react_1.default.createElement(react_3.Input, { placeholder: "\u91D1\u984D" }))),
+                                    react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u30AB\u30C6\u30B4\u30EA"),
+                                    react_1.default.createElement(react_3.Stack, { direction: "row", 
+                                        // align="center" 
+                                        mr: "3" },
+                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal" }, "\u98F2\u98DF"),
+                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal" }, "\u5BBF\u6CCA"),
+                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal" }, "\u4F53\u9A13"),
+                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal" }, "\u4EA4\u901A"),
+                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal" }, "\u305D\u306E\u4ED6"))),
+                                react_1.default.createElement(react_3.Box, { margin: "5", display: "flex" },
+                                    react_1.default.createElement(react_3.Box, { mr: "5" },
+                                        react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", border: "1px", borderColor: "teal.500", p: "2", alignItems: "center", w: "100px" },
+                                            react_1.default.createElement(react_3.Box
+                                            // onClick={onClickAdd} 
+                                            , { 
+                                                // onClick={onClickAdd} 
+                                                color: "gray.500" }, "\u753B\u50CF"),
+                                            react_1.default.createElement(secButton_1.SecButton
+                                            // onClick={onClickAdd}
+                                            , null, "\uFF0B"))),
+                                    react_1.default.createElement(react_3.Box, null,
+                                        react_1.default.createElement(react_3.FormControl, null,
+                                            react_1.default.createElement(react_3.FormLabel, null,
+                                                react_1.default.createElement(react_3.Input, { placeholder: "\u30BF\u30A4\u30C8\u30EB", type: "text" }))),
+                                        react_1.default.createElement(react_3.FormControl, null,
+                                            react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
+                                            react_1.default.createElement(react_3.Input, { placeholder: "\u30B3\u30E1\u30F3\u30C8", type: "text" })),
+                                        react_1.default.createElement(react_3.FormControl, null,
+                                            react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
+                                            react_1.default.createElement(react_3.Input, { placeholder: "\u91D1\u984D" })))),
                                 react_1.default.createElement(react_3.Box, { textAlign: "right", margin: "5" },
                                     react_1.default.createElement(PrimaryButton_1.PrimaryButton, { onClick: onClickSet }, "\u767B\u9332"))))))))));
 });
@@ -95162,6 +95202,9 @@ exports.EditTitleModal = react_2.memo((props) => {
     const onClickUpdate = () => {
         alert("更新されました");
     };
+    // const [ editTitle, setEditTitle ] = useState<string>({`${data?.title}`); 
+    // const onChangeEditTitle = (e:ChangeEvent<HTMLInputElement>) =>
+    // setEditTitle(e.target.value); 
     return (react_1.default.createElement(react_3.Modal, { isOpen: isOpen, onClose: onClose, autoFocus: false },
         react_1.default.createElement(react_3.ModalOverlay, null,
             react_1.default.createElement(react_3.ModalContent, { pb: 6 },
@@ -95176,11 +95219,9 @@ exports.EditTitleModal = react_2.memo((props) => {
                                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u30BF\u30A4\u30C8\u30EB"),
                                         react_1.default.createElement(react_3.Input
                                         // placeholder="タイトル" 
-                                        // type="text" 
                                         , { 
                                             // placeholder="タイトル" 
-                                            // type="text" 
-                                            value: data === null || data === void 0 ? void 0 : data.title })),
+                                            type: "text", value: data === null || data === void 0 ? void 0 : data.title })),
                                     react_1.default.createElement(react_3.FormControl, null,
                                         react_1.default.createElement(react_3.FormLabel, null, "\u753B\u50CF"),
                                         react_1.default.createElement(react_3.Input, { value: "\u753B\u50CF" }))),

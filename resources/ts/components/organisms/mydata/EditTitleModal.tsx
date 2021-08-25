@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { memo,VFC } from 'react';
 import { 
   FormLabel, ModalBody, ModalCloseButton, ModalHeader, Modal, ModalOverlay,  Stack,  ModalContent,  FormControl, Input,Box, Image, Center, Select, Checkbox } from '@chakra-ui/react';
@@ -6,6 +6,7 @@ import { ModalHeaders } from '../layout/ModalHeaders';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import { SecButton } from "../../atoms/button/secButton";
 import { Data } from "../../../types/api/data";
+import { ChangeEvent } from "react";
 
 type Props = {
   isOpen: boolean
@@ -19,6 +20,11 @@ export const EditTitleModal: VFC<Props> = memo((props) => {
   const onClickUpdate = () => {
     alert("更新されました");
   };
+
+  // const [ editTitle, setEditTitle ] = useState<string>({`${data?.title}`); 
+  // const onChangeEditTitle = (e:ChangeEvent<HTMLInputElement>) =>
+  // setEditTitle(e.target.value); 
+  
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} autoFocus={false}> 
@@ -35,9 +41,9 @@ export const EditTitleModal: VFC<Props> = memo((props) => {
                 <FormLabel fontSize="sm">タイトル</FormLabel>
                 <Input 
                 // placeholder="タイトル" 
-                // type="text" 
+                type="text" 
                 value={data?.title} 
-                // onChange={onChangeInputTitle} 
+                // onChange={onChangeEditTitle} 
                 />
               </FormControl>
               <FormControl>
@@ -52,6 +58,7 @@ export const EditTitleModal: VFC<Props> = memo((props) => {
                 <Input 
                   type="date" 
                   value={data?.departure} 
+                  
                   // onChange={onChangeInputDeparture}
                   />
               </FormControl>
@@ -60,6 +67,7 @@ export const EditTitleModal: VFC<Props> = memo((props) => {
                 <Input 
                   type="date"   
                   value={data?.arrival} 
+                  
                   // onChange={onChangeInputArrival}
                  />
               </FormControl>
