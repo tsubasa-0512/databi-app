@@ -43,7 +43,7 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
   },[])
 
   const getCategory = async() =>{
-    await Axios.get("/api/trip-form-select")
+    await Axios.get("/api/itinerary-form-select")
     .then((res)=>{   
       console.log(res.data['category'])
       setCategory(res.data['category'])
@@ -69,7 +69,7 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
       title: inputDetailTitle,
       comment: inputComment,
       bill: inputCosts,
-      category: inputCategory 
+      category: inputCategory[0],
       trip_id:`${id}`,
       api_token:api_token
     })

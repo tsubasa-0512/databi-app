@@ -23,6 +23,7 @@ Route::group(['middleware' => ['api']], function () {
 
     // 旅行情報入力に必要な目的・同伴者項目を返す
     Route::get('/trip-form-select','TripsController@formSelect');
+    
     // 旅行情報詳細入力に必要なカテゴリ・チャネル項目を返す
     Route::get('/itinerary-form-select','ItinerariesController@itineraryFormSelect');
     

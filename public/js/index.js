@@ -95130,7 +95130,7 @@ exports.AddDetailModal = react_2.memo((props) => {
     const onChangeInputDetailTitle = (e) => setInputDetailTitle(e.target.value);
     const onChangeInputComment = (e) => setInputComment(e.target.value);
     const onChangeInputCosts = (e) => setInputCosts(e.target.value);
-    const onChangeCategory = (e) => {
+    const onChangeCategory = e => {
         if (inputCategory.includes(e.target.value)) {
             setInputCategory(inputCategory.filter(item => item !== e.target.value));
         }
@@ -95145,7 +95145,7 @@ exports.AddDetailModal = react_2.memo((props) => {
         getCategory();
     }, []);
     const getCategory = () => __awaiter(void 0, void 0, void 0, function* () {
-        yield axios_1.default.get("/api/trip-form-select")
+        yield axios_1.default.get("/api/itinerary-form-select")
             .then((res) => {
             console.log(res.data['category']);
             setCategory(res.data['category']);
@@ -95165,7 +95165,7 @@ exports.AddDetailModal = react_2.memo((props) => {
             title: inputDetailTitle,
             comment: inputComment,
             bill: inputCosts,
-            category: inputCategory,
+            category: inputCategory[0],
             trip_id: `${id}`,
             api_token: api_token
         })
@@ -95438,10 +95438,7 @@ exports.MyDataDetail = react_2.memo((props) => {
     const onClickAdd = react_1.useCallback(() => onOpen(), []);
     const { id } = react_router_dom_1.useParams();
     console.log({ id });
-    const { detail_id } = react_router_dom_1.useParams();
-    console.log({ detail_id });
     const [userData, setUserData] = react_1.useState([]);
-    const [userDetailData, setUserDetailData] = react_1.useState([]);
     const api_token = document
         .querySelector('meta[name="api-token"]')
         .getAttribute("content");
@@ -96384,8 +96381,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

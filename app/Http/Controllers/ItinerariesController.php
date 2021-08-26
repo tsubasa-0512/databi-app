@@ -41,7 +41,6 @@ class ItinerariesController extends Controller
     
     // ユーザーの旅行詳細データを追加
     public function addMyItinerary(ItineraryRequest $request, Itinerary $itinerary) {
-        
         $itinerary->category_id = $request->category;
         $itinerary->title = $request->title;
         $itinerary->comment = $request->comment;
