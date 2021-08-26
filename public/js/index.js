@@ -95130,14 +95130,14 @@ exports.AddDetailModal = react_2.memo((props) => {
     const onChangeInputDetailTitle = (e) => setInputDetailTitle(e.target.value);
     const onChangeInputComment = (e) => setInputComment(e.target.value);
     const onChangeInputCosts = (e) => setInputCosts(e.target.value);
-    const onChangeCategory = e => {
-        if (inputCategory.includes(e.target.value)) {
-            setInputCategory(inputCategory.filter(item => item !== e.target.value));
-        }
-        else {
-            setInputCategory([...inputCategory, e.target.value]);
-        }
-    };
+    const onChangeInputCategory = (e) => setInputCategory(e.target.value);
+    // const onChangeCategory = e => { 
+    //   if(inputCategory.includes(e.target.value)) {
+    //     setInputCategory(inputCategory.filter(item => item !== e.target.value));
+    //   }else{
+    //     setInputCategory([...inputCategory, e.target.value]);
+    //   }
+    // };
     const csrf_token = document
         .querySelector('meta[name="csrf-token"]')
         .getAttribute("content");
@@ -95190,14 +95190,7 @@ exports.AddDetailModal = react_2.memo((props) => {
                             react_1.default.createElement(react_3.Box, null,
                                 react_1.default.createElement(react_3.FormControl, null,
                                     react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u30AB\u30C6\u30B4\u30EA"),
-                                    react_1.default.createElement(react_3.Stack, { direction: "row", 
-                                        // align="center" 
-                                        mr: "3" },
-                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "1", onChange: onChangeCategory, checked: inputCategory.includes('1') }, "\u98F2\u98DF"),
-                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "2", onChange: onChangeCategory, checked: inputCategory.includes('2') }, "\u5BBF\u6CCA"),
-                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "3", onChange: onChangeCategory, checked: inputCategory.includes('3') }, "\u4F53\u9A13"),
-                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "4", onChange: onChangeCategory, checked: inputCategory.includes('4') }, "\u4EA4\u901A"),
-                                        react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "5", onChange: onChangeCategory, checked: inputCategory.includes('5') }, "\u305D\u306E\u4ED6"))),
+                                    react_1.default.createElement(react_3.Stack, { direction: "row", mr: "3", onChange: onChangeInputCategory }, category.map((p) => react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: p.id }, p.category)))),
                                 react_1.default.createElement(react_3.Box, { margin: "5", display: "flex" },
                                     react_1.default.createElement(react_3.Box, { mr: "5" },
                                         react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", border: "1px", borderColor: "teal.500", p: "2", alignItems: "center", w: "100px" },
@@ -96381,8 +96374,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -26,13 +26,14 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
   const onChangeInputDetailTitle = (e:ChangeEvent<HTMLInputElement>) => setInputDetailTitle(e.target.value);
   const onChangeInputComment = (e:ChangeEvent<HTMLInputElement>) => setInputComment(e.target.value);
   const onChangeInputCosts = (e:ChangeEvent<HTMLInputElement>) => setInputCosts(e.target.value);
-  const onChangeCategory = e => { 
-    if(inputCategory.includes(e.target.value)) {
-      setInputCategory(inputCategory.filter(item => item !== e.target.value));
-    }else{
-      setInputCategory([...inputCategory, e.target.value]);
-    }
-  };
+  const onChangeInputCategory = (e:ChangeEvent<HTMLInputElement>) => setInputCategory(e.target.value);
+  // const onChangeCategory = e => { 
+  //   if(inputCategory.includes(e.target.value)) {
+  //     setInputCategory(inputCategory.filter(item => item !== e.target.value));
+  //   }else{
+  //     setInputCategory([...inputCategory, e.target.value]);
+  //   }
+  // };
 
   const csrf_token = document
   .querySelector<HTMLElement>('meta[name="csrf-token"]')
@@ -98,12 +99,17 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
                 <Box>
                   <FormControl>
                     <FormLabel fontSize="sm">カテゴリ</FormLabel>
-                    <Stack 
-                    direction="row" 
-                    // align="center" 
-                    mr="3"
-                    >
-                      <Checkbox size="sm" colorScheme="teal"
+                      <Stack
+                      direction="row" 
+                      mr="3" 
+                      onChange={onChangeInputCategory}
+                      >
+                        {category.map((p) => <Checkbox
+                        size="sm" 
+                        colorScheme="teal"
+                        value={p.id}>{p.category}</Checkbox> )}
+                      </Stack>
+                      {/* <Checkbox size="sm" colorScheme="teal"
                       value="1"
                       onChange={onChangeCategory}
                       checked={ inputCategory.includes('1') }
@@ -127,8 +133,7 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
                       value="5"
                       onChange={onChangeCategory}
                       checked={ inputCategory.includes('5') }
-                      >その他</Checkbox>
-                    </Stack>
+                      >その他</Checkbox> */}
                   </FormControl>
                   {/* <FormControl>
                   <FormLabel fontSize="sm"></FormLabel>
