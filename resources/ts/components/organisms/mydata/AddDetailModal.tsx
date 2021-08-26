@@ -1,10 +1,13 @@
-import React from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { memo,VFC } from 'react';
 import { 
-  FormLabel, ModalBody, ModalCloseButton, ModalHeader, Modal, ModalOverlay,  Stack,  ModalContent,  FormControl, Input,Box, Select } from '@chakra-ui/react';
+  FormLabel, ModalBody, ModalCloseButton, ModalHeader, Modal, ModalOverlay,  Stack,  ModalContent,  FormControl, Input,Box, Select, Checkbox, Flex } from '@chakra-ui/react';
 import { ModalHeaders } from '../layout/ModalHeaders';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import { AddButton } from '../../atoms/button/AddButton';
+import { SecButton } from "../../atoms/button/secButton";
+import Axios from "axios";
+import { useParams } from "react-router-dom";
 
 type Props = {
   isOpen: boolean
@@ -14,9 +17,72 @@ type Props = {
 export const AddDetailModal: VFC<Props> = memo((props) => {
   const { isOpen, onClose } = props;
 
-  const onClickSet = () => {
-    alert("登録します");
+  const [ inputDetailTitle, setInputDetailTitle ] = useState('');
+  const [ inputComment, setInputComment ] = useState('');
+  const [ inputCosts, setInputCosts ] = useState('');
+  const [ inputCategory, setInputCategory ] = useState('');
+  const [ category, setCategory] = useState([]);
+
+  const onChangeInputDetailTitle = (e:ChangeEvent<HTMLInputElement>) => setInputDetailTitle(e.target.value);
+  const onChangeInputComment = (e:ChangeEvent<HTMLInputElement>) => setInputComment(e.target.value);
+  const onChangeInputCosts = (e:ChangeEvent<HTMLInputElement>) => setInputCosts(e.target.value);
+  const onChangeCategory = e => { 
+    if(inputCategory.includes(e.target.value)) {
+      setInputCategory(inputCategory.filter(item => item !== e.target.value));
+    }else{
+      setInputCategory([...inputCategory, e.target.value]);
+    }
   };
+
+  const csrf_token = document
+  .querySelector<HTMLElement>('meta[name="csrf-token"]')
+  .getAttribute("content")
+
+  useEffect(() => {
+    getCategory()
+  },[])
+
+  const getCategory = async() =>{
+    await Axios.get("/api/trip-form-select")
+    .then((res)=>{   
+      console.log(res.data['category'])
+      setCategory(res.data['category'])
+      }
+        ) 
+    .catch(error => {
+      console.log('Error',error.response);
+      });
+  }  
+
+  
+  const { id } = useParams();
+  console.log({id});
+
+  const api_token = document
+  .querySelector<HTMLElement>('meta[name="api-token"]')
+  .getAttribute("content")
+
+
+  const onClickAddDetail = () => { 
+    alert("登録しますか？");
+    Axios.post('/api/add-myitinerary',{
+      title: inputDetailTitle,
+      comment: inputComment,
+      bill: inputCosts,
+      category: inputCategory 
+      trip_id:`${id}`,
+      api_token:api_token
+    })
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(function(error){
+      console.log(error)
+    });
+    setInputDetailTitle("");
+    setInputComment("");
+    setInputCosts("");
+    };
 
 
 
@@ -30,59 +96,125 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
             <Stack spacing={4}>
               <Stack>
                 <Box>
-                <FormControl>
-              <FormLabel fontSize="sm"></FormLabel>
-                <Select 
-                // value={inputPurpose} 
-                // onChange={onChangeInputPurpose} 
-                >
-                  <option value="food">飲食</option>
-                  <option value="stay">宿泊</option>
-                  <option value="traffic">交通</option>
-                  <option value="leisure">体験</option>
-                  <option value="other">その他</option>
-                </Select>
-              </FormControl>
-              <Box margin="5">
-              <FormControl>
-              <FormLabel>
-                <Input 
-                placeholder="タイトル" 
-                type="text" 
-                // value={inputTitle} 
-                // onChange={onChangeInputTitle} 
-                />
-              </FormLabel>
-              </FormControl>
-              <FormControl>
-                <FormLabel></FormLabel>
-                <Input placeholder="画像" isReadOnly />
-              </FormControl>
-              </Box>
+                  <FormControl>
+                    <FormLabel fontSize="sm">カテゴリ</FormLabel>
+                    <Stack 
+                    direction="row" 
+                    // align="center" 
+                    mr="3"
+                    >
+                      <Checkbox size="sm" colorScheme="teal"
+                      value="1"
+                      onChange={onChangeCategory}
+                      checked={ inputCategory.includes('1') }
+                      >飲食</Checkbox>
+                      <Checkbox size="sm" colorScheme="teal"
+                      value="2"
+                      onChange={onChangeCategory}
+                      checked={ inputCategory.includes('2') }
+                      >宿泊</Checkbox>
+                      <Checkbox size="sm" colorScheme="teal" 
+                      value="3"
+                      onChange={onChangeCategory}
+                      checked={ inputCategory.includes('3') }
+                      >体験</Checkbox>
+                      <Checkbox size="sm" colorScheme="teal"
+                      value="4"
+                      onChange={onChangeCategory}
+                      checked={ inputCategory.includes('4') }
+                      >交通</Checkbox>
+                      <Checkbox size="sm" colorScheme="teal" 
+                      value="5"
+                      onChange={onChangeCategory}
+                      checked={ inputCategory.includes('5') }
+                      >その他</Checkbox>
+                    </Stack>
+                  </FormControl>
+                  {/* <FormControl>
+                  <FormLabel fontSize="sm"></FormLabel>
+                    <Select 
+                    // value={inputPurpose} 
+                    // onChange={onChangeInputPurpose} 
+                    >
+                      <option value="food">飲食</option>
+                      <option value="stay">宿泊</option>
+                      <option value="traffic">交通</option>
+                      <option value="leisure">体験</option>
+                      <option value="other">その他</option>
+                    </Select>
+                  </FormControl> */}
 
-              <Box>
-              
-              <FormControl>
-              <FormLabel fontSize="sm"></FormLabel>
-                <Input 
-                placeholder="コメント" 
-                type="text" 
-                // value={inputTitle} 
-                // onChange={onChangeInputTitle} 
-                />
-              </FormControl>
-              <FormControl>
-              <FormLabel fontSize="sm"></FormLabel>
-                <Input placeholder="金額"/>
-              </FormControl>
-              </Box>
-              <Box textAlign="right" margin="5">
-              <PrimaryButton onClick={onClickSet}>登録</PrimaryButton>
-              </Box>
-              </Box>
+                  <Box margin="5" display="flex">
+                    <Box mr="5">
+                    <Flex
+                    mb="10px" 
+                    textAlign="right" 
+                    justify="space-between" 
+                    border="1px"
+                    borderColor="teal.500"
+                    p="2"
+                    alignItems="center"
+                    w="100px"
+                    >
+                  <Box 
+                  // onClick={onClickAdd} 
+                  color="gray.500"
+                  >
+                  画像
+                  </Box>
+                  <SecButton 
+                  // onClick={onClickAdd}
+                  >
+                  ＋
+                  </SecButton>
+                  </Flex>
+                      {/* <FormControl>
+                        <FormLabel></FormLabel>
+                        <Input placeholder="画像" />
+                      </FormControl> */}
+                    </Box>
+
+                    <Box>
+                      <FormControl>
+                        <FormLabel>
+                          <Input 
+                          placeholder="タイトル" 
+                          type="text" 
+                          value={inputDetailTitle} 
+                          onChange={onChangeInputDetailTitle} 
+                          />
+                        </FormLabel>
+                      </FormControl>
+                      <FormControl>
+                        <FormLabel fontSize="sm"></FormLabel>
+                          <Input 
+                          placeholder="コメント" 
+                          type="text" 
+                          value={inputComment} 
+                          onChange={onChangeInputComment} 
+                          />
+                      </FormControl>
+                      <FormControl>
+                        <FormLabel fontSize="sm"></FormLabel>
+                          <Input 
+                          placeholder="金額"
+                          value={inputCosts} 
+                          onChange={onChangeInputCosts}
+                          />
+                        </FormControl>
+                    </Box>
+                  </Box>
+
+                  <Box textAlign="right" margin="5">
+                    <PrimaryButton 
+                      onClick={onClickAddDetail}
+                      >
+                      登録
+                    </PrimaryButton>
+                  </Box>
+                </Box>
               </Stack>
             </Stack>
-
           </ModalBody>
         </ModalContent>
       </ModalOverlay>
