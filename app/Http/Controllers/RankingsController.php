@@ -28,4 +28,24 @@ class RankingsController extends Controller
 
         return $ranking;
     }
+
+    //ユーザーがマイランキングを編集
+    public function updateMyRanking(RankingRequest $request, Ranking $ranking) {
+        $ranking = Ranking::where('id', $request->id)->first();
+        
+        $ranking->title = $request->title;
+        $ranking->user_id = $request->user()->id;
+
+        $ranking->save();
+
+        return $ranking;
+    }
+
+    // ユーザーがマイランキングを削除
+    public function deleteMyRanking(Request $request, Ranking $ranking) {
+        $ranking = Ranking::where('id', $request->id)->first();
+        $ranking->delete();
+
+        return '削除完了';
+    }
 }
