@@ -108,6 +108,9 @@ class TripsController extends Controller
     // ユーザーの旅行情報削除
     public function deleteMyTrip(Request $request, Trip $trip) {
         $trip = Trip::where('id', $request->id)->first();
+        $trip->itineraries()->each(function($itinerary){
+            $itinerary->delete();
+        });
         $trip->delete();
 
         return '削除完了';

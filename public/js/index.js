@@ -95278,7 +95278,13 @@ exports.DeleteMyData = react_2.memo((props) => {
     const onClickDelete = react_1.useCallback((id) => {
         alert("削除しますか？");
         console.log("削除id", id);
-        axios_1.default.delete(`/api/delete-mytrip?api_token=${api_token}&id=${id}`);
+        axios_1.default.delete(`/api/delete-mytrip?api_token=${api_token}&id=${id}`)
+            .then((res) => {
+            console.log(res.data);
+        })
+            .catch(error => {
+            console.log('Error', error.response);
+        });
     }, []);
     return (react_1.default.createElement(react_3.Box, { paddingLeft: "170px" },
         react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", backgroundColor: "red.400", color: "white", p: "0.5", alignItems: "center", w: "100px" },
@@ -96518,8 +96524,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
