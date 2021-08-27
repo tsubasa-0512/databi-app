@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { memo,VFC } from 'react';
 import { Box, Stack, Image, Text, Flex, Center  } from '@chakra-ui/react';
 import { Link } from "react-router-dom";
+import Axios from "axios";
 
 type Props = {
   id: number;
-  category: string;
+  category: number;
   title: string;
-  costs: string;
+  costs: number;
   comment: string;
   imageUrl: string;
   
@@ -16,6 +17,28 @@ type Props = {
 
 export const MyDetailCard: VFC<Props> = memo((props) => {
   const { id, category, title, costs, comment, imageUrl } = props;
+
+  // const [ category, setCategory] = useState([]);
+
+  // const csrf_token = document
+  // .querySelector<HTMLElement>('meta[name="csrf-token"]')
+  // .getAttribute("content")
+
+  // const getCategory = async() =>{
+  //   await Axios.get(`/api/itinerary-form-select?category_id=${category_id}`)
+  //   .then((res)=>{   
+  //     console.log(res.data['category'])
+  //     setCategory(res.data['category'])
+  //     }
+  //       ) 
+  //   .catch(error => {
+  //     console.log('Error',error.response);
+  //     });
+  // }  
+
+  // useEffect(() => {
+  //   getCategory();
+  //   },[])
 
   return (
     <Flex
@@ -31,9 +54,14 @@ export const MyDetailCard: VFC<Props> = memo((props) => {
       >
 
       <Box>
-      <Center fontSize="sm">
-       {category}
-      </Center>
+        {/* { category.map((cate) => ( */}
+          <Center 
+          // key={cate.category_id} 
+          fontSize="sm">
+          {/* {cate.category} */}
+          {category}
+          </Center>
+        {/* ))} */}
       </Box>
       <Box 
       >

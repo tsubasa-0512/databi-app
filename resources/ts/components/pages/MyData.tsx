@@ -14,7 +14,6 @@ import { LoginUserContext } from "../../providers/LoginUserProvider";
 import { useLoginUser } from "../../hooks/useLoginUser";
 import { useState } from "react";
 import { Data } from "../../types/api/data";
-import { useSelectUserCard } from "../../hooks/useSelectUserTrip";
 
 
 export const MyData: VFC = memo(() => {

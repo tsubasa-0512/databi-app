@@ -1,8 +1,13 @@
 export type detailData = {
-  detail_id: number;
-  category: number;
-  title: string;
-  costs: number;
-  comment: string;
+  id: number;
+  trip_id: number;
+  category_id: number;
+  channel_id: number;
   api_token:string;
+  title: string;
+  comment: string;
+  bill: number;
+  link: string;
+  created_at: string;
+  updated_at: string;
 };

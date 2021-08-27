@@ -14,6 +14,7 @@ import { useMyData } from "../../../hooks/useMyData";
 import { Data } from "../../../types/api/data";
 import Axios from "axios";
 import { MyDetailCard } from "./MyDetailCard";
+import { detailData } from "../../../types/api/detailData";
 
 
 type Props = RouteComponentProps<{
@@ -29,14 +30,16 @@ export const MyDataDetail: VFC= memo((props) => {
   console.log({id});
 
   const [ userData, setUserData ] = useState<Array<Data>>([]);
+  const [ userDetailData, setUserDetailData ] = useState<Array<detailData>>([]);
+  
 
   const api_token= document
     .querySelector('meta[name="api-token"]')
     .getAttribute("content");
 
-    
   useEffect(() => {
     getData();
+    getDetailData();
     },[])
 
     const getData = useCallback(() => {
@@ -52,6 +55,20 @@ export const MyDataDetail: VFC= memo((props) => {
         });
     },[]);
 
+    const getDetailData = useCallback(() => {
+      console.log("user取れる？",api_token)
+      Axios
+        .get<Array<detailData>>(`/api/get-myitinerary-all?api_token=${api_token}&id=${id}`)
+        .then((res) => {
+          setUserDetailData(res.data);
+        console.log("userDetailTrip",res.data)
+      }) 
+        .catch(error => {
+          console.log(error)
+        });
+    },[]);
+
+    
     const style = {
       textDecoration:"none"
      };
@@ -102,23 +119,26 @@ export const MyDataDetail: VFC= memo((props) => {
 
         
         <Wrap justify="center" p={{ base: 4, md: 10 }}>
-          {/* <Link 
-          style={style} 
-          to={{ pathname: "" }}
-          > */}
-            <WrapItem key={1} mx="auto">
+        {userDetailData.map((userDetailTrip) => (
+          // {/* <Link 
+          // style={style} 
+          // to={{ pathname: "" }}
+          // > */}
+            <WrapItem key={userDetailTrip.id} mx="auto">
               <MyDetailCard 
-              id={1}
-              category="カテゴリ"
-              title="タイトル"
-              costs="金額"
-              comment="コメント"
+              id={userDetailTrip.id}
+              category={userDetailTrip.category_id}
+              title={userDetailTrip.title}
+              costs={userDetailTrip.bill}
+              comment={userDetailTrip.comment}
               imageUrl="http://source.unsplash.com/random"
               // onClick={onClick}
               />
             </WrapItem>
-          {/* </Link>   */}
+          // {/* </Link>   */}
+          ) )}
        </Wrap>
+      
 
       
 

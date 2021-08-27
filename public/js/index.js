@@ -95432,11 +95432,13 @@ exports.MyDataDetail = react_2.memo((props) => {
     const { id } = react_router_dom_1.useParams();
     console.log({ id });
     const [userData, setUserData] = react_1.useState([]);
+    const [userDetailData, setUserDetailData] = react_1.useState([]);
     const api_token = document
         .querySelector('meta[name="api-token"]')
         .getAttribute("content");
     react_1.useEffect(() => {
         getData();
+        getDetailData();
     }, []);
     const getData = react_1.useCallback(() => {
         console.log("user取れる？", api_token);
@@ -95445,6 +95447,18 @@ exports.MyDataDetail = react_2.memo((props) => {
             .then((res) => {
             setUserData(res.data);
             console.log("usertrip", res.data);
+        })
+            .catch(error => {
+            console.log(error);
+        });
+    }, []);
+    const getDetailData = react_1.useCallback(() => {
+        console.log("user取れる？", api_token);
+        axios_1.default
+            .get(`/api/get-myitinerary-all?api_token=${api_token}&id=${id}`)
+            .then((res) => {
+            setUserDetailData(res.data);
+            console.log("userDetailTrip", res.data);
         })
             .catch(error => {
             console.log(error);
@@ -95468,9 +95482,15 @@ exports.MyDataDetail = react_2.memo((props) => {
                     react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", border: "1px", borderColor: "teal.500", p: "2", alignItems: "center", w: "200px" },
                         react_1.default.createElement(react_3.Box, { onClick: onClickAdd, color: "gray.500" }, "\u8A73\u7D30\u30C7\u30FC\u30BF\u8FFD\u52A0"),
                         react_1.default.createElement(secButton_1.SecButton, { onClick: onClickAdd }, "\uFF0B"))),
-                react_1.default.createElement(react_3.Wrap, { justify: "center", p: { base: 4, md: 10 } },
-                    react_1.default.createElement(react_3.WrapItem, { key: 1, mx: "auto" },
-                        react_1.default.createElement(MyDetailCard_1.MyDetailCard, { id: 1, category: "\u30AB\u30C6\u30B4\u30EA", title: "\u30BF\u30A4\u30C8\u30EB", costs: "\u91D1\u984D", comment: "\u30B3\u30E1\u30F3\u30C8", imageUrl: "http://source.unsplash.com/random" }))),
+                react_1.default.createElement(react_3.Wrap, { justify: "center", p: { base: 4, md: 10 } }, userDetailData.map((userDetailTrip) => (
+                // {/* <Link 
+                // style={style} 
+                // to={{ pathname: "" }}
+                // > */}
+                react_1.default.createElement(react_3.WrapItem, { key: userDetailTrip.id, mx: "auto" },
+                    react_1.default.createElement(MyDetailCard_1.MyDetailCard, { id: userDetailTrip.id, category: userDetailTrip.category_id, title: userDetailTrip.title, costs: userDetailTrip.bill, comment: userDetailTrip.comment, imageUrl: "http://source.unsplash.com/random" }))
+                // {/* </Link>   */}
+                ))),
                 react_1.default.createElement(AddDetailModal_1.AddDetailModal, { isOpen: isOpen, onClose: onClose })))));
 });
 
@@ -95496,9 +95516,31 @@ const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 exports.MyDetailCard = react_2.memo((props) => {
     const { id, category, title, costs, comment, imageUrl } = props;
+    // const [ category, setCategory] = useState([]);
+    // const csrf_token = document
+    // .querySelector<HTMLElement>('meta[name="csrf-token"]')
+    // .getAttribute("content")
+    // const getCategory = async() =>{
+    //   await Axios.get(`/api/itinerary-form-select?category_id=${category_id}`)
+    //   .then((res)=>{   
+    //     console.log(res.data['category'])
+    //     setCategory(res.data['category'])
+    //     }
+    //       ) 
+    //   .catch(error => {
+    //     console.log('Error',error.response);
+    //     });
+    // }  
+    // useEffect(() => {
+    //   getCategory();
+    //   },[])
     return (react_1.default.createElement(react_3.Flex, { w: "370px", h: "60px", bg: "gray.50", color: "teal.400", align: "center", justify: "space-between", mb: "5px", _hover: { cursor: "pointer", opacity: 0.8 } },
         react_1.default.createElement(react_3.Box, null,
-            react_1.default.createElement(react_3.Center, { fontSize: "sm" }, category)),
+            react_1.default.createElement(react_3.Center
+            // key={cate.category_id} 
+            , { 
+                // key={cate.category_id} 
+                fontSize: "sm" }, category)),
         react_1.default.createElement(react_3.Box, null,
             react_1.default.createElement(react_3.Center, { fontSize: "sm" }, title)),
         react_1.default.createElement(react_3.Box, null,
