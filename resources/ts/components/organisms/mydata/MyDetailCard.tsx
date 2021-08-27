@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { memo,VFC } from 'react';
-import { Box, Stack, Image, Text, Flex, Center  } from '@chakra-ui/react';
-import { Link } from "react-router-dom";
+import { Box, Image, Flex, Center, Button  } from '@chakra-ui/react';
+import { useParams } from "react-router-dom";
 import Axios from "axios";
 
 type Props = {
@@ -18,28 +18,19 @@ type Props = {
 export const MyDetailCard: VFC<Props> = memo((props) => {
   const { id, category, title, costs, comment, imageUrl } = props;
 
-  // const [ category, setCategory] = useState([]);
+  console.log("詳細情報のid",id);
 
-  // const csrf_token = document
-  // .querySelector<HTMLElement>('meta[name="csrf-token"]')
-  // .getAttribute("content")
+  const api_token= document
+    .querySelector('meta[name="api-token"]')
+    .getAttribute("content");
 
-  // const getCategory = async() =>{
-  //   await Axios.get(`/api/itinerary-form-select?category_id=${category_id}`)
-  //   .then((res)=>{   
-  //     console.log(res.data['category'])
-  //     setCategory(res.data['category'])
-  //     }
-  //       ) 
-  //   .catch(error => {
-  //     console.log('Error',error.response);
-  //     });
-  // }  
+  const onClickDeleteDetail = useCallback((id) => {
+    alert("削除しますか？");
+    console.log("削除id",id);
+    Axios.delete(`/api/delete-mytrip?api_token=${api_token}&id=${id}`)
+  },[]);
 
-  // useEffect(() => {
-  //   getCategory();
-  //   },[])
-
+  
   return (
     <Flex
       w="370px"
@@ -54,14 +45,10 @@ export const MyDetailCard: VFC<Props> = memo((props) => {
       >
 
       <Box>
-        {/* { category.map((cate) => ( */}
           <Center 
-          // key={cate.category_id} 
           fontSize="sm">
-          {/* {cate.category} */}
           {category}
           </Center>
-        {/* ))} */}
       </Box>
       <Box 
       >
@@ -90,6 +77,17 @@ export const MyDetailCard: VFC<Props> = memo((props) => {
         m="auto"
         />
       </Box>
+      <Button
+      size="xs"
+      backgroundColor="red.400"
+      color="white"
+      fontWeight="light"
+      borderRadius="none"
+      _hover={{ opacity: 0.8 }}
+      // disabled={disabled || loading} 
+      // isLoading={loading}
+      onClick={() => onClickDeleteDetail(id)}
+      >削除</Button>
     </Flex>
   )
 });

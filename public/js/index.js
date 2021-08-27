@@ -95230,14 +95230,35 @@ exports.AddDetailModal = react_2.memo((props) => {
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteMyData = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 // type Props = {
 //   id: number;
 //   category: number;
@@ -95249,9 +95270,22 @@ const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@cha
 // };
 exports.DeleteMyData = react_2.memo((props) => {
     // const { id, category, title, costs, comment, imageUrl } = props;
+    const { id } = react_router_dom_1.useParams();
+    console.log({ id });
+    const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content");
+    const onClickDelete = react_1.useCallback((id) => {
+        alert("削除しますか？");
+        console.log("削除id", id);
+        axios_1.default.delete(`/api/delete-mytrip?api_token=${api_token}&id=${id}`);
+    }, []);
     return (react_1.default.createElement(react_3.Box, { paddingLeft: "170px" },
-        react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", backgroundColor: "red.400", color: "white", p: "2", alignItems: "center", w: "100px" },
-            react_1.default.createElement(react_3.Button, { size: "sm", backgroundColor: "red.400", fontWeight: "light", borderRadius: "none" }, "\u65C5\u884C\u60C5\u5831\u524A\u9664"))));
+        react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", backgroundColor: "red.400", color: "white", p: "0.5", alignItems: "center", w: "100px" },
+            react_1.default.createElement(react_3.Button, { size: "sm", backgroundColor: "red.400", fontWeight: "light", borderRadius: "none", _hover: { opacity: 0.8 }, 
+                // disabled={disabled || loading} 
+                // isLoading={loading}
+                onClick: () => onClickDelete(id) }, "\u65C5\u884C\u60C5\u5831\u524A\u9664"))));
 });
 
 
@@ -95546,41 +95580,48 @@ exports.MyDataDetail = react_2.memo((props) => {
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyDetailCard = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 exports.MyDetailCard = react_2.memo((props) => {
     const { id, category, title, costs, comment, imageUrl } = props;
-    // const [ category, setCategory] = useState([]);
-    // const csrf_token = document
-    // .querySelector<HTMLElement>('meta[name="csrf-token"]')
-    // .getAttribute("content")
-    // const getCategory = async() =>{
-    //   await Axios.get(`/api/itinerary-form-select?category_id=${category_id}`)
-    //   .then((res)=>{   
-    //     console.log(res.data['category'])
-    //     setCategory(res.data['category'])
-    //     }
-    //       ) 
-    //   .catch(error => {
-    //     console.log('Error',error.response);
-    //     });
-    // }  
-    // useEffect(() => {
-    //   getCategory();
-    //   },[])
+    console.log("詳細情報のid", id);
+    const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content");
+    const onClickDeleteDetail = react_1.useCallback((id) => {
+        alert("削除しますか？");
+        console.log("削除id", id);
+        axios_1.default.delete(`/api/delete-mytrip?api_token=${api_token}&id=${id}`);
+    }, []);
     return (react_1.default.createElement(react_3.Flex, { w: "370px", h: "60px", bg: "gray.50", color: "teal.400", align: "center", justify: "space-between", mb: "5px", _hover: { cursor: "pointer", opacity: 0.8 } },
         react_1.default.createElement(react_3.Box, null,
-            react_1.default.createElement(react_3.Center
-            // key={cate.category_id} 
-            , { 
-                // key={cate.category_id} 
-                fontSize: "sm" }, category)),
+            react_1.default.createElement(react_3.Center, { fontSize: "sm" }, category)),
         react_1.default.createElement(react_3.Box, null,
             react_1.default.createElement(react_3.Center, { fontSize: "sm" }, title)),
         react_1.default.createElement(react_3.Box, null,
@@ -95594,7 +95635,11 @@ exports.MyDetailCard = react_2.memo((props) => {
             , { 
                 // borderRadius="full"
                 // boxSize="40px"
-                w: "60px", h: "60px", src: "http://source.unsplash.com/random", alt: imageUrl, m: "auto" }))));
+                w: "60px", h: "60px", src: "http://source.unsplash.com/random", alt: imageUrl, m: "auto" })),
+        react_1.default.createElement(react_3.Button, { size: "xs", backgroundColor: "red.400", color: "white", fontWeight: "light", borderRadius: "none", _hover: { opacity: 0.8 }, 
+            // disabled={disabled || loading} 
+            // isLoading={loading}
+            onClick: () => onClickDeleteDetail(id) }, "\u524A\u9664")));
 });
 
 
@@ -96473,8 +96518,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
