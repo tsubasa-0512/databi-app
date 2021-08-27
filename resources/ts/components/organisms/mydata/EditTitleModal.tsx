@@ -61,6 +61,7 @@ export const EditTitleModal: VFC<Props> = memo((props) => {
     .catch(function(error){
       console.log(error)
     });
+
     };
   
 

@@ -96000,11 +96000,28 @@ const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@cha
 const ModalHeaders_1 = __webpack_require__(/*! ../../organisms/layout/ModalHeaders */ "./resources/ts/components/organisms/layout/ModalHeaders.tsx");
 const AddButton_1 = __webpack_require__(/*! ../../atoms/button/AddButton */ "./resources/ts/components/atoms/button/AddButton.tsx");
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+const axios_2 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 exports.Profile = react_2.memo((props) => {
     const { isOpen, onClose, onOpen } = react_3.useDisclosure();
     const [gender, setGender] = react_1.useState([]);
     const [prefecture, setPrefecture] = react_1.useState([]);
+    const [userName, setUserName] = react_1.useState('');
+    const onChangeUserName = (e) => setUserName(e.target.value);
+    const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content");
+    const getUserName = () => __awaiter(void 0, void 0, void 0, function* () {
+        yield axios_2.default.get(`/api/myprofile?api_token=${api_token}`)
+            .then((res) => {
+            console.log(res.data);
+            setUserName(res.data);
+        })
+            .catch(error => {
+            console.log('Error', error.response);
+        });
+    });
     react_1.useEffect(() => {
+        getUserName();
         getMypageSelection();
     }, []);
     const onClickProfile = react_2.useCallback(() => onOpen(), []);
@@ -96039,16 +96056,16 @@ exports.Profile = react_2.memo((props) => {
                     react_1.default.createElement(react_3.Stack, { spacing: 4 },
                         react_1.default.createElement(react_3.FormControl, null,
                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u30E6\u30FC\u30B6\u30FC\u540D"),
-                            react_1.default.createElement(react_3.Input, { value: "\u30E6\u30FC\u30B6\u30FC\u540D", color: "gray" })),
+                            react_1.default.createElement(react_3.Input, { type: "text", value: `${userName.name}`, color: "gray", onChange: onChangeUserName })),
                         react_1.default.createElement(react_3.FormControl, null,
                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u6027\u5225"),
-                            react_1.default.createElement(react_3.Input, { value: "\u9078\u629E", color: "gray" })),
+                            react_1.default.createElement(react_3.Select, null, gender.map((p) => react_1.default.createElement("option", { value: p.id }, p.gender)))),
                         react_1.default.createElement(react_3.FormControl, null,
                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u5E74\u9F62"),
                             react_1.default.createElement(react_3.Input, { value: "\u897F\u66A6\u9078\u629E", color: "gray" })),
                         react_1.default.createElement(react_3.FormControl, null,
                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u5C45\u4F4F\u5730"),
-                            react_1.default.createElement(react_3.Input, { value: "\u90FD\u9053\u5E9C\u770C\u9078\u629E", color: "gray" })),
+                            react_1.default.createElement(react_3.Select, null, prefecture.map((p) => react_1.default.createElement("option", { value: p.id }, p.name)))),
                         react_1.default.createElement(react_3.FormControl, null,
                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "link"),
                             react_1.default.createElement(react_3.Input, { value: "", color: "gray", isReadOnly: true })),
