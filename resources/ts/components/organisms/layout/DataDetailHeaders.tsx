@@ -15,7 +15,7 @@ export const DataDetailHeaders: VFC<Props>= memo((props) => {
     w="400px"
     h="30px" 
     align="center"
-    // justify="center" 
+    // justify="space-between" 
     // bg="teal.500"
     // color="gray.200" 
   >
@@ -26,6 +26,7 @@ export const DataDetailHeaders: VFC<Props>= memo((props) => {
   >
     {children}
   </Heading>
+  
   </Flex>
   </>
   )

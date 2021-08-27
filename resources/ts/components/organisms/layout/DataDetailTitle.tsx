@@ -1,4 +1,4 @@
-import { Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import React from "react";
 import { memo,VFC, ReactNode } from 'react'
 
@@ -25,8 +25,7 @@ export const DataDetailTitle: VFC<Props>= memo((props) => {
   >
     {children}
   </Heading>
-  </Flex>
-      
+  </Flex>    
   </>
   )
 });

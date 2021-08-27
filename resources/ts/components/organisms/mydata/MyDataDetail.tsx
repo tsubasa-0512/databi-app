@@ -7,7 +7,7 @@ import { Box, Center, Flex, useDisclosure, Wrap, WrapItem } from "@chakra-ui/rea
 
 import { DataDetailHeaders } from "../layout/DataDetailHeaders";
 import { DataDetailTitle } from "../layout/DataDetailTitle";
-import { SecButton } from "../../atoms/button/secButton";
+
 import { AddDetailModal } from "./AddDetailModal";
 import { DataDetailEdit } from "../layout/DataDetailEdit"
 import { useMyData } from "../../../hooks/useMyData";
@@ -15,6 +15,8 @@ import { Data } from "../../../types/api/data";
 import Axios from "axios";
 import { MyDetailCard } from "./MyDetailCard";
 import { detailData } from "../../../types/api/detailData";
+import { SecButton } from "../../atoms/button/secButton";
+import { DeleteMyData } from "./DeleteMyData";
 
 
 type Props = RouteComponentProps<{
@@ -137,12 +139,8 @@ export const MyDataDetail: VFC= memo((props) => {
             </WrapItem>
           // {/* </Link>   */}
           ) )}
-       </Wrap>
+        </Wrap>
       
-
-      
-
-
         {/* <Box bg="cyan.700" mb="8px">
         <Center h="40px"  mb="5px" color="gray.50">宿</Center></Box>
         <Box bg="green.500" mb="8px">
@@ -151,8 +149,10 @@ export const MyDataDetail: VFC= memo((props) => {
         <Center h="40px"  mb="5px" color="gray.50">体験</Center></Box> */}
         
         <AddDetailModal isOpen={isOpen} onClose={onClose}/>
+        <DeleteMyData></DeleteMyData>
         </Box>
       </WrapItem>
+        
   </Wrap>
   )
 });
