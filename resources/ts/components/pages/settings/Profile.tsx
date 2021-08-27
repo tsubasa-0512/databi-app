@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { useCallback, memo,VFC } from 'react';
-import { Button, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, Stack, FormControl, FormLabel, Input, ModalFooter, useDisclosure, MenuButton } from '@chakra-ui/react'; 
+import { Button, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody, Stack, FormControl, FormLabel, Input, ModalFooter, useDisclosure, MenuButton, Select } from '@chakra-ui/react'; 
 import { ModalHeaders } from '../../organisms/layout/ModalHeaders';
 import { AddButton } from "../../atoms/button/AddButton";
 import axios from "axios";
+import Axios from "axios";
 
 
 type Props = {
@@ -19,8 +20,29 @@ export const Profile: VFC<Props> = memo((props) => {
   const [gender, setGender] = useState([]);
   const [prefecture, setPrefecture] = useState([]);
 
+  const [ userName, setUserName ] = useState('');
+  const onChangeUserName = (e:ChangeEvent<HTMLInputElement>) =>
+  setUserName(e.target.value); 
+
+  const api_token = document
+  .querySelector<HTMLElement>('meta[name="api-token"]')
+  .getAttribute("content")
+
+  const getUserName = async() =>{
+    await Axios.get(`/api/myprofile?api_token=${api_token}`)
+    .then((res)=>{   
+      console.log(res.data)
+      setUserName(res.data)
+      }
+        ) 
+    .catch(error => {
+      console.log('Error',error.response);
+      });
+  }  
+
   useEffect(() => {
-    getMypageSelection()
+    getUserName();
+    getMypageSelection();
   },[])
 
   const onClickProfile = useCallback(() => onOpen(), []);
@@ -66,11 +88,23 @@ export const Profile: VFC<Props> = memo((props) => {
             <Stack spacing={4}>
               <FormControl>
                 <FormLabel fontSize="sm">ユーザー名</FormLabel>
-                <Input value="ユーザー名" color="gray"/>
+                <Input
+                  type="text" 
+                  value={`${userName.name}`} 
+                  color="gray"
+                  onChange={onChangeUserName}
+                  />
               </FormControl>
               <FormControl>
                 <FormLabel fontSize="sm">性別</FormLabel>
-                <Input value="選択" color="gray"/>
+                <Select>
+                  {gender.map((p) =>
+                    <option 
+                    value={p.id}
+                    >
+                      {p.gender}
+                    </option>)}
+                </Select>
               </FormControl>
               <FormControl>
                 <FormLabel fontSize="sm">年齢</FormLabel>
@@ -78,7 +112,14 @@ export const Profile: VFC<Props> = memo((props) => {
               </FormControl>
               <FormControl>
                 <FormLabel fontSize="sm">居住地</FormLabel>
-                <Input value="都道府県選択" color="gray"/>
+                <Select>
+                  {prefecture.map((p) =>
+                    <option 
+                    value={p.id}
+                    >
+                      {p.name}
+                    </option>)}
+                </Select>
               </FormControl>
               <FormControl>
                 <FormLabel  fontSize="sm">link</FormLabel>

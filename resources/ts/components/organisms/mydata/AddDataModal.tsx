@@ -65,7 +65,7 @@ export const AddDataModal: VFC<Props> = memo((props) => {
   .getAttribute("content")
 
   useEffect(() => {
-    getSelection()
+    getSelection();
   },[])
 
   const getSelection = async() =>{

@@ -7,13 +7,16 @@ import { Box, Center, Flex, useDisclosure, Wrap, WrapItem } from "@chakra-ui/rea
 
 import { DataDetailHeaders } from "../layout/DataDetailHeaders";
 import { DataDetailTitle } from "../layout/DataDetailTitle";
-import { SecButton } from "../../atoms/button/secButton";
+
 import { AddDetailModal } from "./AddDetailModal";
 import { DataDetailEdit } from "../layout/DataDetailEdit"
 import { useMyData } from "../../../hooks/useMyData";
 import { Data } from "../../../types/api/data";
 import Axios from "axios";
 import { MyDetailCard } from "./MyDetailCard";
+import { detailData } from "../../../types/api/detailData";
+import { SecButton } from "../../atoms/button/secButton";
+import { DeleteMyData } from "./DeleteMyData";
 
 
 type Props = RouteComponentProps<{
@@ -29,14 +32,16 @@ export const MyDataDetail: VFC= memo((props) => {
   console.log({id});
 
   const [ userData, setUserData ] = useState<Array<Data>>([]);
+  const [ userDetailData, setUserDetailData ] = useState<Array<detailData>>([]);
+  
 
   const api_token= document
     .querySelector('meta[name="api-token"]')
     .getAttribute("content");
 
-    
   useEffect(() => {
     getData();
+    getDetailData();
     },[])
 
     const getData = useCallback(() => {
@@ -52,6 +57,20 @@ export const MyDataDetail: VFC= memo((props) => {
         });
     },[]);
 
+    const getDetailData = useCallback(() => {
+      console.log("user取れる？",api_token)
+      Axios
+        .get<Array<detailData>>(`/api/get-myitinerary-all?api_token=${api_token}&id=${id}`)
+        .then((res) => {
+          setUserDetailData(res.data);
+        console.log("userDetailTrip",res.data)
+      }) 
+        .catch(error => {
+          console.log(error)
+        });
+    },[]);
+
+    
     const style = {
       textDecoration:"none"
      };
@@ -102,27 +121,26 @@ export const MyDataDetail: VFC= memo((props) => {
 
         
         <Wrap justify="center" p={{ base: 4, md: 10 }}>
-          {/* <Link 
-          style={style} 
-          to={{ pathname: "" }}
-          > */}
-            <WrapItem key={1} mx="auto">
+        {userDetailData.map((userDetailTrip) => (
+          // {/* <Link 
+          // style={style} 
+          // to={{ pathname: "" }}
+          // > */}
+            <WrapItem key={userDetailTrip.id} mx="auto">
               <MyDetailCard 
-              id={1}
-              category="カテゴリ"
-              title="タイトル"
-              costs="金額"
-              comment="コメント"
+              id={userDetailTrip.id}
+              category={userDetailTrip.category_id}
+              title={userDetailTrip.title}
+              costs={userDetailTrip.bill}
+              comment={userDetailTrip.comment}
               imageUrl="http://source.unsplash.com/random"
               // onClick={onClick}
               />
             </WrapItem>
-          {/* </Link>   */}
-       </Wrap>
-
+          // {/* </Link>   */}
+          ) )}
+        </Wrap>
       
-
-
         {/* <Box bg="cyan.700" mb="8px">
         <Center h="40px"  mb="5px" color="gray.50">宿</Center></Box>
         <Box bg="green.500" mb="8px">
@@ -131,8 +149,10 @@ export const MyDataDetail: VFC= memo((props) => {
         <Center h="40px"  mb="5px" color="gray.50">体験</Center></Box> */}
         
         <AddDetailModal isOpen={isOpen} onClose={onClose}/>
+        <DeleteMyData></DeleteMyData>
         </Box>
       </WrapItem>
+        
   </Wrap>
   )
 });

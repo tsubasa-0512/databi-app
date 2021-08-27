@@ -95219,6 +95219,42 @@ exports.AddDetailModal = react_2.memo((props) => {
 
 /***/ }),
 
+/***/ "./resources/ts/components/organisms/mydata/DeleteMyData.tsx":
+/*!*******************************************************************!*\
+  !*** ./resources/ts/components/organisms/mydata/DeleteMyData.tsx ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DeleteMyData = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+// type Props = {
+//   id: number;
+//   category: number;
+//   title: string;
+//   costs: number;
+//   comment: string;
+//   imageUrl: string;
+//   onClick: (id: number) => void;
+// };
+exports.DeleteMyData = react_2.memo((props) => {
+    // const { id, category, title, costs, comment, imageUrl } = props;
+    return (react_1.default.createElement(react_3.Box, { paddingLeft: "170px" },
+        react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", backgroundColor: "red.400", color: "white", p: "2", alignItems: "center", w: "100px" },
+            react_1.default.createElement(react_3.Button, { size: "sm", backgroundColor: "red.400", fontWeight: "light", borderRadius: "none" }, "\u65C5\u884C\u60C5\u5831\u524A\u9664"))));
+});
+
+
+/***/ }),
+
 /***/ "./resources/ts/components/organisms/mydata/EditTitleModal.tsx":
 /*!*********************************************************************!*\
   !*** ./resources/ts/components/organisms/mydata/EditTitleModal.tsx ***!
@@ -95421,22 +95457,25 @@ const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_m
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const DataDetailHeaders_1 = __webpack_require__(/*! ../layout/DataDetailHeaders */ "./resources/ts/components/organisms/layout/DataDetailHeaders.tsx");
 const DataDetailTitle_1 = __webpack_require__(/*! ../layout/DataDetailTitle */ "./resources/ts/components/organisms/layout/DataDetailTitle.tsx");
-const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./resources/ts/components/atoms/button/secButton.tsx");
 const AddDetailModal_1 = __webpack_require__(/*! ./AddDetailModal */ "./resources/ts/components/organisms/mydata/AddDetailModal.tsx");
 const DataDetailEdit_1 = __webpack_require__(/*! ../layout/DataDetailEdit */ "./resources/ts/components/organisms/layout/DataDetailEdit.tsx");
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 const MyDetailCard_1 = __webpack_require__(/*! ./MyDetailCard */ "./resources/ts/components/organisms/mydata/MyDetailCard.tsx");
+const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./resources/ts/components/atoms/button/secButton.tsx");
+const DeleteMyData_1 = __webpack_require__(/*! ./DeleteMyData */ "./resources/ts/components/organisms/mydata/DeleteMyData.tsx");
 exports.MyDataDetail = react_2.memo((props) => {
     const { isOpen, onOpen, onClose } = react_3.useDisclosure();
     const onClickAdd = react_1.useCallback(() => onOpen(), []);
     const { id } = react_router_dom_1.useParams();
     console.log({ id });
     const [userData, setUserData] = react_1.useState([]);
+    const [userDetailData, setUserDetailData] = react_1.useState([]);
     const api_token = document
         .querySelector('meta[name="api-token"]')
         .getAttribute("content");
     react_1.useEffect(() => {
         getData();
+        getDetailData();
     }, []);
     const getData = react_1.useCallback(() => {
         console.log("user取れる？", api_token);
@@ -95445,6 +95484,18 @@ exports.MyDataDetail = react_2.memo((props) => {
             .then((res) => {
             setUserData(res.data);
             console.log("usertrip", res.data);
+        })
+            .catch(error => {
+            console.log(error);
+        });
+    }, []);
+    const getDetailData = react_1.useCallback(() => {
+        console.log("user取れる？", api_token);
+        axios_1.default
+            .get(`/api/get-myitinerary-all?api_token=${api_token}&id=${id}`)
+            .then((res) => {
+            setUserDetailData(res.data);
+            console.log("userDetailTrip", res.data);
         })
             .catch(error => {
             console.log(error);
@@ -95468,10 +95519,17 @@ exports.MyDataDetail = react_2.memo((props) => {
                     react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", border: "1px", borderColor: "teal.500", p: "2", alignItems: "center", w: "200px" },
                         react_1.default.createElement(react_3.Box, { onClick: onClickAdd, color: "gray.500" }, "\u8A73\u7D30\u30C7\u30FC\u30BF\u8FFD\u52A0"),
                         react_1.default.createElement(secButton_1.SecButton, { onClick: onClickAdd }, "\uFF0B"))),
-                react_1.default.createElement(react_3.Wrap, { justify: "center", p: { base: 4, md: 10 } },
-                    react_1.default.createElement(react_3.WrapItem, { key: 1, mx: "auto" },
-                        react_1.default.createElement(MyDetailCard_1.MyDetailCard, { id: 1, category: "\u30AB\u30C6\u30B4\u30EA", title: "\u30BF\u30A4\u30C8\u30EB", costs: "\u91D1\u984D", comment: "\u30B3\u30E1\u30F3\u30C8", imageUrl: "http://source.unsplash.com/random" }))),
-                react_1.default.createElement(AddDetailModal_1.AddDetailModal, { isOpen: isOpen, onClose: onClose })))));
+                react_1.default.createElement(react_3.Wrap, { justify: "center", p: { base: 4, md: 10 } }, userDetailData.map((userDetailTrip) => (
+                // {/* <Link 
+                // style={style} 
+                // to={{ pathname: "" }}
+                // > */}
+                react_1.default.createElement(react_3.WrapItem, { key: userDetailTrip.id, mx: "auto" },
+                    react_1.default.createElement(MyDetailCard_1.MyDetailCard, { id: userDetailTrip.id, category: userDetailTrip.category_id, title: userDetailTrip.title, costs: userDetailTrip.bill, comment: userDetailTrip.comment, imageUrl: "http://source.unsplash.com/random" }))
+                // {/* </Link>   */}
+                ))),
+                react_1.default.createElement(AddDetailModal_1.AddDetailModal, { isOpen: isOpen, onClose: onClose }),
+                react_1.default.createElement(DeleteMyData_1.DeleteMyData, null)))));
 });
 
 
@@ -95496,9 +95554,31 @@ const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 exports.MyDetailCard = react_2.memo((props) => {
     const { id, category, title, costs, comment, imageUrl } = props;
+    // const [ category, setCategory] = useState([]);
+    // const csrf_token = document
+    // .querySelector<HTMLElement>('meta[name="csrf-token"]')
+    // .getAttribute("content")
+    // const getCategory = async() =>{
+    //   await Axios.get(`/api/itinerary-form-select?category_id=${category_id}`)
+    //   .then((res)=>{   
+    //     console.log(res.data['category'])
+    //     setCategory(res.data['category'])
+    //     }
+    //       ) 
+    //   .catch(error => {
+    //     console.log('Error',error.response);
+    //     });
+    // }  
+    // useEffect(() => {
+    //   getCategory();
+    //   },[])
     return (react_1.default.createElement(react_3.Flex, { w: "370px", h: "60px", bg: "gray.50", color: "teal.400", align: "center", justify: "space-between", mb: "5px", _hover: { cursor: "pointer", opacity: 0.8 } },
         react_1.default.createElement(react_3.Box, null,
-            react_1.default.createElement(react_3.Center, { fontSize: "sm" }, category)),
+            react_1.default.createElement(react_3.Center
+            // key={cate.category_id} 
+            , { 
+                // key={cate.category_id} 
+                fontSize: "sm" }, category)),
         react_1.default.createElement(react_3.Box, null,
             react_1.default.createElement(react_3.Center, { fontSize: "sm" }, title)),
         react_1.default.createElement(react_3.Box, null,
@@ -95958,11 +96038,28 @@ const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@cha
 const ModalHeaders_1 = __webpack_require__(/*! ../../organisms/layout/ModalHeaders */ "./resources/ts/components/organisms/layout/ModalHeaders.tsx");
 const AddButton_1 = __webpack_require__(/*! ../../atoms/button/AddButton */ "./resources/ts/components/atoms/button/AddButton.tsx");
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+const axios_2 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 exports.Profile = react_2.memo((props) => {
     const { isOpen, onClose, onOpen } = react_3.useDisclosure();
     const [gender, setGender] = react_1.useState([]);
     const [prefecture, setPrefecture] = react_1.useState([]);
+    const [userName, setUserName] = react_1.useState('');
+    const onChangeUserName = (e) => setUserName(e.target.value);
+    const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content");
+    const getUserName = () => __awaiter(void 0, void 0, void 0, function* () {
+        yield axios_2.default.get(`/api/myprofile?api_token=${api_token}`)
+            .then((res) => {
+            console.log(res.data);
+            setUserName(res.data);
+        })
+            .catch(error => {
+            console.log('Error', error.response);
+        });
+    });
     react_1.useEffect(() => {
+        getUserName();
         getMypageSelection();
     }, []);
     const onClickProfile = react_2.useCallback(() => onOpen(), []);
@@ -95997,16 +96094,16 @@ exports.Profile = react_2.memo((props) => {
                     react_1.default.createElement(react_3.Stack, { spacing: 4 },
                         react_1.default.createElement(react_3.FormControl, null,
                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u30E6\u30FC\u30B6\u30FC\u540D"),
-                            react_1.default.createElement(react_3.Input, { value: "\u30E6\u30FC\u30B6\u30FC\u540D", color: "gray" })),
+                            react_1.default.createElement(react_3.Input, { type: "text", value: `${userName.name}`, color: "gray", onChange: onChangeUserName })),
                         react_1.default.createElement(react_3.FormControl, null,
                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u6027\u5225"),
-                            react_1.default.createElement(react_3.Input, { value: "\u9078\u629E", color: "gray" })),
+                            react_1.default.createElement(react_3.Select, null, gender.map((p) => react_1.default.createElement("option", { value: p.id }, p.gender)))),
                         react_1.default.createElement(react_3.FormControl, null,
                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u5E74\u9F62"),
                             react_1.default.createElement(react_3.Input, { value: "\u897F\u66A6\u9078\u629E", color: "gray" })),
                         react_1.default.createElement(react_3.FormControl, null,
                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u5C45\u4F4F\u5730"),
-                            react_1.default.createElement(react_3.Input, { value: "\u90FD\u9053\u5E9C\u770C\u9078\u629E", color: "gray" })),
+                            react_1.default.createElement(react_3.Select, null, prefecture.map((p) => react_1.default.createElement("option", { value: p.id }, p.name)))),
                         react_1.default.createElement(react_3.FormControl, null,
                             react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "link"),
                             react_1.default.createElement(react_3.Input, { value: "", color: "gray", isReadOnly: true })),
