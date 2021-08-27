@@ -105,6 +105,7 @@ class CreateTripsTable extends Migration
             $table->foreign('itinerary_id')->references('id')->on('itineraries')->onDelete('cascade');
             $table->unsignedBigInteger('trip_id');
             $table->foreign('trip_id')->references('id')->on('trips');
+            $table->integer('rank')->nullable();
             $table->timestamps();
         });
 

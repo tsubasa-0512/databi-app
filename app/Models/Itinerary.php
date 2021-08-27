@@ -10,4 +10,8 @@ class Itinerary extends Model
         return $this->belongsTo('App\Models\Category');
     }
 
+    public function rankings() { 
+        return $this->belongsToMany('App\Models\Ranking')->withTimestamps();   
+    }
+
 }

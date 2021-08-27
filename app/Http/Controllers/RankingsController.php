@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use  Illuminate\Support\Facades\DB;
 use App\Http\Requests\RankingRequest;
 use App\Models\Ranking;
+use App\Models\Itinerary;
 
 class RankingsController extends Controller
 {

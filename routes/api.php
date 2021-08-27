@@ -69,7 +69,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/add-myranking','RankingsController@addMyRanking');
     // マイランキング編集
     Route::post('/update-myranking','RankingsController@updateMyRanking');
-
      // マイランキング削除
      Route::delete('/delete-myranking','RankingsController@deleteMyRanking');
 });

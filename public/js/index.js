@@ -95167,6 +95167,8 @@ exports.AddDetailModal = react_2.memo((props) => {
             bill: inputCosts,
             category: inputCategory[0],
             trip_id: `${id}`,
+            ranking_id: 1,
+            rank: 10,
             api_token: api_token
         })
             .then(response => {
@@ -95525,7 +95527,7 @@ exports.MyDataDetail = react_2.memo((props) => {
                 // to={{ pathname: "" }}
                 // > */}
                 react_1.default.createElement(react_3.WrapItem, { key: userDetailTrip.id, mx: "auto" },
-                    react_1.default.createElement(MyDetailCard_1.MyDetailCard, { id: userDetailTrip.id, category: userDetailTrip.category_id, title: userDetailTrip.title, costs: userDetailTrip.bill, comment: userDetailTrip.comment, imageUrl: "http://source.unsplash.com/random" }))
+                    react_1.default.createElement(MyDetailCard_1.MyDetailCard, { id: userDetailTrip.id, category: userDetailTrip.category.category, title: userDetailTrip.title, costs: userDetailTrip.bill, comment: userDetailTrip.comment, imageUrl: "http://source.unsplash.com/random" }))
                 // {/* </Link>   */}
                 ))),
                 react_1.default.createElement(AddDetailModal_1.AddDetailModal, { isOpen: isOpen, onClose: onClose }),
@@ -96471,8 +96473,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
