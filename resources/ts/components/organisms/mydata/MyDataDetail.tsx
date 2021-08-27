@@ -129,7 +129,7 @@ export const MyDataDetail: VFC= memo((props) => {
             <WrapItem key={userDetailTrip.id} mx="auto">
               <MyDetailCard 
               id={userDetailTrip.id}
-              category={userDetailTrip.category_id}
+              category={userDetailTrip.category.category}
               title={userDetailTrip.title}
               costs={userDetailTrip.bill}
               comment={userDetailTrip.comment}

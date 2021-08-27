@@ -72,6 +72,8 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
       bill: inputCosts,
       category: inputCategory[0],
       trip_id:`${id}`,
+      ranking_id: 1,
+      rank: 10,
       api_token:api_token
     })
     .then(response => {

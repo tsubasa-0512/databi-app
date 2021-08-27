@@ -48,15 +48,16 @@ class ItinerariesController extends Controller
         $itinerary->bill = $request->bill;
         $itinerary->link = $request->link;
         $itinerary->trip_id = $request->trip_id;
-        
-        // try{
-        //     var_dump($request->title);
-            $itinerary->save(); 
-        //  }
-        //  catch(\Exception $e){
-        //     echo $e->getMessage();   
-        //  }
+    
+        $itinerary->save(); 
 
+        // マイランキングに該当旅行情報追加
+        $itinerary->rankings()->attach($request->ranking_id,
+        [
+            'trip_id' => $request->trip_id,
+            'rank' => $request->rank
+        ]);
+        
         return $itinerary;
     }  
 
@@ -72,13 +73,16 @@ class ItinerariesController extends Controller
         $itinerary->link = $request->link;
         $itinerary->trip_id = $request->trip_id;
         
-        // try{
-        //     var_dump($request->title);
-            $itinerary->save(); 
-        //  }
-        //  catch(\Exception $e){
-        //     echo $e->getMessage();   
-        //  }
+        $itinerary->save();
+        
+        // 該当旅行情報の紐づくランキングを削除
+        $itinerary->rankings()->wherePivot('itinerary_id', '=' ,$itinerary->id)->detach();
+        // マイランキングに該当旅行情報追加
+        $itinerary->rankings()->attach($request->ranking_id,
+        [
+            'trip_id' => $request->trip_id,
+            'rank' => $request->rank
+        ]);
 
         return $itinerary;
     }
