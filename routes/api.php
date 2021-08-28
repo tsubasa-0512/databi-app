@@ -71,4 +71,8 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('/update-myranking','RankingsController@updateMyRanking');
      // マイランキング削除
      Route::delete('/delete-myranking','RankingsController@deleteMyRanking');
+     // 指定したマイランキングとそこに紐づく旅行詳細情報を表示
+     Route::get('/get-myranking-with-itinerary','RankingsController@getMyRankingWithItinerary');
+     // 指定したマイランキング内から旅行詳細情報を削除（ランキングからは削除するが、実データとしては残る）
+     Route::delete('/delete-myranking-with-itinerary','RankingsController@deleteMyRankingWithItinerary');
 });

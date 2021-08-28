@@ -49,4 +49,24 @@ class RankingsController extends Controller
 
         return '削除完了';
     }
+
+    // 指定したマイランキングとそこに紐づく旅行詳細情報を表示
+    public function getMyRankingWithItinerary(Request $request) {
+        $ranking = Ranking::where('id', $request->id)->first();
+
+        $itineraries = $ranking->itineraries()->withPivot('rank')->get();
+
+        return response()->json([
+            'ranking' => $ranking,
+            'itineraries' => $itineraries
+        ]);
+    }
+
+    // 指定したマイランキング内から旅行詳細情報を削除（ランキングからは削除するが、実データとしては残る）
+    public function deleteMyRankingWithItinerary(Request $request) {
+        $itinerary = Itinerary::where('id', $request->id)->first();
+        $itinerary->rankings()->wherePivot('itinerary_id', '=' ,$itinerary->id)->detach();
+
+        return 'ランキングから削除完了';
+    }
 }
