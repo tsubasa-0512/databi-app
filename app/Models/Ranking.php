@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Ranking extends Model
 {
     public function itineraries() { 
-        return $this->belongsToMany('App\Models\Itinerary')->withTimestamps();   
+        return $this->belongsToMany('App\Models\Itinerary')
+        ->withPivot('rank')
+        ->orderBy('rank','desc');   
     }
 }

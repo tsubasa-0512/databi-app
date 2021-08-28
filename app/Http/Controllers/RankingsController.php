@@ -54,7 +54,7 @@ class RankingsController extends Controller
     public function getMyRankingWithItinerary(Request $request) {
         $ranking = Ranking::where('id', $request->id)->first();
 
-        $itineraries = $ranking->itineraries()->withPivot('rank')->get();
+        $itineraries = $ranking->itineraries;
 
         return response()->json([
             'ranking' => $ranking,
