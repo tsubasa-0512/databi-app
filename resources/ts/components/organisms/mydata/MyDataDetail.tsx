@@ -45,12 +45,12 @@ export const MyDataDetail: VFC= memo((props) => {
     },[])
 
     const getData = useCallback(() => {
-      console.log("user取れる？",api_token)
+      // console.log("user取れる？",api_token)
       Axios
         .get<Array<Data>>(`/api/show-mytrip?api_token=${api_token}&id=${id}`)
         .then((res) => {
         setUserData(res.data);
-        console.log("usertrip",res.data)
+        console.log("userTrip",res.data)
       }) 
         .catch(error => {
           console.log(error)
@@ -58,7 +58,7 @@ export const MyDataDetail: VFC= memo((props) => {
     },[]);
 
     const getDetailData = useCallback(() => {
-      console.log("user取れる？",api_token)
+      // console.log("user取れる？",api_token)
       Axios
         .get<Array<detailData>>(`/api/get-myitinerary-all?api_token=${api_token}&id=${id}`)
         .then((res) => {
@@ -90,8 +90,8 @@ export const MyDataDetail: VFC= memo((props) => {
          id={userTrip.id}
          imageUrl="http://source.unsplash.com/random"
          dates={`${userTrip.departure}${userTrip.arrival}`}
-        // purpose={userTrip.purpose}
-        // companions={userTrip.companions}
+         purpose={userTrip.purpose.purpose}
+         companions={userTrip.companions}
          cost="金額"
         />
         </Box>

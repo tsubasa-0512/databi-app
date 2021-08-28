@@ -13,7 +13,7 @@ type Props = {
   id: number;
   title: string;
   dates: string;
-  purpose: number;
+  purpose: string;
   companions: string; 
   cost: string;
   imageUrl: string;
@@ -43,7 +43,7 @@ export const DataDetailEdit: VFC<Props>= memo((props) => {
       .get<Array<Data>>(`/api/mytrip?api_token=${api_token}`)
       .then((res) => {
       setUserData(res.data);
-      console.log("usertrip",res.data)
+      console.log("userTrip",res.data)
       console.log("できるかな？",setUserData)
     }) 
       .catch(error => {
@@ -94,9 +94,9 @@ export const DataDetailEdit: VFC<Props>= memo((props) => {
       <Box border="1px" borderColor="teal.400" mb="5px">
       <Center w="180" h="30" color="gray.400">{dates}</Center></Box>
       <Box border="1px" borderColor="teal.400" mb="5px">
-      <Center w="180" h="30" color="gray.400">{purpose}目的</Center></Box>
+      <Center w="180" h="30" color="gray.400" placeholder="目的">{purpose}</Center></Box>
       <Box border="1px" borderColor="teal.400" mb="5px">
-      <Center w="180" h="30" color="gray.400">{companions}同行者</Center></Box>
+      <Center w="180" h="30" color="gray.400" placeholder="同行者">{companions}</Center></Box>
       <Box bg="teal.400" mb="4px">
       <Center w="180" h="30" color="gray.50">{cost}</Center></Box>
       <Box margin="25px">

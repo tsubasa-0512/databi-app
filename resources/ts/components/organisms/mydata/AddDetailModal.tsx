@@ -106,10 +106,16 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
                       mr="3" 
                       onChange={onChangeInputCategory}
                       >
+                        <Flex
+                        mr="1.5"
+                        ml="2"
+                        >
                         {category.map((p) => <Checkbox
                         size="sm" 
                         colorScheme="teal"
+                        ml="2"
                         value={p.id}>{p.category}</Checkbox> )}
+                        </Flex>
                       </Stack>
                       {/* <Checkbox size="sm" colorScheme="teal"
                       value="1"
