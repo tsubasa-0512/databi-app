@@ -92,7 +92,7 @@ class ItinerariesController extends Controller
     }
 
     // ユーザーの旅行情報詳細削除
-    public function deleteMyItinerary(Request $request, Itinerary $itinerary) {
+    public function deleteMyItinerary(Request $request) {
         $trip = Itinerary::where('id', $request->id)->first();
         $trip->delete();
 
