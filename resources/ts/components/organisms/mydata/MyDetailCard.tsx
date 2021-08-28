@@ -27,7 +27,7 @@ export const MyDetailCard: VFC<Props> = memo((props) => {
   const onClickDeleteDetail = useCallback((id) => {
     alert("削除しますか？");
     console.log("削除id",id);
-    Axios.delete(`/api/delete-mytrip?api_token=${api_token}&id=${id}`)
+    Axios.delete(`/api/delete-myitinerary?api_token=${api_token}&id=${id}`)
   },[]);
 
   

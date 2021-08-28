@@ -95623,7 +95623,7 @@ exports.MyDetailCard = react_2.memo((props) => {
     const onClickDeleteDetail = react_1.useCallback((id) => {
         alert("削除しますか？");
         console.log("削除id", id);
-        axios_1.default.delete(`/api/delete-mytrip?api_token=${api_token}&id=${id}`);
+        axios_1.default.delete(`/api/delete-myitinerary?api_token=${api_token}&id=${id}`);
     }, []);
     return (react_1.default.createElement(react_3.Flex, { w: "370px", h: "60px", bg: "gray.50", color: "teal.400", align: "center", justify: "space-between", mb: "5px", _hover: { cursor: "pointer", opacity: 0.8 } },
         react_1.default.createElement(react_3.Box, null,
@@ -96524,8 +96524,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
