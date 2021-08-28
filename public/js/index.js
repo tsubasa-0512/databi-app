@@ -94690,7 +94690,7 @@ exports.DataDetailEdit = react_2.memo((props) => {
             .get(`/api/mytrip?api_token=${api_token}`)
             .then((res) => {
             setUserData(res.data);
-            console.log("usertrip", res.data);
+            console.log("userTrip", res.data);
             console.log("できるかな？", setUserData);
         })
             .catch(error => {
@@ -94718,13 +94718,9 @@ exports.DataDetailEdit = react_2.memo((props) => {
                 react_1.default.createElement(react_3.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
                     react_1.default.createElement(react_3.Center, { w: "180", h: "30", color: "gray.400" }, dates)),
                 react_1.default.createElement(react_3.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
-                    react_1.default.createElement(react_3.Center, { w: "180", h: "30", color: "gray.400" },
-                        purpose,
-                        "\u76EE\u7684")),
+                    react_1.default.createElement(react_3.Center, { w: "180", h: "30", color: "gray.400", placeholder: "\u76EE\u7684" }, purpose)),
                 react_1.default.createElement(react_3.Box, { border: "1px", borderColor: "teal.400", mb: "5px" },
-                    react_1.default.createElement(react_3.Center, { w: "180", h: "30", color: "gray.400" },
-                        companions,
-                        "\u540C\u884C\u8005")),
+                    react_1.default.createElement(react_3.Center, { w: "180", h: "30", color: "gray.400", placeholder: "\u540C\u884C\u8005" }, companions)),
                 react_1.default.createElement(react_3.Box, { bg: "teal.400", mb: "4px" },
                     react_1.default.createElement(react_3.Center, { w: "180", h: "30", color: "gray.50" }, cost)),
                 react_1.default.createElement(react_3.Box, { margin: "25px" },
@@ -95192,7 +95188,8 @@ exports.AddDetailModal = react_2.memo((props) => {
                             react_1.default.createElement(react_3.Box, null,
                                 react_1.default.createElement(react_3.FormControl, null,
                                     react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u30AB\u30C6\u30B4\u30EA"),
-                                    react_1.default.createElement(react_3.Stack, { direction: "row", mr: "3", onChange: onChangeInputCategory }, category.map((p) => react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: p.id }, p.category)))),
+                                    react_1.default.createElement(react_3.Stack, { direction: "row", mr: "3", onChange: onChangeInputCategory },
+                                        react_1.default.createElement(react_3.Flex, { mr: "1.5", ml: "2" }, category.map((p) => react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", ml: "2", value: p.id }, p.category))))),
                                 react_1.default.createElement(react_3.Box, { margin: "5", display: "flex" },
                                     react_1.default.createElement(react_3.Box, { mr: "5" },
                                         react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", border: "1px", borderColor: "teal.500", p: "2", alignItems: "center", w: "100px" },
@@ -95520,19 +95517,19 @@ exports.MyDataDetail = react_2.memo((props) => {
         getDetailData();
     }, []);
     const getData = react_1.useCallback(() => {
-        console.log("user取れる？", api_token);
+        // console.log("user取れる？",api_token)
         axios_1.default
             .get(`/api/show-mytrip?api_token=${api_token}&id=${id}`)
             .then((res) => {
             setUserData(res.data);
-            console.log("usertrip", res.data);
+            console.log("userTrip", res.data);
         })
             .catch(error => {
             console.log(error);
         });
     }, []);
     const getDetailData = react_1.useCallback(() => {
-        console.log("user取れる？", api_token);
+        // console.log("user取れる？",api_token)
         axios_1.default
             .get(`/api/get-myitinerary-all?api_token=${api_token}&id=${id}`)
             .then((res) => {
@@ -95551,10 +95548,7 @@ exports.MyDataDetail = react_2.memo((props) => {
             react_1.default.createElement(react_3.Box, null,
                 react_1.default.createElement(DataDetailHeaders_1.DataDetailHeaders, null, "\u30DE\u30A4\u30C7\u30FC\u30BF\u8A73\u7D30\u3000\u30C7\u30FC\u30BF\u8FFD\u52A0\u753B\u9762"),
                 react_1.default.createElement(DataDetailTitle_1.DataDetailTitle, null, userTrip.title),
-                react_1.default.createElement(DataDetailEdit_1.DataDetailEdit, { id: userTrip.id, imageUrl: "http://source.unsplash.com/random", dates: `${userTrip.departure}${userTrip.arrival}`, 
-                    // purpose={userTrip.purpose}
-                    // companions={userTrip.companions}
-                    cost: "\u91D1\u984D" }))))),
+                react_1.default.createElement(DataDetailEdit_1.DataDetailEdit, { id: userTrip.id, imageUrl: "http://source.unsplash.com/random", dates: `${userTrip.departure}${userTrip.arrival}`, purpose: userTrip.purpose.purpose, companions: userTrip.companions, cost: "\u91D1\u984D" }))))),
         react_1.default.createElement(react_3.WrapItem, { alignItems: "center" },
             react_1.default.createElement(react_3.Box, { w: "400px", p: 4 },
                 react_1.default.createElement(react_3.Box, { paddingLeft: "170px" },
@@ -95623,7 +95617,13 @@ exports.MyDetailCard = react_2.memo((props) => {
     const onClickDeleteDetail = react_1.useCallback((id) => {
         alert("削除しますか？");
         console.log("削除id", id);
-        axios_1.default.delete(`/api/delete-myitinerary?api_token=${api_token}&id=${id}`);
+        axios_1.default.delete(`/api/delete-myitinerary?api_token=${api_token}&id=${id}`)
+            .then((res) => {
+            console.log(res.data);
+        })
+            .catch(error => {
+            console.log('Error', error.response);
+        });
     }, []);
     return (react_1.default.createElement(react_3.Flex, { w: "370px", h: "60px", bg: "gray.50", color: "teal.400", align: "center", justify: "space-between", mb: "5px", _hover: { cursor: "pointer", opacity: 0.8 } },
         react_1.default.createElement(react_3.Box, null,

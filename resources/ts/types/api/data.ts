@@ -3,7 +3,7 @@ export type Data = {
   title: string;
   departure: string;
   arrival: string;
-  purpose: number;
-  companion: string;
+  purpose: string;
+  companions: string;
   api_token:string;
 };

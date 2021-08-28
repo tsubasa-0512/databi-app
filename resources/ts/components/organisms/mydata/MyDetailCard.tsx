@@ -28,6 +28,13 @@ export const MyDetailCard: VFC<Props> = memo((props) => {
     alert("削除しますか？");
     console.log("削除id",id);
     Axios.delete(`/api/delete-myitinerary?api_token=${api_token}&id=${id}`)
+    .then((res)=>{   
+      console.log(res.data)
+      }
+        ) 
+    .catch(error => {
+      console.log('Error',error.response);
+      });
   },[]);
 
   
