@@ -11,7 +11,7 @@ import Axios from "axios";
 
 type Props = {
   id: number;
-  title: string;
+  // title: string;
   dates: string;
   purpose: string;
   companions: string; 
@@ -20,11 +20,11 @@ type Props = {
 //  isOpen: boolean;
 //  onClose: () => void;
 //  onOpen: () => void;
- onClick: (id: number) => void;
+//  onClick: (id: number) => void;
 };
 
 export const DataDetailEdit: VFC<Props>= memo((props) => {
-  const { id, title, dates, purpose, companions, cost, imageUrl, onClick } = props;
+  const { id,  dates, purpose, companions, cost, imageUrl } = props;
 
   const [ userData, setUserData ] = useState<Array<Data>>([]);
  

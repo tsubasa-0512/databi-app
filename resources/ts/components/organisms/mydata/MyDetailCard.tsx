@@ -6,7 +6,7 @@ import Axios from "axios";
 
 type Props = {
   id: number;
-  category: number;
+  category: string;
   title: string;
   costs: number;
   comment: string;
