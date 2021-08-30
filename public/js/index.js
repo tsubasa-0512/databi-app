@@ -94676,7 +94676,7 @@ const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./r
 const EditTitleModal_1 = __webpack_require__(/*! ../mydata/EditTitleModal */ "./resources/ts/components/organisms/mydata/EditTitleModal.tsx");
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 exports.DataDetailEdit = react_2.memo((props) => {
-    const { id, title, dates, purpose, companions, cost, imageUrl, onClick } = props;
+    const { id, dates, purpose, companions, cost, imageUrl } = props;
     const [userData, setUserData] = react_1.useState([]);
     const [selectedUserTrip, setSelectedUserTrip] = react_1.useState(null);
     const api_token = document
@@ -95113,7 +95113,6 @@ const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js"
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const ModalHeaders_1 = __webpack_require__(/*! ../layout/ModalHeaders */ "./resources/ts/components/organisms/layout/ModalHeaders.tsx");
 const PrimaryButton_1 = __webpack_require__(/*! ../../atoms/button/PrimaryButton */ "./resources/ts/components/atoms/button/PrimaryButton.tsx");
-const secButton_1 = __webpack_require__(/*! ../../atoms/button/secButton */ "./resources/ts/components/atoms/button/secButton.tsx");
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 exports.AddDetailModal = react_2.memo((props) => {
@@ -95123,6 +95122,7 @@ exports.AddDetailModal = react_2.memo((props) => {
     const [inputCosts, setInputCosts] = react_1.useState('');
     const [inputCategory, setInputCategory] = react_1.useState('');
     const [category, setCategory] = react_1.useState([]);
+    // console.log("カテゴリ",category);
     const onChangeInputDetailTitle = (e) => setInputDetailTitle(e.target.value);
     const onChangeInputComment = (e) => setInputComment(e.target.value);
     const onChangeInputCosts = (e) => setInputCosts(e.target.value);
@@ -95198,9 +95198,7 @@ exports.AddDetailModal = react_2.memo((props) => {
                                             , { 
                                                 // onClick={onClickAdd} 
                                                 color: "gray.500" }, "\u753B\u50CF"),
-                                            react_1.default.createElement(secButton_1.SecButton
-                                            // onClick={onClickAdd}
-                                            , null, "\uFF0B"))),
+                                            react_1.default.createElement(react_3.Button, { size: "sm" }, "\uFF0B"))),
                                     react_1.default.createElement(react_3.Box, null,
                                         react_1.default.createElement(react_3.FormControl, null,
                                             react_1.default.createElement(react_3.FormLabel, null,

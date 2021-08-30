@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { memo,VFC } from 'react';
 import { 
-  FormLabel, ModalBody, ModalCloseButton, ModalHeader, Modal, ModalOverlay,  Stack,  ModalContent,  FormControl, Input,Box, Select, Checkbox, Flex } from '@chakra-ui/react';
+  FormLabel, ModalBody, ModalCloseButton, ModalHeader, Modal, ModalOverlay,  Stack,  ModalContent,  FormControl, Input,Box, Select, Checkbox, Flex, Button } from '@chakra-ui/react';
 import { ModalHeaders } from '../layout/ModalHeaders';
 import { PrimaryButton } from '../../atoms/button/PrimaryButton';
 import { AddButton } from '../../atoms/button/AddButton';
@@ -22,6 +22,8 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
   const [ inputCosts, setInputCosts ] = useState('');
   const [ inputCategory, setInputCategory ] = useState('');
   const [ category, setCategory] = useState([]);
+
+  // console.log("カテゴリ",category);
 
   const onChangeInputDetailTitle = (e:ChangeEvent<HTMLInputElement>) => setInputDetailTitle(e.target.value);
   const onChangeInputComment = (e:ChangeEvent<HTMLInputElement>) => setInputComment(e.target.value);
@@ -86,7 +88,6 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
     setInputComment("");
     setInputCosts("");
     };
-
 
 
   return (
@@ -175,11 +176,9 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
                   >
                   画像
                   </Box>
-                  <SecButton 
-                  // onClick={onClickAdd}
-                  >
+                  <Button size="sm">
                   ＋
-                  </SecButton>
+                  </Button> 
                   </Flex>
                       {/* <FormControl>
                         <FormLabel></FormLabel>
