@@ -33,6 +33,20 @@ export const MyDataDetail: VFC= memo((props) => {
 
   const [ userData, setUserData ] = useState<Array<Data>>([]);
   const [ userDetailData, setUserDetailData ] = useState<Array<detailData>>([]);
+
+  // const [companions, setCompanions] = useState([]);
+
+  // const getSelection = async() =>{
+  //   await Axios.get("/api/trip-form-select")
+  //   .then((res)=>{   
+  //     console.log(res.data['companions'])
+  //     setCompanions(res.data['companion'])
+  //     }
+  //       ) 
+  //   .catch(error => {
+  //     console.log('Error',error.response);
+  //     });
+  // }  
   
 
   const api_token= document
@@ -42,6 +56,7 @@ export const MyDataDetail: VFC= memo((props) => {
   useEffect(() => {
     getData();
     getDetailData();
+    getSelection();
     },[])
 
     const getData = useCallback(() => {
@@ -91,7 +106,7 @@ export const MyDataDetail: VFC= memo((props) => {
          imageUrl="http://source.unsplash.com/random"
          dates={`${userTrip.departure}${userTrip.arrival}`}
          purpose={userTrip.purpose.purpose}
-         companions={userTrip.companions}
+         companions={userTrip.companions.id}
          cost="金額"
         />
         </Box>

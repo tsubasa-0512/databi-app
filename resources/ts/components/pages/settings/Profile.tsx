@@ -31,7 +31,7 @@ export const Profile: VFC<Props> = memo((props) => {
   const getUserName = async() =>{
     await Axios.get(`/api/myprofile?api_token=${api_token}`)
     .then((res)=>{   
-      console.log(res.data)
+      console.log("UserName",res.data)
       setUserName(res.data)
       }
         ) 

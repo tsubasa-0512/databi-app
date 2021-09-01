@@ -95507,12 +95507,25 @@ exports.MyDataDetail = react_2.memo((props) => {
     console.log({ id });
     const [userData, setUserData] = react_1.useState([]);
     const [userDetailData, setUserDetailData] = react_1.useState([]);
+    // const [companions, setCompanions] = useState([]);
+    // const getSelection = async() =>{
+    //   await Axios.get("/api/trip-form-select")
+    //   .then((res)=>{   
+    //     console.log(res.data['companions'])
+    //     setCompanions(res.data['companion'])
+    //     }
+    //       ) 
+    //   .catch(error => {
+    //     console.log('Error',error.response);
+    //     });
+    // }  
     const api_token = document
         .querySelector('meta[name="api-token"]')
         .getAttribute("content");
     react_1.useEffect(() => {
         getData();
         getDetailData();
+        getSelection();
     }, []);
     const getData = react_1.useCallback(() => {
         // console.log("user取れる？",api_token)
@@ -95546,7 +95559,7 @@ exports.MyDataDetail = react_2.memo((props) => {
             react_1.default.createElement(react_3.Box, null,
                 react_1.default.createElement(DataDetailHeaders_1.DataDetailHeaders, null, "\u30DE\u30A4\u30C7\u30FC\u30BF\u8A73\u7D30\u3000\u30C7\u30FC\u30BF\u8FFD\u52A0\u753B\u9762"),
                 react_1.default.createElement(DataDetailTitle_1.DataDetailTitle, null, userTrip.title),
-                react_1.default.createElement(DataDetailEdit_1.DataDetailEdit, { id: userTrip.id, imageUrl: "http://source.unsplash.com/random", dates: `${userTrip.departure}${userTrip.arrival}`, purpose: userTrip.purpose.purpose, companions: userTrip.companions, cost: "\u91D1\u984D" }))))),
+                react_1.default.createElement(DataDetailEdit_1.DataDetailEdit, { id: userTrip.id, imageUrl: "http://source.unsplash.com/random", dates: `${userTrip.departure}${userTrip.arrival}`, purpose: userTrip.purpose.purpose, companions: userTrip.companions.id, cost: "\u91D1\u984D" }))))),
         react_1.default.createElement(react_3.WrapItem, { alignItems: "center" },
             react_1.default.createElement(react_3.Box, { w: "400px", p: 4 },
                 react_1.default.createElement(react_3.Box, { paddingLeft: "170px" },
@@ -96102,7 +96115,7 @@ exports.Profile = react_2.memo((props) => {
     const getUserName = () => __awaiter(void 0, void 0, void 0, function* () {
         yield axios_2.default.get(`/api/myprofile?api_token=${api_token}`)
             .then((res) => {
-            console.log(res.data);
+            console.log("UserName", res.data);
             setUserName(res.data);
         })
             .catch(error => {
