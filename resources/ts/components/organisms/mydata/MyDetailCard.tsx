@@ -1,8 +1,10 @@
 import React, { useCallback } from "react";
 import { memo,VFC } from 'react';
-import { Box, Image, Flex, Center, Button  } from '@chakra-ui/react';
+import { Box, Image, Flex, Center, Button, useDisclosure  } from '@chakra-ui/react';
 import { useParams } from "react-router-dom";
 import Axios from "axios";
+import { AddDetailModal } from "./AddDetailModal";
+import { EditDetailModal } from "../mydetaildata/EditDetailModal";
 
 type Props = {
   id: number;
@@ -17,6 +19,11 @@ type Props = {
 
 export const MyDetailCard: VFC<Props> = memo((props) => {
   const { id, category, title, costs, comment, imageUrl } = props;
+
+  const { isOpen, onOpen, onClose} = useDisclosure();
+  const onClickDetailCard = useCallback(() => {
+    onOpen();
+  }, []);
 
   console.log("詳細情報のid",id);
 
@@ -48,7 +55,7 @@ export const MyDetailCard: VFC<Props> = memo((props) => {
       justify="space-between"
       mb="5px"
       _hover={{ cursor:"pointer", opacity:0.8 }}
-      // onClick={() => onClick(id)}
+      onClick={() => onClickDetailCard(id)}
       >
 
       <Box>
@@ -95,6 +102,7 @@ export const MyDetailCard: VFC<Props> = memo((props) => {
       // isLoading={loading}
       onClick={() => onClickDeleteDetail(id)}
       >削除</Button>
+      <EditDetailModal isOpen={isOpen} onClose={onClose}/>
     </Flex>
   )
 });
