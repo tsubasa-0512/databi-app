@@ -28,7 +28,10 @@ export const AddDataModal: VFC<Props> = memo((props) => {
   //   },
   // ]);
 
-  const [purpose, setPurpose] = useState([]);
+  const [purpose, setPurpose] = useState<{
+    id: number;
+    purpose: string;
+  }[]>([]);
   const [goWith, setGoWith] = useState([]);
   const [ inputTitle, setInputTitle ] = useState<string>('');
   const [ inputDeparture, setInputDeparture ] = useState<string>('');
@@ -45,7 +48,7 @@ export const AddDataModal: VFC<Props> = memo((props) => {
   const onChangeInputArrival = (e:ChangeEvent<HTMLInputElement>) =>
   setInputArrival(e.target.value);
   
-  const onChangeInputPurpose = (e:ChangeEvent<HTMLInputElement>) =>
+  const onChangeInputPurpose = (e:ChangeEvent<HTMLSelectElement>) =>
   setInputPurpose(e.target.value);
 
   const handleChange = e => { 
@@ -141,7 +144,7 @@ export const AddDataModal: VFC<Props> = memo((props) => {
               </FormControl>
               <FormControl>
                 <FormLabel fontSize="sm">目的</FormLabel>
-                <Select onChange={onChangeInputPurpose} >
+                <Select onChange={onChangeInputPurpose} defaultValue='id: 1;'>
                   {purpose.map((p) =>
                     <option value={p.id}>{p.purpose}</option>
                   )}

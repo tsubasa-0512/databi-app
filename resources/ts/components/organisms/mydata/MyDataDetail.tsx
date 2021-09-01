@@ -106,7 +106,7 @@ export const MyDataDetail: VFC= memo((props) => {
          imageUrl="http://source.unsplash.com/random"
          dates={`${userTrip.departure}${userTrip.arrival}`}
          purpose={userTrip.purpose.purpose}
-         companions={userTrip.companions.id}
+         companions={userTrip.companions.companion}
          cost="金額"
         />
         </Box>

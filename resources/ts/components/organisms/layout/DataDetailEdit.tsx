@@ -15,7 +15,7 @@ type Props = {
   dates: string;
   purpose: string;
   purpose_id: number;
-  companions: number;
+  companions: string;
   cost: string;
   imageUrl: string;
 //  isOpen: boolean;
