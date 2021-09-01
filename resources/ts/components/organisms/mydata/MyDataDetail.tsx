@@ -34,20 +34,10 @@ export const MyDataDetail: VFC= memo((props) => {
   const [ userData, setUserData ] = useState<Array<Data>>([]);
   const [ userDetailData, setUserDetailData ] = useState<Array<detailData>>([]);
 
-  // const [companions, setCompanions] = useState([]);
-
-  // const getSelection = async() =>{
-  //   await Axios.get("/api/trip-form-select")
-  //   .then((res)=>{   
-  //     console.log(res.data['companions'])
-  //     setCompanions(res.data['companion'])
-  //     }
-  //       ) 
-  //   .catch(error => {
-  //     console.log('Error',error.response);
-  //     });
-  // }  
-  
+  const [companions, setCompanions] = useState<{
+    id: number;
+    companion: string;
+  }[]>([]);
 
   const api_token= document
     .querySelector('meta[name="api-token"]')

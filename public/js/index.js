@@ -95041,7 +95041,7 @@ exports.AddDataModal = react_2.memo((props) => {
                         react_1.default.createElement(react_3.Input, { type: "date", value: inputArrival, onChange: onChangeInputArrival })),
                     react_1.default.createElement(react_3.FormControl, null,
                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u76EE\u7684"),
-                        react_1.default.createElement(react_3.Select, { onChange: onChangeInputPurpose, defaultValue: 'id: 1;' }, purpose.map((p) => react_1.default.createElement("option", { value: p.id }, p.purpose)))),
+                        react_1.default.createElement(react_3.Select, { onChange: onChangeInputPurpose }, purpose.map((p) => react_1.default.createElement("option", { value: p.id }, p.purpose)))),
                     react_1.default.createElement(react_3.FormControl, null,
                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u540C\u884C\u8005"),
                         react_1.default.createElement(react_3.Stack, { direction: "row", align: "center" },
@@ -95507,18 +95507,7 @@ exports.MyDataDetail = react_2.memo((props) => {
     console.log({ id });
     const [userData, setUserData] = react_1.useState([]);
     const [userDetailData, setUserDetailData] = react_1.useState([]);
-    // const [companions, setCompanions] = useState([]);
-    // const getSelection = async() =>{
-    //   await Axios.get("/api/trip-form-select")
-    //   .then((res)=>{   
-    //     console.log(res.data['companions'])
-    //     setCompanions(res.data['companion'])
-    //     }
-    //       ) 
-    //   .catch(error => {
-    //     console.log('Error',error.response);
-    //     });
-    // }  
+    const [companions, setCompanions] = react_1.useState([]);
     const api_token = document
         .querySelector('meta[name="api-token"]')
         .getAttribute("content");
@@ -95619,8 +95608,13 @@ const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/re
 const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
+const EditDetailModal_1 = __webpack_require__(/*! ../mydetaildata/EditDetailModal */ "./resources/ts/components/organisms/mydetaildata/EditDetailModal.tsx");
 exports.MyDetailCard = react_2.memo((props) => {
     const { id, category, title, costs, comment, imageUrl } = props;
+    const { isOpen, onOpen, onClose } = react_3.useDisclosure();
+    const onClickDetailCard = react_1.useCallback(() => {
+        onOpen();
+    }, []);
     console.log("詳細情報のid", id);
     const api_token = document
         .querySelector('meta[name="api-token"]')
@@ -95636,7 +95630,7 @@ exports.MyDetailCard = react_2.memo((props) => {
             console.log('Error', error.response);
         });
     }, []);
-    return (react_1.default.createElement(react_3.Flex, { w: "370px", h: "60px", bg: "gray.50", color: "teal.400", align: "center", justify: "space-between", mb: "5px", _hover: { cursor: "pointer", opacity: 0.8 } },
+    return (react_1.default.createElement(react_3.Flex, { w: "370px", h: "60px", bg: "gray.50", color: "teal.400", align: "center", justify: "space-between", mb: "5px", _hover: { cursor: "pointer", opacity: 0.8 }, onClick: () => onClickDetailCard(id) },
         react_1.default.createElement(react_3.Box, null,
             react_1.default.createElement(react_3.Center, { fontSize: "sm" }, category)),
         react_1.default.createElement(react_3.Box, null,
@@ -95656,7 +95650,121 @@ exports.MyDetailCard = react_2.memo((props) => {
         react_1.default.createElement(react_3.Button, { size: "xs", backgroundColor: "red.400", color: "white", fontWeight: "light", borderRadius: "none", _hover: { opacity: 0.8 }, 
             // disabled={disabled || loading} 
             // isLoading={loading}
-            onClick: () => onClickDeleteDetail(id) }, "\u524A\u9664")));
+            onClick: () => onClickDeleteDetail(id) }, "\u524A\u9664"),
+        react_1.default.createElement(EditDetailModal_1.EditDetailModal, { isOpen: isOpen, onClose: onClose })));
+});
+
+
+/***/ }),
+
+/***/ "./resources/ts/components/organisms/mydetaildata/EditDetailModal.tsx":
+/*!****************************************************************************!*\
+  !*** ./resources/ts/components/organisms/mydetaildata/EditDetailModal.tsx ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EditDetailModal = void 0;
+const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_2 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const react_3 = __webpack_require__(/*! @chakra-ui/react */ "./node_modules/@chakra-ui/react/dist/esm/index.js");
+const ModalHeaders_1 = __webpack_require__(/*! ../layout/ModalHeaders */ "./resources/ts/components/organisms/layout/ModalHeaders.tsx");
+const PrimaryButton_1 = __webpack_require__(/*! ../../atoms/button/PrimaryButton */ "./resources/ts/components/atoms/button/PrimaryButton.tsx");
+const react_4 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const react_router_dom_1 = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+exports.EditDetailModal = react_2.memo((props) => {
+    const { data, isOpen, onClose } = props;
+    const [detailTitle, setDetailTitle] = react_1.useState('');
+    const [comment, setComment] = react_1.useState('');
+    const [detailCosts, setDetailCosts] = react_1.useState('');
+    react_4.useEffect(() => {
+        var _a, _b, _c;
+        setDetailTitle((_a = data === null || data === void 0 ? void 0 : data.title) !== null && _a !== void 0 ? _a : '');
+        setComment((_b = data === null || data === void 0 ? void 0 : data.comment) !== null && _b !== void 0 ? _b : '');
+        setDetailCosts((_c = data === null || data === void 0 ? void 0 : data.bill) !== null && _c !== void 0 ? _c : '');
+    }, [data]);
+    const onChangeDetailTitle = (e) => setDetailTitle(e.target.value);
+    const onChangeComment = (e) => setComment(e.target.value);
+    const onChangeDetailCosts = (e) => setDetailCosts(e.target.value);
+    const { id } = react_router_dom_1.useParams();
+    console.log({ id });
+    const api_token = document
+        .querySelector('meta[name="api-token"]')
+        .getAttribute("content");
+    const onClickEditDetail = () => {
+        alert("更新します");
+        // Axios.post(`/api/update-mytrip?api_token=${api_token}&id=${id}`,{
+        //   title: detailTitle,
+        //   comment: comment,
+        //   bill: detailCosts,
+        //   api_token:api_token
+        // })
+        // .then(response => {
+        //   console.log(response.data);
+        // })
+        // .catch(function(error){
+        //   console.log(error)
+        // });
+    };
+    return (react_1.default.createElement(react_3.Modal, { isOpen: isOpen, onClose: onClose, autoFocus: false },
+        react_1.default.createElement(react_3.ModalOverlay, null,
+            react_1.default.createElement(react_3.ModalContent, { pb: 6 },
+                react_1.default.createElement(ModalHeaders_1.ModalHeaders, null, "\u8A73\u7D30\u30C7\u30FC\u30BF\u753B\u9762"),
+                react_1.default.createElement(react_3.ModalCloseButton, null),
+                react_1.default.createElement(react_3.ModalBody, { mx: 10 },
+                    react_1.default.createElement(react_3.Stack, { spacing: 4 },
+                        react_1.default.createElement(react_3.Stack, null,
+                            react_1.default.createElement(react_3.Box, null,
+                                react_1.default.createElement(react_3.FormControl, null,
+                                    react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u30AB\u30C6\u30B4\u30EA"),
+                                    react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "1" }, "\u98F2\u98DF"),
+                                    react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "2" }, "\u5BBF\u6CCA"),
+                                    react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "3" }, "\u4F53\u9A13"),
+                                    react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "4" }, "\u4EA4\u901A"),
+                                    react_1.default.createElement(react_3.Checkbox, { size: "sm", colorScheme: "teal", value: "5" }, "\u305D\u306E\u4ED6")),
+                                react_1.default.createElement(react_3.Box, { margin: "5", display: "flex" },
+                                    react_1.default.createElement(react_3.Box, { mr: "5" },
+                                        react_1.default.createElement(react_3.Flex, { mb: "10px", textAlign: "right", justify: "space-between", border: "1px", borderColor: "teal.500", p: "2", alignItems: "center", w: "100px" },
+                                            react_1.default.createElement(react_3.Box
+                                            // onClick={onClickAdd} 
+                                            , { 
+                                                // onClick={onClickAdd} 
+                                                color: "gray.500" }, "\u753B\u50CF"),
+                                            react_1.default.createElement(react_3.Button, { size: "sm" }, "\uFF0B"))),
+                                    react_1.default.createElement(react_3.Box, null,
+                                        react_1.default.createElement(react_3.FormControl, null,
+                                            react_1.default.createElement(react_3.FormLabel, null,
+                                                react_1.default.createElement(react_3.Input, { placeholder: "\u30BF\u30A4\u30C8\u30EB", type: "text", value: detailTitle, onChange: onChangeDetailTitle }))),
+                                        react_1.default.createElement(react_3.FormControl, null,
+                                            react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
+                                            react_1.default.createElement(react_3.Input, { placeholder: "\u30B3\u30E1\u30F3\u30C8", type: "text", value: comment, onChange: onChangeComment })),
+                                        react_1.default.createElement(react_3.FormControl, null,
+                                            react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }),
+                                            react_1.default.createElement(react_3.Input, { placeholder: "\u91D1\u984D", value: detailCosts, onChange: onChangeDetailCosts })))),
+                                react_1.default.createElement(react_3.Box, { textAlign: "right", margin: "5" },
+                                    react_1.default.createElement(PrimaryButton_1.PrimaryButton, { onClick: onClickEditDetail }, "\u767B\u9332"))))))))));
 });
 
 
