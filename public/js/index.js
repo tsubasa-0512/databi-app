@@ -95548,7 +95548,7 @@ exports.MyDataDetail = react_2.memo((props) => {
             react_1.default.createElement(react_3.Box, null,
                 react_1.default.createElement(DataDetailHeaders_1.DataDetailHeaders, null, "\u30DE\u30A4\u30C7\u30FC\u30BF\u8A73\u7D30\u3000\u30C7\u30FC\u30BF\u8FFD\u52A0\u753B\u9762"),
                 react_1.default.createElement(DataDetailTitle_1.DataDetailTitle, null, userTrip.title),
-                react_1.default.createElement(DataDetailEdit_1.DataDetailEdit, { id: userTrip.id, imageUrl: "http://source.unsplash.com/random", dates: `${userTrip.departure}${userTrip.arrival}`, purpose: userTrip.purpose.purpose, companions: userTrip.companions.companion, cost: "\u91D1\u984D" }))))),
+                react_1.default.createElement(DataDetailEdit_1.DataDetailEdit, { id: userTrip.id, imageUrl: "http://source.unsplash.com/random", dates: `${userTrip.departure}${userTrip.arrival}`, purpose: userTrip.purpose.purpose, companions: userTrip.companions.map((com) => (com.companion)), cost: "\u91D1\u984D" }))))),
         react_1.default.createElement(react_3.WrapItem, { alignItems: "center" },
             react_1.default.createElement(react_3.Box, { w: "400px", p: 4 },
                 react_1.default.createElement(react_3.Box, { paddingLeft: "170px" },
@@ -96643,8 +96643,8 @@ exports.default = theme;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Sho/databi-app/resources/ts/index.tsx */"./resources/ts/index.tsx");
-module.exports = __webpack_require__(/*! /Users/Sho/databi-app/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/resources/ts/index.tsx */"./resources/ts/index.tsx");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

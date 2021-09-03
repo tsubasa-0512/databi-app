@@ -34,10 +34,7 @@ export const MyDataDetail: VFC= memo((props) => {
   const [ userData, setUserData ] = useState<Array<Data>>([]);
   const [ userDetailData, setUserDetailData ] = useState<Array<detailData>>([]);
 
-  const [companions, setCompanions] = useState<{
-    id: number;
-    companion: string;
-  }[]>([]);
+  const [companions, setCompanions] = useState<{}[]>([]);
 
   const api_token= document
     .querySelector('meta[name="api-token"]')
@@ -96,7 +93,11 @@ export const MyDataDetail: VFC= memo((props) => {
          imageUrl="http://source.unsplash.com/random"
          dates={`${userTrip.departure}${userTrip.arrival}`}
          purpose={userTrip.purpose.purpose}
-         companions={userTrip.companions.companion}
+         companions={
+           userTrip.companions.map((com) => (
+             com.companion
+           ))
+          }
          cost="金額"
         />
         </Box>
