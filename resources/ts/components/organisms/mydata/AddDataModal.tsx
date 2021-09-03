@@ -144,7 +144,10 @@ export const AddDataModal: VFC<Props> = memo((props) => {
               </FormControl>
               <FormControl>
                 <FormLabel fontSize="sm">目的</FormLabel>
-                <Select onChange={onChangeInputPurpose}>
+                <Select
+                 placeholder="回答を選ぶ"
+                 onChange={onChangeInputPurpose}
+                >
                   {purpose.map((p) =>
                     <option value={p.id}>{p.purpose}</option>
                   )}

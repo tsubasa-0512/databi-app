@@ -95041,7 +95041,7 @@ exports.AddDataModal = react_2.memo((props) => {
                         react_1.default.createElement(react_3.Input, { type: "date", value: inputArrival, onChange: onChangeInputArrival })),
                     react_1.default.createElement(react_3.FormControl, null,
                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u76EE\u7684"),
-                        react_1.default.createElement(react_3.Select, { onChange: onChangeInputPurpose }, purpose.map((p) => react_1.default.createElement("option", { value: p.id }, p.purpose)))),
+                        react_1.default.createElement(react_3.Select, { placeholder: "\u56DE\u7B54\u3092\u9078\u3076", onChange: onChangeInputPurpose }, purpose.map((p) => react_1.default.createElement("option", { value: p.id }, p.purpose)))),
                     react_1.default.createElement(react_3.FormControl, null,
                         react_1.default.createElement(react_3.FormLabel, { fontSize: "sm" }, "\u540C\u884C\u8005"),
                         react_1.default.createElement(react_3.Stack, { direction: "row", align: "center" },
