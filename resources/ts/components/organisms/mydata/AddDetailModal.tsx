@@ -102,6 +102,7 @@ export const AddDetailModal: VFC<Props> = memo((props) => {
                 <Box>
                   <FormControl>
                     <FormLabel fontSize="sm">カテゴリ</FormLabel>
+                    
                       <Stack
                       direction="row" 
                       mr="3" 
